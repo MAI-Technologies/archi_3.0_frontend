@@ -1,0 +1,134 @@
+/* CalculatorButton.module.css */
+
+* {
+  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+  box-sizing: border-box;
+}
+
+/* CalculatorButton.module.css */
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-around; /* This will space your buttons evenly */
+  align-items: center; /* This will center the buttons vertically */
+}
+
+.button {
+  justify-content: space-between;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px #A09F9F;
+  width: auto;
+  height: 37px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+  z-index: 1000;
+}
+
+/* Styles for calculator img on button */
+.calc {
+  position: relative;
+  margin: 5px;
+  margin-top: 2px;
+  align-items: center;
+  height: 33px;
+  width: 33px;
+}
+/* Styles for expand arrow img on button */
+.expand {
+  position: relative;
+  margin: 5px;
+  margin-top: 2px;
+  margin-left: 2px;
+  align-items: center;
+  height: auto;
+  width: 11px;
+}
+
+/* TODO: SHOULD I DO THIS FOR THE OTHER BUTTONS???*/
+/* .button:hover {
+  background: transparent;
+  box-shadow: none;
+} */
+
+.buttonClicked {
+  background: transparent;
+  box-shadow: none;
+  margin-left: 2px;
+  margin-bottom: 140px;
+}
+
+/* Styles for expand arrow img on button when clicked */
+.expandClicked {
+  transform: rotate(180deg); /* Rotates the image 180 degrees */
+  transition: transform 0.01s; /* Smooth transition for the rotate effect */
+}
+
+/* Hide og calculator icon button once clicked */
+.hidden {
+  display: none;
+}
+
+.interface {
+  display: none;
+  position: absolute;
+  bottom: 100%; /* Position above the button */
+  left: 0;
+  bottom: 0px;
+  height: auto;
+  width: auto;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px #A09F9F;
+  z-index: 999;
+}
+
+.interface.active {
+  display: block;
+}
+
+/* Add specific styles for your calculator's keys and display */
+.calcContainer {
+  display: flex;
+  flex-direction: column; /* Stack the input and buttons vertically */
+}
+
+.calcInput {
+  margin-bottom: 10px; /* Space between the input and the button pad */
+  font-size: 1.5em; /* Larger font size for the input */
+  text-align: right; /* Right-align the text */
+  border: 1px solid #d0d0d0; /* Border for the input */
+  border-radius: 4px; /* Rounded corners for the input */
+  padding: 5px; /* Padding inside the input */
+}
+
+.buttonPad {
+  display: grid;
+  margin-top: 25px;
+  align-items: center;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns for the calculator buttons */
+  gap: 5px 10px; /* Space between buttons */
+}
+
+.calcButton {
+  color: #7A7A7A;
+  font-weight: bold;
+  width: 50px;
+  height: 25px;
+  padding: 0.5px; /* Padding inside the button */
+  cursor: pointer; /* Cursor to indicate clickable buttons */
+  background-color: #D9D9D9; /* Background color for the buttons */
+  border: none; /* Border for the buttons */
+  border-radius: 2px; /* Rounded corners for the buttons */
+  margin: 1px;
+  box-shadow: 0 2px 5px #A09F9F;
+  transition: background-color 0.3s; /* Transition for button click effect */
+}
+
+.calcButton:hover {
+  background-color: #d0d0d0; /* Slightly darker background on hover */
+}

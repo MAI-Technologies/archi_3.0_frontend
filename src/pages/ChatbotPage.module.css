@@ -1,0 +1,232 @@
+/* ChatbotPage.module.css */
+/*
+body {
+    overflow: hidden;
+}*/
+/* Styles for the main container */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    /* hide horizontal scroll */
+    height: 92.5vh;
+    background-color: #F5F5F5;
+}
+
+/* Styles for chat history bar on the left of the screen */
+.history {
+    position: fixed;
+    /* Fixed position */
+    display: table-row;
+    float: left;
+    left: 0;
+    top: 0;
+    width: 256px;
+    height: 100%;
+    font-size: 17px;
+    text-align: left;
+    font-weight: bold;
+    color: white;
+    padding-top: 85px;
+    padding-left: 30px;
+}
+
+.newChat {
+    height: 37px;
+    width: 154px;
+    border-radius: 37px;
+    /* Must match height and width to make round button */
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-size: 17px;
+    color: #000000;
+    align-items: center;
+}
+
+.newChat img {
+    height: 23px;
+    transition: background-color 0.3s, color 0.3s;
+    padding-right: 20px;
+    padding-bottom: 4px;
+    align-items: center;
+}
+
+.recent {
+    font-size: 17px;
+    color: white;
+    padding-top: 10px;
+}
+
+/* Styles for chatbot container + when it shifts in response to the question button being clicked */
+.chatbot,
+.chatbotShifted {
+    display: flex;
+    /* Align children side by side */
+    flex-direction: column;
+    align-items: flex-start;
+    top: 0;
+    max-height: calc(100vh - 250px); /* controls height of scrollable chatbot container */
+    height: 100vh;
+    width: calc(100% - 256px);
+    /* Subtracting width of .history */
+    min-height: 100vh;
+    margin-left: 256px; /* must be same as .history width */
+    padding-left: 80px;
+    padding-top: 50px;
+    background-color: #F5F5F5;
+    overflow-y: hidden;
+    transition: margin-left 0.02s, transform 0.3s;
+    /* Smooth transition for shifting */
+}
+
+/* Styles for shifted chatbot container */
+.chatbotShifted {
+    transform: translateX(-200px);
+    /* Shift to the left */
+}
+
+/* Styles for container for tutor/student profile pic + chatbot output/input */
+.output {
+    position: relative;
+    margin-right: 300px;
+    margin-left: 10px;
+}
+
+/* Styles for tutor profile pic */
+.profile {
+    position: relative;
+    display: table-row;
+    left: 0;
+    top: 0;
+}
+
+/* Styles for img for tutor profile pic */
+.profile img {
+    width: 60px;
+    height: auto;
+}
+
+/* Styles for all the initial text displayed by chatbot */
+.botText {
+    white-space: pre-line;
+    display: block;
+    position: fixed;
+    text-align: justify;
+    width: calc(100% - 460px);
+    padding-right: 50px;  /* Create space for the scrollbar */
+    max-width: calc(100% - 300px); 
+    overflow-y: auto;
+    max-height: calc(100% - 213px);
+}
+
+/* Styles for just the chatbot greeting */
+.greeting p {
+    position: relative;
+    margin-top: -60px;
+    margin-left: 85px;
+    /* Might have to change later to align better */
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.logMsg {
+    display: flex;
+    padding: 20px;
+    /* Removed the line below to make profile pic align with top line of convo */
+    /*align-items: center;*/
+    margin-left: -20px;
+}
+
+.logMsg .msg {
+    margin-left: 25px;
+}
+
+/* Styles for just the tutor introduction */
+.purpose p {
+    position: relative;
+    margin-top: -10px;
+    /* Adjust based on font size */
+    margin-left: 85px;
+    /* Might have to change later to align better */
+    font-size: 15px;
+}
+
+/* Styles for question mark (FAQs/more info) button */
+.help {
+    position: fixed;
+    right: 0;
+    /* Align to the right side of the screen */
+    top: 10%;
+    /* Example to center it vertically, adjust as needed */
+    margin-right: 20px;
+}
+
+/* Accounts for window resizing */
+@media (max-width: 920px) {
+    .history {
+        display: none;
+        /* Hides the history bar on smaller screens */
+    }
+
+    .chatbot,
+    .chatbotShifted {
+        width: 100%;
+        /* Full width on smaller screens */
+        margin-left: 0;
+        /* No space for .history */
+    }
+
+    .chatbotShifted {
+        transform: translateX(0);
+        /* No shift on smaller screens */
+    }
+
+    .botText {
+        width: 80%;
+        max-width: 100%;
+        height: auto;
+        resize: none;
+        /* Needs same padding as content and purpose */
+    }
+
+    /* following code doesn't affect shortcuts and input bar layout
+    .shortcuts {
+        display: none;
+        right: 0;
+        padding-left: 0;
+    }
+
+    .inputBar {
+        margin-left: 0;
+    }
+    */
+}
+
+/* following code doesn't affect input bar layout
+.inputBar {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    margin-left: 100px;
+}
+*/
+
+.contentSkewed {
+    transform: skewX(-10000000deg);
+}
+
+.history, .chatbot {
+    transition: transform 0.3s ease-in-out;
+  }
+
+/* Need to ensure alignment of these properties */
+.purpose, .greeting, .botText {
+    padding-right: -10px; 
+    /*padding-left: 10px*/
+}

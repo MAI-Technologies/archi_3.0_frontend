@@ -1,0 +1,137 @@
+ /* ChatInputBar.module.css */
+
+ .chatInputContainer {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: calc(100% - 513px);
+   /* Subtract based on margin-left+margin-right */
+   margin-left: 340px;
+   /* Val is based on margin-left of ChatbotPage chatbot class */
+   /*margin-right: 250px;*/
+   margin-bottom: 33px;
+   background-color: transparent;
+   /* Change to match your design */
+   padding: 10px;
+   display: flex;
+   justify-content: space-between;
+   /* Adjust as necessary */
+   align-items: center;
+   box-sizing: border-box;
+ }
+
+ .chatInput {
+   flex-grow: 1;
+   height: 42px;
+   margin-right: -40px;
+   /* Negative margin to allow button overlap */
+   padding: 10px;
+   padding-left: 30px;
+   border-radius: 40px;
+   /* Rounded corners */
+   background-color: #D9D9D9;
+   border: none;
+   outline: none;
+   /* Removes the default focus outline */
+   font-size: 17px;
+ }
+
+ /* Styles for the chat input placeholder */
+ .chatInput::placeholder {
+   color: #A09F9F;
+   /* Replace #yourColor with the color you want */
+   opacity: 1;
+   /* Override any browser-specific opacity to ensure the color is consistent */
+ }
+
+ .sendButton {
+   height: 32px;
+   width: 32px;
+   align-content: center;
+   border-radius: 32px;
+   /* Must match height and width to make round button */
+   border: none;
+   background-color: #A09F9F;
+   color: white;
+   cursor: pointer;
+ }
+
+ .sendButton img {
+   padding: 2px;
+   padding-left: 4px;
+   float: left;
+   transition: background-color 0.3s, color 0.3s;
+ }
+
+ .calculator {
+   position: fixed;
+   display: flex;
+   bottom: 0;
+   left: 0;
+   margin: 75px;
+   margin-left: 340px;
+   padding-left: 10px;
+   /* Make this align with input bar later */
+   margin-bottom: 100px;
+ }
+
+ /* Styles for the container of text-based suggestion shortcut buttons */
+.shortcuts {
+  position: fixed; /* Position relative to the nearest positioned ancestor */
+  height: 37px;
+  margin-right: 176px;
+  margin-bottom: 100px;
+  bottom: 0; /* Adjust this as necessary to position below the chat input */
+  right: 0; /* Align to the right edge of the chat input container */
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center the buttons */
+  gap: 10px; /* Space between buttons */
+}
+
+/* Styles for each individual text-based shortcut button */
+.shortcut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    /* Minimum width */
+    flex-shrink: 0;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px #A09F9F;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 37px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+@media (max-width: 920px) {
+  .chatInputContainer {
+    margin-left: 80px;
+    width: 75%;
+  }
+
+  .calculator {
+    margin-left: 80px;
+  }
+
+  .shortcuts {
+    width: 70%;
+    margin-right: 10px;
+  }
+}
+
+
+@media (max-width: 675px) {
+  .shortcuts {
+    display: none;
+  }
+}
