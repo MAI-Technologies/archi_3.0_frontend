@@ -8,6 +8,8 @@ import MetricsPage from './pages/MetricsPage';
 import TutorPage from './pages/TutorPage';
 import ChatbotPage from './pages/ChatbotPage';
 import PopupButton from './components/PopupButton/PopupButton';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   // State for tracking popup visibility
@@ -36,11 +38,13 @@ function App() {
           <Route exact path='/' element={<LandingPage />} />
           <Route exact path='/metrics' element={<MetricsPage />} />
           <Route exact path='/tutor' element={<TutorPage />} />
+          <Route exact path='/register' element={<RegisterPage />} />
+          <Route exact path='/login' element={<LoginPage />} />
           <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
         </Routes>
         {showPopupButton && (
           <div className={styles.info}>
-            <PopupButton onToggle={handlePopupToggle} buttonText="i" alignLeft buttonTextColor='#749AAB' text="Who's ArchI?" extraContent= "ArchI is an AI math tutor that you can consult to help solve your math homework!" >
+            <PopupButton onToggle={handlePopupToggle} buttonText="i" alignLeft buttonTextColor='#749AAB' text="Who's ArchI?" extraContent="ArchI is an AI math tutor that you can consult to help solve your math homework!" >
             </PopupButton>
           </div>
         )}
