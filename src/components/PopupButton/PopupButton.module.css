@@ -1,0 +1,78 @@
+/* PopupButton.module.css */
+
+.popupContainer {
+    position: relative;
+}
+
+.question {
+    font-size: 25px; /* Adjust size as needed */
+    font-weight: bold;
+    width: 33px; /* Same width and height for a circle */
+    height: 33px;
+    border-radius: 50%; /* Circular shape */
+    border: none; /* No border */
+    background-color: #F5F5F5;
+    color: #749AAB; /* TODO: Change based on background color */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Flexbox for centering content */
+    align-items: center; /* Align text vertically */
+    justify-content: center; /* Align text horizontally */
+    position: relative; /* Relative position to the viewport */
+    top: 0px; /* Positioned from the top of the viewport */
+    right: 0px; /* Positioned from the right of the viewport */
+    z-index: 1000; /* High z-index to stay above other elements */
+    box-shadow: 0 2px 5px #A09F9F; /* Subtle shadow for depth */
+}
+
+/* Popup styling */
+.popup {
+    position: absolute; /* Absolute position */
+    z-index: 999; /* Below the button but above other content */
+    height: 610px;
+    width: 250px; /* Only as wide as its content requires */
+    max-width: calc(100% - 40px); /* Maximum width with some padding from edges */
+    background-color: #F5F5F5;
+    box-shadow: 0 2px 5px #A09F9F; /* Subtle shadow for depth */
+    border-radius: 20px; /* Must match border-radius of popupInner */
+    margin: 10px;
+}
+
+/* Custom styling for popup when button is on the bottom left */
+.popupLeft {
+    left: -10px;
+    bottom: -10px;
+}
+
+/* Custom styling for popup when button is on the top right */
+.popupRight {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    background-color: #F5F5F5;
+    height: 355px;
+    width: 250px;
+    min-width: 250px; /* Minimum width */
+    min-height: 255px; /* Minimum height */
+    color: white; /* Text color for visibility */
+    z-index: 999;
+}
+
+/* Popup inner content styling */
+.popupInner {
+    background-color: transparent; /* White background for the content */
+    border-radius: 20px; /* Rounded corners */
+    padding: 30px; /* Padding around the content */
+    text-align: left; /* Align text to the left */
+    position: relative; /* For positioning the close button if needed */
+    font-size: 12px;
+    color: black;
+    z-index: 1000;
+}
+
+.popupInner .boldText {
+    font-weight: bold;
+}
+
+.popupInner .regularText {
+    font-weight: normal;
+}

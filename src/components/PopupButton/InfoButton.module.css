@@ -1,0 +1,10 @@
+/* InfoButton.module.css */
+
+.info {
+    position: fixed; /* Fixed position relative to the viewport */
+    bottom: 25px; /* Aligns to the top of the viewport */
+    left: 25px; /* Aligns to the left of the viewport */
+    z-index: 1000; /* High z-index to stay above other elements */
+    background-color: transparent; /* Background color */
+    width: 100%; /* Full width */
+  }

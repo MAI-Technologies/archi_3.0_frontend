@@ -1,0 +1,44 @@
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.title,
+.desc {
+    min-width: 100vh;
+    padding: 15px;
+    font-size: 20px;
+}
+
+.chatlogs {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: left;
+}
+
+.log {
+    border: 1px solid black;
+    padding: 15px;
+}
+
+.userLog,
+.botLog,
+.timeLog {
+    padding: 10px;
+}
+
+.totalSessions {
+    font-size: 25px;
+    border: 1px solid black;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 20px;
+}
+
+.metrics {
+    text-align: center;
+
+}
