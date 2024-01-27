@@ -9,8 +9,14 @@ const LandingPage = () => {
 
 				<div className={styles.section1}>
 					<div className={styles.visualBlock1}>
-						<img src="/img/archi_flipped.gif" alt="archi gif"></img>
-						<img src="/img/planet_shape.png" alt="planet image"></img>
+						<div className={styles.archiButtonBlock}>
+							<img src="/img/archi_flipped_loop.gif" alt="archi gif"></img>
+							<img src="/img/getStarted.png" alt="get started button"></img>
+							<img src="/img/haveAcc.png" alt="have account button"></img>
+						</div>
+						<div className={styles.planetBlock}>
+							<img src="/img/planet_shape.png" alt="planet image"></img>
+						</div>
 					</div>
 					
 					<div className={styles.textBlock1}>
@@ -25,30 +31,36 @@ const LandingPage = () => {
 				</div>
 
 				<div className={styles.section2}>
-					<h2>Who We Are</h2>
-					<p>
-						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
-						tutor, that they can not only utilize to answer their questions for various coursework, but 
-						also to review material learned in previous courses.
-					</p>
+					<div className={styles.textBlock2}>
+						<h2>Who We Are</h2>
+						<p>
+							We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
+							tutor, that they can not only utilize to answer their questions for various coursework, but 
+							also to review material learned in previous courses.
+						</p>
+					</div>
 				</div>
 
 				<div className={styles.section3}>
-					<h2>How It Works</h2>
-					<p>
-						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
-						tutor, that they can not only utilize to answer their questions for various coursework, but 
-						also to review material learned in previous courses.
-					</p>
+					<div className={styles.textBlock3}>
+						<h2>How It Works</h2>
+						<p>
+							We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
+							tutor, that they can not only utilize to answer their questions for various coursework, but 
+							also to review material learned in previous courses.
+						</p>
+					</div>
 				</div>
 
 				<div className={styles.section4}>
-					<h2>FAQs</h2>
-					<p>
-						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
-						tutor, that they can not only utilize to answer their questions for various coursework, but 
-						also to review material learned in previous courses.
-					</p>
+					<div className={styles.textBlock4}>
+						<h2>FAQs</h2>
+						<p>
+							We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
+							tutor, that they can not only utilize to answer their questions for various coursework, but 
+							also to review material learned in previous courses.
+						</p>
+					</div>
 				</div>
 			</div>
 

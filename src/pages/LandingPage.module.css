@@ -23,20 +23,82 @@
 .visualBlock1 {
   position: absolute;
   border: 1px solid yellow;
+  display: flex;
+  flex-direction: column;
 }
 
-.visualBlock1 img:nth-child(2) {
-  margin-top: 370px;
+.planetBlock {
+  margin-top: 400px;
+}
+
+.planetBlock img {
   width: 75vw;
   height: auto;
+  border: 1px solid green;
+}
 
+.archiButtonBlock {
+  border: 1px solid blue;
+  position: absolute;
+  width: 300px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px;
+  margin-left: 250px;
+}
+
+.archiButtonBlock img:first-child {
+  margin-bottom: 0;
+  height: 350px;
+  width: auto;
+}
+
+.archiButtonBlock img:nth-child(2) {
+  width: 260px;
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.archiButtonBlock img:nth-child(3) {
+  width: 260px;
+  height: auto;
 }
 
 .textBlock1 {
-  margin-left: 800px;
+  position: absolute;
+  right: 150px;
   margin-top: 200px;
   width: 500px;
   border: 1px solid red;
+  color: white;
+}
+
+.textBlock2 {
+  color: white;
+}
+
+.textBlock3 {
+  color: white;
+}
+
+.textBlock4 {
+  color: white;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+p {
+  font-size: 16px;
 }
 
 .section2 {
@@ -50,90 +112,3 @@
 .section4 {
   padding: 300px;
 }
-
-
-
-
-
-
-
-
-
-/* Styles for inner container containing elements in the center */
-.innerContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vh;
-  height: calc(100%-51px); /* Subtract Navbar height from vh */
-}
-
-  /* Styles for the standalone image */
-  .content img {
-    height: 252px;
-    width: auto;
-    margin-bottom: 20px;
-  }
-  
-  /* Styles for the "Try ArchI" button */
-  button[type="try"] {
-    background-color: #E79775;
-    border: none;
-    border-radius: 30px;
-    width: 202px;
-    height: 43px;
-    min-width: 202px;
-    min-height: 43px;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 17px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 0.3s, color 0.3s;
-  }
-
-  /* Styles for "Try ArchI" on hover */
-  button[type="try"]:hover {
-    background-color: #C06041; /* New background color on hover */
-    color: white; /* New text color on hover */
-  }
-  
-  /* Styles for the header */
-  .content h1 {
-    color: #F5F5F5;
-    text-align: center;
-    align-content: center;
-    font-size: 33px;
-  }
-
-  /* Styles for the "info" button */
-  button[type="info"] {
-    background-color: transparent;
-    padding: 10px 22 px;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    bottom: 10px;
-    left: 10px; 
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  /* Styles for the image inside the button */
-  button[type="info"] img {
-    width: 33px;
-    height: auto;
-    transition: filter 0.3s;
-    position: center;
-  }
-  
