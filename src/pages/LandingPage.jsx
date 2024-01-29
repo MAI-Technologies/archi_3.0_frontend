@@ -15,12 +15,13 @@ const LandingPage = () => {
 							<img src="/img/haveAcc.png" alt="have account button"></img>
 						</div>
 						<div className={styles.planetBlock}>
-							<img src="/img/planet_shape.png" alt="planet image"></img>
+							<img src="/img/planet.png" alt="planet image"></img>
 						</div>
 					</div>
 					
 					<div className={styles.textBlock1}>
-						<h2>Welcome to Archimedes, An AI tutor for mathematics!</h2>
+						<h2>Welcome to Archimedes, </h2>
+						<h2>An AI tutor for mathematics!</h2>
 						<h3>The free, fun, and effective way to learn math!</h3>
 						<p>
 							Technology has made learning math easier with the introduction of a personal AI math tutor.

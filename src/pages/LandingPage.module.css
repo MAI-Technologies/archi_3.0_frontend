@@ -3,26 +3,28 @@
 /* Styles for the main container */
 .content {
   background: url(/img/bg1.png), url(/img/bg2.png), url(/img/bg3.png), url(/img/bg4.png);
-  background-position: left 0%, left 100vh, left 200vh, left 300vh;
+  background-position: left -8vh, left 100vh, left 200vh, left 300vh;
   background-repeat: no-repeat;
-  background-size: 100vw 100vh;
-  min-height: 100vh;
-  height: 400vh;
+  background-size: contain;
+  /*min-height: 100vh;*/
+  height: 410vh;
 }
 
+
+/* Section 1 elements */
 .section1 {
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  height: 135vh;
+  height: 100vh;
   width: 100vw;
   border: 1px solid;
 }
 
 .visualBlock1 {
   position: absolute;
-  border: 1px solid yellow;
+  /*border: 1px solid yellow;*/
   display: flex;
   flex-direction: column;
 }
@@ -32,13 +34,14 @@
 }
 
 .planetBlock img {
-  width: 75vw;
+  width: 1250px;
   height: auto;
-  border: 1px solid green;
+  /*border: 1px solid green;*/
+  margin-left: -230px;
 }
 
 .archiButtonBlock {
-  border: 1px solid blue;
+  /*border: 1px solid blue;*/
   position: absolute;
   width: 300px;
   height: auto;
@@ -46,13 +49,13 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 100px;
-  margin-left: 250px;
+  margin-top: 110px;
+  margin-left: 265px;
 }
 
 .archiButtonBlock img:first-child {
   margin-bottom: 0;
-  height: 350px;
+  height: 330px;
   width: auto;
 }
 
@@ -61,52 +64,83 @@
   height: auto;
   margin-top: 0;
   margin-bottom: 10px;
+  animation: fadeInLoad 1s 3s forwards;
+  opacity: 0;
 }
 
 .archiButtonBlock img:nth-child(3) {
   width: 260px;
   height: auto;
+  animation: fadeInLoad 1s 3s forwards;
+  opacity: 0;
 }
 
 .textBlock1 {
   position: absolute;
   right: 150px;
   margin-top: 200px;
-  width: 500px;
-  border: 1px solid red;
+  width: 495px;
+  /*border: 1px solid red;*/
+  animation: fadeInLoad 1s 3s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInLoad {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+   }
+}
+
+.textBlock1 h2 {
+  font-family: 'Baloo 2';
   color: white;
+  font-weight: 600;
+}
+
+.textBlock1 h3 {
+  font-family: 'Baloo 2';
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+
+/* Section 2 elements */
+
+.section2 {
+  position: relative;
+  padding: 100px;
 }
 
 .textBlock2 {
-  color: white;
+
 }
 
+
+
+
 .textBlock3 {
-  color: white;
+
 }
 
 .textBlock4 {
-  color: white;
-}
 
-h2 {
-  font-size: 22px;
-}
-
-h3 {
-  font-size: 16px;
 }
 
 p {
-  font-size: 16px;
-}
-
-.section2 {
-  padding: 100px;
+  font-size: 17px;
+  font-family: 'Baloo 2';
+  color: white;
 }
 
 .section3 {
   padding: 200px;
+  position: relative;
 }
 
 .section4 {
