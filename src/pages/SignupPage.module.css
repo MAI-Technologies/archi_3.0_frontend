@@ -1,0 +1,104 @@
+/* SignupPage.module.css */
+
+.signupPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* Or any other background color */
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .registrationForm {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .formGroup {
+    margin-bottom: 1em;
+  }
+
+  .roleSelection {
+    margin-bottom: 20px;
+  }
+  
+  .roleButton {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    flex: 1;
+  }
+  
+  .roleButton:hover,
+  .roleButton:focus,
+  .roleButton.active {
+    background-color: #e7e7e7;
+  }
+  
+  .select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+  }
+  
+  .dobInputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .dobInputs input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .continueButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #5C6BC0; /* Example color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 1em;
+    cursor: pointer;
+  }
+  
+  .continueButton:hover {
+    background-color: #3949AB; /* Darken button on hover, example color */
+  }
+  
+  .loginLink {
+    display: block;
+    color: #5C6BC0; /* Example color */
+    text-decoration: none;
+    margin-top: 1em;
+  }
+  
+  .characterContainer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .characterImage {
+    width: 200px; /* Adjust as needed */
+  }
+  
+  .speechBubble {
+    position: absolute;
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4
+  }
