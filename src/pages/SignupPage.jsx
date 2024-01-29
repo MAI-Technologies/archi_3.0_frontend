@@ -5,8 +5,10 @@ import styles from './SignupPage.module.css'; // Import your CSS module
 const SignupPage = () => {
   return (
     <div className={styles.signupPage}>
-      <RegistrationForm />
-      <Character />
+        <div className="contentContainer">
+            <RegistrationForm />
+            <Character />
+        </div>
     </div>
   );
 };
@@ -23,27 +25,32 @@ const RegistrationForm = () => {
         <div className={styles.registrationForm}>
             <h2>Welcome to Archimedes</h2>
             <p>Create an account to save your progress!</p>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.roleSelection}>
-                    {['Student', 'Teacher', 'Parent'].map((role) => (
-                    <button
-                        type="button"
-                        key={role}
-                        onClick={() => setSelectedRole(role)}
-                        className={`${styles.roleButton} ${selectedRole === role ? styles.active : ''}`}
-                    >
-                        {role}
-                    </button>
-                    ))}
-                </div>
-            <input type="hidden" name="role" value={selectedRole} />
-            </form>
+            <div className={styles.formContainer}>
+                <form onSubmit={handleSubmit}>
+                    <div className={styles.roleSelection}>
+                        <label htmlFor="dob">Join Archimedes as a </label>
+                        <div className={styles.dobInputs}>
+                            {['Student', 'Teacher', 'Parent'].map((role) => (
+                            <button
+                                type="button"
+                                key={role}
+                                onClick={() => setSelectedRole(role)}
+                                className={`${styles.roleButton} ${selectedRole === role ? styles.active : ''}`}
+                            >
+                                {role}
+                            </button>
+                            ))}
+                        </div>
+                    </div>
+                    <input type="hidden" name="role" value={selectedRole} />
+                </form>
+            </div>
         <div className={styles.formGroup}>
             <label htmlFor="dob">What is your date of birth?</label>
             <div className={styles.dobInputs}>
-            <input type="text" id="month" placeholder="Jan" />
-            <input type="text" id="day" placeholder="16" />
-            <input type="text" id="year" placeholder="1994" />
+                <input type="text" id="month" placeholder="Jan" />
+                <input type="text" id="day" placeholder="16" />
+                <input type="text" id="year" placeholder="1994" />
             </div>
         </div>
         <button type="submit" className={styles.continueButton}>Continue</button>
@@ -55,8 +62,8 @@ const RegistrationForm = () => {
 const Character = () => {
   return (
     <div className={styles.characterContainer}>
-      <img src="/path-to-character-image.png" alt="Archimedes character" className={styles.characterImage} />
-      <SpeechBubble />
+        <SpeechBubble />
+      <img src="/img/archi_amazed.png" alt="Archimedes character" className={styles.characterImage} />
     </div>
   );
 };
@@ -64,7 +71,8 @@ const Character = () => {
 const SpeechBubble = () => {
   return (
     <div className={styles.speechBubble}>
-      <p>Ooooo... A new student!?</p>
+        <img src="/img/text_bubble.png" alt="Blank text bubble" className={styles.textBubbleImage} />
+        <p>Ooooo... A new student!?</p>
     </div>
   );
 };
