@@ -6,6 +6,7 @@ const SignupPage = () => {
     const [currentSection, setCurrentSection] = useState(1); // State to manage the current section
     const [role, setRole] = useState(''); // State to track the selected role in section 1
     const [dob, setDob] = useState({ month: '', day: '', year: '' }); // State to track date of birth in section 1
+    const [characterImageSrc, setCharacterImageSrc] = useState('/img/archi_amazed.png'); // State for character image source
 
 
     const handleNextSection = () => {
@@ -25,11 +26,6 @@ const SignupPage = () => {
       setCurrentSection(currentSection + 1);
     };
 
-    // Character image source based on the current section
-    const characterImageSrc = currentSection === 1
-      ? '/img/archi_amazed.png' // Character image for section 1
-      : '/img/archi.png'; // Different image for section 2
-
     return (
         <div className={styles.signupPage}>
             <div className="contentContainer">
@@ -43,7 +39,7 @@ const SignupPage = () => {
                         handleNextSection={handleNextSection}
                     />
                 )}
-                {currentSection === 2 && <AnotherForm />}
+                {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} />}
                 <Character imageSrc={characterImageSrc} /> {/* Pass the image source as a prop */}
             </div>
         </div>
@@ -152,7 +148,22 @@ const SpeechBubble = () => {
   );
 };
 
-const AnotherForm = () => {
+const CreateAccountForm = ({setCharacterImageSrc}) => {
+    // State to manage the hint and image source
+    const [passwordHint, setPasswordHint] = useState('');
+
+    // Function to show the password hint and change the image
+    const showPasswordHint = () => {
+        setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
+        setCharacterImageSrc('/img/archi.png'); // Update with the path to your new image
+    };
+
+    // Function to clear the password hint and reset the image
+    const clearPasswordHint = () => {
+        setPasswordHint('');
+        setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
+    };
+    
     return (
       <div className={styles.registrationForm}>
             <div class="signup-container">
@@ -172,7 +183,15 @@ const AnotherForm = () => {
                     </div>
                     <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required/>
+                    <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                            onFocus={showPasswordHint}
+                            onBlur={clearPasswordHint}
+                        />
+                        {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                     </div>
                     <div class="submit-group">
                     <button type="submit" class="signup-button">Sign Up</button>
@@ -184,7 +203,7 @@ const AnotherForm = () => {
                     </div>
                     <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
                 </form>
-                </div>
+            </div>
 
       </div>
     );
