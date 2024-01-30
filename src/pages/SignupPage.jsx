@@ -155,8 +155,37 @@ const SpeechBubble = () => {
 const AnotherForm = () => {
     return (
       <div className={styles.registrationForm}>
-          {/* Include your form fields for section 2 here */}
-          <h1> FORM! </h1>
+            <div class="signup-container">
+                <form class="signup-form">
+                    <h2>Sign Up</h2>
+                    <div class="input-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first_name" required/>
+                    </div>
+                    <div class="input-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last_name" required/>
+                    </div>
+                    <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required/>
+                    </div>
+                    <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required/>
+                    </div>
+                    <div class="submit-group">
+                    <button type="submit" class="signup-button">Sign Up</button>
+                    <p>---- or ----</p>
+                    <button type="button" class="google-signin-button">Sign in with Google</button>
+                    </div>
+                    <div class="login-link">
+                    Already have an account? <a href="/login">Log in</a>
+                    </div>
+                    <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
+                </form>
+                </div>
+
       </div>
     );
 };
