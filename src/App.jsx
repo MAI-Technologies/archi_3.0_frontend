@@ -8,8 +8,6 @@ import MetricsPage from './pages/MetricsPage';
 import TutorPage from './pages/TutorPage';
 import ChatbotPage from './pages/ChatbotPage';
 import PopupButton from './components/PopupButton/PopupButton';
-import RegisterPage from './pages/RegisterPage';
-import LoginPage from './pages/LoginPage';
 
 function App() {
   // State for tracking popup visibility
@@ -38,8 +36,6 @@ function App() {
           <Route exact path='/' element={<LandingPage />} />
           <Route exact path='/metrics' element={<MetricsPage />} />
           <Route exact path='/tutor' element={<TutorPage />} />
-          <Route exact path='/register' element={<RegisterPage />} />
-          <Route exact path='/login' element={<LoginPage />} />
           <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
         </Routes>
         {showPopupButton && (
