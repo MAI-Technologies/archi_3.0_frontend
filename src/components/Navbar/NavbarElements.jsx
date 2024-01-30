@@ -9,7 +9,7 @@ position: fixed;
 top: 0;
 left: 0;
 right: 0;
-height: 51px;
+height: 48px;
 width: 100%;
 display: flex;
 justify-content: space-between;

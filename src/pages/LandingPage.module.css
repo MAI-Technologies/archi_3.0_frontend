@@ -2,12 +2,7 @@
 
 /* Styles for the main container */
 .content {
-  background: url(/img/bg1.png), url(/img/bg2.png), url(/img/bg3.png), url(/img/bg4.png);
-  background-position: left -8vh, left 100vh, left 200vh, left 300vh;
-  background-repeat: no-repeat;
-  background-size: contain;
-  /*min-height: 100vh;*/
-  height: 410vh;
+  height: 435vh;
 }
 
 
@@ -19,7 +14,6 @@
   align-items: flex-start;
   height: 100vh;
   width: 100vw;
-  border: 1px solid;
 }
 
 .visualBlock1 {
@@ -78,7 +72,7 @@
 .textBlock1 {
   position: absolute;
   right: 150px;
-  margin-top: 200px;
+  margin-top: 160px;
   width: 495px;
   /*border: 1px solid red;*/
   animation: fadeInLoad 1s 3s forwards;
@@ -94,55 +88,140 @@
    }
 }
 
+.textBlock1 p {
+  font-size: 18px;
+  font-family: 'Baloo 2';
+  color: white;
+}
+
 .textBlock1 h2 {
   font-family: 'Baloo 2';
   color: white;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .textBlock1 h3 {
   font-family: 'Baloo 2';
   color: white;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
 
 /* Section 2 elements */
-
 .section2 {
   position: relative;
-  padding: 100px;
+  height: 120vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-top: 250px;
+  padding-left: 150px;
+}
+
+.section2 img:first-child {
+  width: 40px;
+  height: auto;
 }
 
 .textBlock2 {
-
+  width: 570px;
 }
 
-
-
-
-.textBlock3 {
-
-}
-
-.textBlock4 {
-
-}
-
-p {
-  font-size: 17px;
+.textBlock2 p {
+  font-size: 18px;
   font-family: 'Baloo 2';
   color: white;
 }
 
-.section3 {
-  padding: 200px;
-  position: relative;
+.textBlock2 h2 {
+  font-family: 'Baloo 2';
+  color: white;
+  font-weight: 700;
 }
 
+.textBlock2 img {
+  width: 160px;
+  height: auto;
+}
+
+
+/* Section 3 elements */
+.section3 {
+  padding-top: 280px;
+  position: relative;
+  height: 120vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /*border: 1px solid yellow;*/
+}
+
+.visualBlock2 {
+  /* PLACEHOLDER */
+  width: 380px;
+  height: 300px;
+  border-radius: 25px;
+  background-color: white;
+}
+
+.textBlock3 {
+  padding-left: 140px;
+  width: 610px;
+}
+
+.textBlock3 p {
+  font-size: 18px;
+  font-family: 'Baloo 2';
+  color: white;
+}
+
+.textBlock3 h2 {
+  font-family: 'Baloo 2';
+  color: #EC9C74;
+  font-weight: 700;
+}
+
+.textBlock3 img {
+  width: 160px;
+  height: auto;
+}
+
+
+/* Section 4 elements */
 .section4 {
-  padding: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  height: 80vh;
+  /*border: 1px solid blue;*/
+}
+
+.textBlock4 {
+  width: 720px;
+  padding-left: 240px;
+  padding-top: 190px;
+}
+
+.textBlock4 h2 {
+  font-family: 'Baloo 2';
+  color: white;
+  font-weight: 700;
+}
+
+.textBlock4 p {
+  font-size: 18px;
+  font-family: 'Baloo 2';
+  color: white;
+}
+
+.textBlock4 img {
+  width: 160px;
+  height: auto;
 }

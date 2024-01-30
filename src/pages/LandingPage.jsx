@@ -11,7 +11,11 @@ const LandingPage = () => {
 					<div className={styles.visualBlock1}>
 						<div className={styles.archiButtonBlock}>
 							<img src="/img/archi_flipped_loop.gif" alt="archi gif"></img>
-							<img src="/img/getStarted.png" alt="get started button"></img>
+							<img 
+								src="/img/getStarted.png" alt="get started button" /*
+								onMouseOver={e => (e.currentTarget.src = "/img/getStartedHover.png")} 
+								onMouseOut={e => (e.currentTarget.src = "/img/getStarted.png")} */
+							/>
 							<img src="/img/haveAcc.png" alt="have account button"></img>
 						</div>
 						<div className={styles.planetBlock}>
@@ -32,6 +36,7 @@ const LandingPage = () => {
 				</div>
 
 				<div className={styles.section2}>
+					<img src="/img/one_star.gif" alt="one star"></img>
 					<div className={styles.textBlock2}>
 						<h2>Who We Are</h2>
 						<p>
@@ -39,10 +44,20 @@ const LandingPage = () => {
 							tutor, that they can not only utilize to answer their questions for various coursework, but 
 							also to review material learned in previous courses.
 						</p>
+						<p>
+							We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
+							tutor, that they can not only utilize to answer their questions for various coursework, but 
+							also to review material learned in previous courses.
+						</p>
+
+						<img src="/img/learn_more.png" alt="learn more button"></img>
 					</div>
 				</div>
 
 				<div className={styles.section3}>
+					<div className={styles.visualBlock2}>
+
+					</div>
 					<div className={styles.textBlock3}>
 						<h2>How It Works</h2>
 						<p>
@@ -50,6 +65,8 @@ const LandingPage = () => {
 							tutor, that they can not only utilize to answer their questions for various coursework, but 
 							also to review material learned in previous courses.
 						</p>
+
+						<img src="/img/learn_more.png" alt="learn more button"></img>
 					</div>
 				</div>
 
@@ -61,6 +78,8 @@ const LandingPage = () => {
 							tutor, that they can not only utilize to answer their questions for various coursework, but 
 							also to review material learned in previous courses.
 						</p>
+
+						<img src="/img/learn_more.png" alt="learn more button"></img>
 					</div>
 				</div>
 			</div>
