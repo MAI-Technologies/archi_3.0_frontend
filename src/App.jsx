@@ -53,8 +53,8 @@ function InfoButton() {
   const [showPopupButton, setShowPopupButton] = useState(true);
 
   useEffect(() => {
-    // Hide the popup button on the signup page
-    setShowPopupButton(location.pathname !== '/signup');
+    // Hide the popup button on the signup and login pages
+    setShowPopupButton((location.pathname !== '/signup') && (location.pathname !== '/login'));
   }, [location]);
 
   return showPopupButton && (
