@@ -185,13 +185,15 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                         />
                     </div>
                 </div>
-                <button 
-                    type="button" 
-                    onClick={handleSubmit} // Handle the click event
-                    className={styles.continueButton}>
-                    Continue
-                </button>
-                <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                <div className={styles.navigate}>
+                    <button 
+                        type="button" 
+                        onClick={handleSubmit} // Handle the click event
+                        className={styles.continueButton}>
+                        Continue
+                    </button>
+                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                </div>
             </>
             )}
         </div>

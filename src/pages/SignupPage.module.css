@@ -20,12 +20,15 @@
     background-color: #FFFFFF;
     color: #C05F41;
     padding-top: 50px;
+    padding-bottom: 50px;
     padding-left: 70px;
+    padding-right: 70px;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 20px;
-    margin-top: 60px;
+    left: 20px;
+    top: 60px;
     text-align: left;
+    min-width: 620px; /* Prevents form from having a smaller width than children */
     width: calc(50% - 40px);
     height: calc(100% - 80px);
     display: fixed;
@@ -36,11 +39,14 @@
   }
 
   .registrationForm h2 {
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 0px;
   }
   .registrationForm p {
-    font-size: 0.9rem;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 20px;
   }
   .registrationForm h2,
   .registrationForm p,
@@ -51,7 +57,8 @@
 
   .formContainer {
     color: black;
-    font-size: 1rem;
+    font-size: 20px;
+    font-weight: 600;
     width: 100%; /* Full width of the registration form */
     display: flex;
     flex-direction: column; /* Stack the form elements */
@@ -60,10 +67,10 @@
   
   .formGroup {
     color: black;
-    font-size: 1rem;
+    font-size: 20px;
+    font-weight: 600;
     width: 100%; /* Full width for alignment */
     text-align: left; /* Align text to the left for contents in formGroup */
-    margin-bottom: 1em; /* Space between form groups */
     display: flex; /* This will allow you to align the label and input side by side */
     flex-direction: column; /* Stack elements vertically */
     align-items: flex-start; /* Align children to the start (left side) */
@@ -72,32 +79,28 @@
   .roleSelection {
     text-align: left;
     display: flex; /* Align buttons in a row */
-    justify-content: flex-start; /* Align buttons to the left */
+    justify-content: center; /* Align buttons to the center */
     flex-wrap: wrap; /* Wrap buttons to next line if needed */
+    margin-bottom: 30px;
   }
   
   .roleButton {
-    border: 1px solid #ddd; /* Thicker border */
-    background-color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition for hover and focus */
-    width: 111px;
-    height: 39px;
-    font-size: 0.9rem; /* Larger font size */
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    border-color: transparent;
+    margin-right: -10px;
+    width: 164px;
+    height: 47px;
+    font-size: 16px;
+    color: #C05F41;
+    margin-top: 5px;
   }
   
   .roleButton:hover,
-  .roleButton:focus {
-    background-color: #C05F41; /* Subtle hover effect */
-    border-color: #bbb; /* Change border color on hover */
-  }
-  
+  .roleButton:focus,
   .roleButton.active {
-    background-color: #5C6BC0; /* Active color */
+    background-color: #C05F41; /* Change border color */
     color: white;
-    border-color: #5C6BC0; /* Border color for active button */
   }
   
   .dobInputs {
@@ -121,34 +124,43 @@
   .dobInputs input:focus {
     border-color: #5C6BC0; /* Highlight on focus */
   }
+
+  .navigate {
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Position the left edge of the inner div in the middle of the outer div */
+    transform: translateX(-50%); /* Shift the inner div leftwards by half its width */
+    margin-bottom: 70px;
+    text-align: center; /* Align children to the center */
+  }
   
   .continueButton {
     width: 172px;
     height: 40px;
-    padding: 12px; /* Slightly larger padding */
     background-color: #C05F41;
     color: white;
-    font-size: 0.9rem;
+    text-align: center;
+    font-size: 16px;
     font-weight: bold;
     border: none;
     border-radius: 40px;
-    margin-top: 1em;
     cursor: pointer;
     transition: background-color 0.3s; /* Smooth transition for hover */
   }
   
-  .continueButton:hover {
-    background-color: #3949AB;
+  .continueButton:hover,
+  .continueButton:focus,
+  .continueButton.active {
+    background-image: linear-gradient(to bottom right, #C05F41, #86AFC7);
+    transition: background-color 0.3s; /* Smooth transition for hover */
   }
   
   .loginLink {
     display: block;
     color: #C05F41;
-    font-weight: 16px;
     text-decoration: none;
     text-align: center;
-    margin-top: 1em;
-    font-size: 0.9rem; /* Adjust font size */
+    font-size: 18px;
   }
   
   .characterContainer {
@@ -186,7 +198,7 @@
 
   .speechBubble p {
     position: absolute;
-    top: 50%; /* Center vertically */
+    top: 40%; /* Center vertically + move up some more */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%);
     width: 285px; /* Take full width of the parent */
@@ -194,8 +206,9 @@
     white-space: nowrap; /* Ensures the text is in a single line */
     overflow: hidden; /* Prevents text from overflowing */
     text-overflow: ellipsis; /* Adds ellipsis if text is too long */
-    font-size: 14px; /* Adjust font size as needed */
-    color: black; /* Adjust text color as needed */
+    font-size: 20px;
+    font-weight: bold;
+    color: #EC9C74;
   }
   
   .speechBubble img {
