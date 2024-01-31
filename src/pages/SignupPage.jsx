@@ -12,10 +12,12 @@ const SignupPage = () => {
     const [dob, setDob] = useState({ month: '', day: '', year: '' }); // State to track date of birth in section 1
     const [characterImageSrc, setCharacterImageSrc] = useState('/img/archi_amazed.png'); // State for character image source
     const [characterSpeechBubbleContent, setCharacterSpeechBubbleContent] = useState('"Ooooo... A new student!"'); // State for character speech bubble content
+    const [showSpeechBubble, setShowSpeechBubble] = useState(true); // State for speech bubble visibility
 
     const renderForms = () => {
         if (isLogin) {
-            return <LoginForm setCharacterImageSrc={setCharacterImageSrc} setCharacterSpeechBubbleContent={setCharacterSpeechBubbleContent}/>;
+            return <LoginForm setCharacterImageSrc={setCharacterImageSrc} setCharacterSpeechBubbleContent={setCharacterSpeechBubbleContent}
+            setShowSpeechBubble={setShowSpeechBubble}/>;
         } else {
             return (
                 <>
@@ -29,7 +31,7 @@ const SignupPage = () => {
                             handleNextSection={handleNextSection}
                         />
                     )}
-                    {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} />}
+                    {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} setShowSpeechBubble={setShowSpeechBubble}/>}
                 </>
             );
         }
@@ -65,7 +67,7 @@ const SignupPage = () => {
                 {renderForms()}
                 <Character 
                     imageSrc={characterImageSrc} 
-                    speechBubbleContent={characterSpeechBubbleContent}
+                    speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
                 /> {/* Render the character image */}
             </div>
         </div>
@@ -174,9 +176,14 @@ const SpeechBubble = ({ content }) => {
   );
 };
 
-const CreateAccountForm = ({setCharacterImageSrc}) => {
+const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
     // State to manage the hint and image source
     const [passwordHint, setPasswordHint] = useState('');
+
+    useEffect(() => {
+        setShowSpeechBubble(false); // Hide speech bubble when this form is rendered
+        return () => setShowSpeechBubble(true); // Show speech bubble when form is unmounted
+    }, [setShowSpeechBubble]);
 
     // Function to show the password hint and change the image
     const showPasswordHint = () => {
@@ -233,28 +240,32 @@ const CreateAccountForm = ({setCharacterImageSrc}) => {
     );
 };
 
-const LoginForm = ({setCharacterImageSrc, setCharacterSpeechBubbleContent}) => {
+const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setShowSpeechBubble }) => {
     // State to manage the hint and image source
     const [passwordHint, setPasswordHint] = useState('');
 
     // Modify speech bubble content when the LoginForm is rendered
     useEffect(() => {
         setCharacterSpeechBubbleContent('"Welcome Back!"'); // Set new speech bubble content for login
+        setShowSpeechBubble(true); // Show speech bubble when this form is rendered
         return () => {
             setCharacterSpeechBubbleContent(""); // Clear speech bubble content when unmounted
+            setShowSpeechBubble(false); // Hide speech bubble when form is unmounted
         };
-    }, [setCharacterSpeechBubbleContent]);
+    }, [setCharacterSpeechBubbleContent, setShowSpeechBubble]);
 
     // Function to show the password hint and change the image
     const showPasswordHint = () => {
         // setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
         setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image
+        setShowSpeechBubble(false); // Hide speech bubble when password field is focused
     };
 
     // Function to clear the password hint and reset the image
     const clearPasswordHint = () => {
         // setPasswordHint('');
         setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
+        setShowSpeechBubble(true); // Show speech bubble when password field loses focus
     };
     
     return (
