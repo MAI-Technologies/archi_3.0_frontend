@@ -23,11 +23,11 @@
     padding-left: 70px;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
-    margin-left:20px;
+    margin-left: 20px;
+    margin-top: 60px;
     text-align: left;
-    width: 520px;
-    height: 560px;
+    width: calc(50% - 40px);
+    height: calc(100% - 80px);
     display: fixed;
     position: absolute;
     flex-direction: column; /* Stack the children vertically */
@@ -152,8 +152,8 @@
   }
   
   .characterContainer {
-    margin-top: 170px;
-    margin-left: 720px;
+    margin-top: 220px;
+    margin-left: 760px;
     position: absolute;
     width: calc(100% - 540px);
     min-width: 412px;
@@ -171,10 +171,17 @@
   
   .speechBubble {
     align-items: center;
-    position: relative; /* Position relative to the characterContainer */
+    position: absolute;  /* MUST HAVE for archi img to not shift up */
     max-width: 100%; /* Ensure they do not overflow their container */
     width: 412px;
     height: 80px;
+    margin-top: -40px; /* Add spacing below speech bubble */
+    top: 0;  /* MUST HAVE for archi img to not shift up */
+    left: 0;  /* MUST HAVE for archi img to not shift up */
+  }
+  /* Hide the speech bubble but keep its space */
+  .speechBubbleContainer.hidden .speechBubble {
+    display: none;
   }
 
   .speechBubble p {
