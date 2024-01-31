@@ -62,7 +62,7 @@ const SignupPage = () => {
         <div className={styles.signupPage}>
             <div className="contentContainer">
                 {renderForms()}
-                <Character imageSrc={characterImageSrc} /> {/* This will render the character image */}
+                <Character imageSrc={characterImageSrc} /> {/* Render the character image */}
             </div>
         </div>
     );
@@ -164,8 +164,8 @@ const Character = ({imageSrc}) => {
 const SpeechBubble = () => {
   return (
     <div className={styles.speechBubble}>
-        <img src="/img/text_bubble.png" alt="Blank text bubble" className={styles.textBubbleImage} />
-        <p>Ooooo... A new student!?</p>
+        <img src="/img/text_bubble.png" alt="Blank text bubble"/>
+        <p>"Ooooo... A new student!"</p>
     </div>
   );
 };
@@ -177,7 +177,7 @@ const CreateAccountForm = ({setCharacterImageSrc}) => {
     // Function to show the password hint and change the image
     const showPasswordHint = () => {
         setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
-        setCharacterImageSrc('/img/archi.png'); // Update with the path to your new image
+        setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image
     };
 
     // Function to clear the password hint and reset the image
@@ -236,7 +236,7 @@ const LoginForm = ({setCharacterImageSrc}) => {
     // Function to show the password hint and change the image
     const showPasswordHint = () => {
         // setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
-        setCharacterImageSrc('/img/archi.png'); // Update with the path to your new image
+        setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image
     };
 
     // Function to clear the password hint and reset the image
@@ -274,7 +274,7 @@ const LoginForm = ({setCharacterImageSrc}) => {
                     <button type="button" class="google-signin-button">Sign in with Google</button>
                     </div>
                     <div class="login-link">
-                    <a href="/signup">Create a new account </a>
+                    <a href="/signup" className={styles.loginLink}>Create a new account </a>
                     </div>
                 </form>
             </div>
