@@ -1,7 +1,6 @@
 // SignupPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
-import validator from 'validator';
 import styles from './SignupPage.module.css'; // Import your CSS module
 
 const SignupPage = () => {
@@ -37,6 +36,47 @@ const SignupPage = () => {
         }
     };
 
+    // Validate date strings in the format mm-dd-yyyy where mm is a month abbreviation
+    function isValidDate(dateStr) {
+        // Array of month abbreviations
+        const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    
+        // Split the date string into components
+        const parts = dateStr.split('-');
+        if (parts.length !== 3) {
+            return false; // Incorrect format
+        }
+    
+        // Extract the components
+        const [monthStr, dayStr, yearStr] = parts;
+    
+        // Try to parse the month as a number
+        let monthIndex = parseInt(monthStr, 10) - 1; // -1 because months are 0-indexed in JavaScript Date
+
+        // If month is not a number, convert month abbreviation to an index
+        if (isNaN(monthIndex)) {
+            monthIndex = months.indexOf(monthStr.toLowerCase());
+            if (monthIndex === -1) {
+                return false; // Invalid month
+            }
+        } else if (monthIndex < 0 || monthIndex > 11) {
+            return false; // Month number out of range
+        }
+    
+        // Parse day and year
+        const day = parseInt(dayStr, 10);
+        const year = parseInt(yearStr, 10);
+    
+        // Check if day and year are valid numbers
+        if (isNaN(day) || isNaN(year)) {
+            return false;
+        }
+    
+        // Create a date object and check if it matches the provided values
+        const dateObj = new Date(year, monthIndex, day);
+        return dateObj.getFullYear() === year && dateObj.getMonth() === monthIndex && dateObj.getDate() === day;
+    }
+
     const handleNextSection = () => {
         // Validate the fields in section 1
         if (currentSection === 1) {
@@ -50,11 +90,11 @@ const SignupPage = () => {
                 alert('Please fill out the date of birth before proceeding.');
                 return;
             }
-            // Check if dob is valid
-            // if (!validator.isDate(value)) { 
-            //     alert('Please enter a valid date before proceeding.');
-            //     return;
-            // }
+            // Check if the dob is valid
+            if (!isValidDate(dob.month + "-" + dob.day + "-" + dob.year)) {
+                alert('Please enter a valid date of birth before proceeding.');
+                return;
+            }
         }
   
       // Move to the next section
