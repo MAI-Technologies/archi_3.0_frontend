@@ -1,25 +1,57 @@
 // SignupPage.jsx
 import React, { useState } from 'react';
+import { useLocation } from "react-router-dom";
+import validator from 'validator';
 import styles from './SignupPage.module.css'; // Import your CSS module
 
 const SignupPage = () => {
+    const location = useLocation();
+    const isLogin = location.pathname === '/login';
     const [currentSection, setCurrentSection] = useState(1); // State to manage the current section
     const [role, setRole] = useState(''); // State to track the selected role in section 1
     const [dob, setDob] = useState({ month: '', day: '', year: '' }); // State to track date of birth in section 1
     const [characterImageSrc, setCharacterImageSrc] = useState('/img/archi_amazed.png'); // State for character image source
 
+    const renderForms = () => {
+        if (isLogin) {
+            return <LoginForm setCharacterImageSrc={setCharacterImageSrc} />;
+        } else {
+            return (
+                <>
+                    {currentSection === 1 && (
+                        <RegistrationForm
+                            currentSection={currentSection}
+                            role={role}
+                            setRole={setRole}
+                            dob={dob}
+                            setDob={setDob}
+                            handleNextSection={handleNextSection}
+                        />
+                    )}
+                    {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} />}
+                </>
+            );
+        }
+    };
 
     const handleNextSection = () => {
+        // Validate the fields in section 1
         if (currentSection === 1) {
-            // Validate the fields in section 1
+            // Check if user entered role
             if (!role) {
                 alert('Please select a role before proceeding.');
                 return;
             }
+            // Check if user entered dob
             if (!dob.month || !dob.day || !dob.year) {
                 alert('Please fill out the date of birth before proceeding.');
                 return;
             }
+            // Check if dob is valid
+            // if (!validator.isDate(value)) { 
+            //     alert('Please enter a valid date before proceeding.');
+            //     return;
+            // }
         }
   
       // Move to the next section
@@ -29,18 +61,8 @@ const SignupPage = () => {
     return (
         <div className={styles.signupPage}>
             <div className="contentContainer">
-                {currentSection === 1 && (
-                    <RegistrationForm
-                        currentSection={currentSection}
-                        role={role}
-                        setRole={setRole}
-                        dob={dob}
-                        setDob={setDob}
-                        handleNextSection={handleNextSection}
-                    />
-                )}
-                {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} />}
-                <Character imageSrc={characterImageSrc} /> {/* Pass the image source as a prop */}
+                {renderForms()}
+                <Character imageSrc={characterImageSrc} /> {/* This will render the character image */}
             </div>
         </div>
     );
@@ -198,10 +220,62 @@ const CreateAccountForm = ({setCharacterImageSrc}) => {
                     <p>---- or ----</p>
                     <button type="button" class="google-signin-button">Sign in with Google</button>
                     </div>
-                    <div class="login-link">
-                    Already have an account? <a href="/login">Log in</a>
-                    </div>
+                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
                     <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
+                </form>
+            </div>
+
+      </div>
+    );
+};
+
+const LoginForm = ({setCharacterImageSrc}) => {
+    // State to manage the hint and image source
+    const [passwordHint, setPasswordHint] = useState('');
+
+    // Function to show the password hint and change the image
+    const showPasswordHint = () => {
+        // setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
+        setCharacterImageSrc('/img/archi.png'); // Update with the path to your new image
+    };
+
+    // Function to clear the password hint and reset the image
+    const clearPasswordHint = () => {
+        // setPasswordHint('');
+        setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
+    };
+    
+    return (
+      <div className={styles.registrationForm}>
+            <div class="signup-container">
+                <form class="signup-form">
+                    <h2>Sign Up</h2>
+                    <p>We are excited to meet you again!</p>
+                    <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required/>
+                    </div>
+                    <div class="input-group">
+                    <label for="password">Password</label>
+                    <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                            onFocus={showPasswordHint}
+                            onBlur={clearPasswordHint}
+                        />
+                        {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
+                    <p>Forgot password?</p>
+                    </div>
+                    <div class="submit-group">
+                    <button type="submit" class="signup-button">Log In</button>
+                    <p>---- or ----</p>
+                    <button type="button" class="google-signin-button">Sign in with Google</button>
+                    </div>
+                    <div class="login-link">
+                    <a href="/signup">Create a new account </a>
+                    </div>
                 </form>
             </div>
 

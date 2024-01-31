@@ -7,7 +7,7 @@ import LandingPage from './pages/LandingPage';
 import MetricsPage from './pages/MetricsPage';
 import TutorPage from './pages/TutorPage';
 import ChatbotPage from './pages/ChatbotPage';
-import SignupPage from './pages/SignupPage';
+import SignupPage from './pages/SignupPage'; 
 import PopupButton from './components/PopupButton/PopupButton';
 
 function App() {
@@ -39,6 +39,7 @@ function App() {
           <Route exact path='/tutor' element={<TutorPage />} />
           <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
           <Route exact path='/signup' element={<SignupPage />} />
+          <Route path='/login' element={<SignupPage />} />
         </Routes>
         <InfoButton />
       </BrowserRouter>

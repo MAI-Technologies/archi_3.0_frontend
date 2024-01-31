@@ -24,7 +24,8 @@
     "remark-math": "^6.0.0",
     "rollup": "^4.9.1",
     "styled-components": "^6.1.1",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
