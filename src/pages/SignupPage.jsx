@@ -133,6 +133,15 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
         // After processing, move to the next section
         handleNextSection();
     };
+
+    // Style buttons based on order
+    const getButtonClassName = (index) => {
+        let className = "";
+        if (index === 0) className += ` ${styles.firstButton}`;
+        if (index === 1) className += ` ${styles.secondButton}`;
+        if (index === 2) className += ` ${styles.thirdButton}`;
+        return className;
+    };
     
     return (
         <div className={styles.registrationForm}>
@@ -145,12 +154,12 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                         <div className={styles.roleSelection}>
                             <label htmlFor="dob">Join Archimedes as a </label>
                             <div className={styles.dobInputs}>
-                                {['Student', 'Teacher', 'Parent'].map((roleOption) => (
+                                {['Student', 'Teacher', 'Parent'].map((roleOption, index) => (
                                 <button
                                     type="button"
                                     key={roleOption}
                                     onClick={() => setRole(roleOption)}
-                                    className={`${styles.roleButton} ${role === roleOption ? styles.active : ''}`}
+                                    className={getButtonClassName(index)}
                                 >
                                     {roleOption}
                                 </button>
@@ -168,6 +177,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                             placeholder="Jan"
                             value={dob.month}
                             onChange={(e) => setDob({ ...dob, month: e.target.value })}
+                            className={styles.firstInput}
                         />
                         <input
                             type="text"
@@ -175,6 +185,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                             placeholder="16"
                             value={dob.day}
                             onChange={(e) => setDob({ ...dob, day: e.target.value })}
+                            className={styles.secondInput}
                         />
                         <input
                             type="text"
@@ -182,6 +193,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                             placeholder="1994"
                             value={dob.year}
                             onChange={(e) => setDob({ ...dob, year: e.target.value })}
+                            className={styles.thirdInput}
                         />
                     </div>
                 </div>

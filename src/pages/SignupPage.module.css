@@ -29,6 +29,7 @@
     top: 60px;
     text-align: left;
     min-width: 620px; /* Prevents form from having a smaller width than children */
+    min-height: 600px; 
     width: calc(50% - 40px);
     height: calc(100% - 80px);
     display: fixed;
@@ -83,12 +84,36 @@
     flex-wrap: wrap; /* Wrap buttons to next line if needed */
     margin-bottom: 30px;
   }
+
+  .firstButton {
+    border-left: #C05F41;
+    border-top: #C05F41;
+    border-bottom: #C05F41;
+    border-right: 1px solid #C05F41;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .secondButton {
+    border-top: #C05F41;
+    border-bottom: #C05F41;
+    border-right: 1px solid #C05F41;
+    border-left: 1px solid #C05F41;
+  }
+
+  .thirdButton {
+    border-top: #C05F41;
+    border-bottom: #C05F41;
+    border-right: #C05F41;
+    border-left: 1px solid #C05F41;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
   
-  .roleButton {
+  .firstButton,
+  .secondButton,
+  .thirdButton {
     background-color: #F5F5F5;
-    border-radius: 10px;
-    border-color: transparent;
-    margin-right: -10px;
     width: 164px;
     height: 47px;
     font-size: 16px;
@@ -96,33 +121,72 @@
     margin-top: 5px;
   }
   
-  .roleButton:hover,
-  .roleButton:focus,
-  .roleButton.active {
+  .firstButton:hover,
+  .secondButton:hover,
+  .thirdButton:hover,
+  .firstButton:focus,
+  .secondButton:focus,
+  .thirdButton:focus,
+  .firstButton.active,
+  .secondButton.active,
+  .thirdButton.active {
     background-color: #C05F41; /* Change border color */
     color: white;
   }
-  
+
   .dobInputs {
     display: flex;
-    justify-content: center; /* Center the DOB input fields */
     margin-top: 0.5em; /* Add some space between the label and the input fields */
-    gap: 10px;
+  }
+
+  .firstInput {
+    border-left: #C05F41;
+    border-top: #C05F41;
+    border-bottom: #C05F41;
+    border-right: 1px solid #C05F41;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .secondInput {
+    border-top: #C05F41;
+    border-bottom: #C05F41;
+    border-right: 1px solid #C05F41;
+    border-left: 1px solid #C05F41;
+  }
+
+  .thirdInput {
+    border-top: #C05F41;
+    border-bottom: #C05F41;
+    border-right: #C05F41;
+    border-left: 1px solid #C05F41;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
   
+  .firstInput,
+  .secondInput,
+  .thirdInput {
+    background-color: #F5F5F5;
+    width: 164px;
+    height: 47px;
+    font-size: 16px;
+    color: #C05F41;
+    margin-top: 5px;
+  }
+
   .dobInputs input {
     text-align: center;
-    font-size: 0.9rem; /* Larger font size */
-    flex: 1;
-    border: 1px solid #ddd;
-    border-radius: 4px; /* Rounded corners */
-    outline: none; /* Remove default focus outline */
-    width: 111px;
-    height: 39px;
+    background-color: #F5F5F5;
+    width: 164px;
+    height: 47px;
+    font-size: 16px;
+    color: #C05F41;
+    margin-top: 5px;
   }
   
-  .dobInputs input:focus {
-    border-color: #5C6BC0; /* Highlight on focus */
+  .dobInputs input:active {
+    border-color: transparent; /* Highlight on focus */
   }
 
   .navigate {
@@ -146,6 +210,7 @@
     border-radius: 40px;
     cursor: pointer;
     transition: background-color 0.3s; /* Smooth transition for hover */
+    margin-bottom: 10px;
   }
   
   .continueButton:hover,
