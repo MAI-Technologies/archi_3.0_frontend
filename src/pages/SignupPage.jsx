@@ -1,5 +1,5 @@
 // SignupPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import validator from 'validator';
 import styles from './SignupPage.module.css'; // Import your CSS module
@@ -11,10 +11,11 @@ const SignupPage = () => {
     const [role, setRole] = useState(''); // State to track the selected role in section 1
     const [dob, setDob] = useState({ month: '', day: '', year: '' }); // State to track date of birth in section 1
     const [characterImageSrc, setCharacterImageSrc] = useState('/img/archi_amazed.png'); // State for character image source
+    const [characterSpeechBubbleContent, setCharacterSpeechBubbleContent] = useState('"Ooooo... A new student!"'); // State for character speech bubble content
 
     const renderForms = () => {
         if (isLogin) {
-            return <LoginForm setCharacterImageSrc={setCharacterImageSrc} />;
+            return <LoginForm setCharacterImageSrc={setCharacterImageSrc} setCharacterSpeechBubbleContent={setCharacterSpeechBubbleContent}/>;
         } else {
             return (
                 <>
@@ -62,7 +63,10 @@ const SignupPage = () => {
         <div className={styles.signupPage}>
             <div className="contentContainer">
                 {renderForms()}
-                <Character imageSrc={characterImageSrc} /> {/* Render the character image */}
+                <Character 
+                    imageSrc={characterImageSrc} 
+                    speechBubbleContent={characterSpeechBubbleContent}
+                /> {/* Render the character image */}
             </div>
         </div>
     );
@@ -152,20 +156,20 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
     );
 };
 
-const Character = ({imageSrc}) => {
+const Character = ({imageSrc, speechBubbleContent}) => {
   return (
     <div className={styles.characterContainer}>
-        <SpeechBubble />
+        {speechBubbleContent && <SpeechBubble content={speechBubbleContent} />} {/* Conditional rendering based on content */}
         <img src={imageSrc} alt="Archimedes character" className={styles.characterImage} />
     </div>
   );
 };
 
-const SpeechBubble = () => {
+const SpeechBubble = ({ content }) => {
   return (
     <div className={styles.speechBubble}>
         <img src="/img/text_bubble.png" alt="Blank text bubble"/>
-        <p>"Ooooo... A new student!"</p>
+        <p>{content}</p> {/* Render passed content */}
     </div>
   );
 };
@@ -229,9 +233,17 @@ const CreateAccountForm = ({setCharacterImageSrc}) => {
     );
 };
 
-const LoginForm = ({setCharacterImageSrc}) => {
+const LoginForm = ({setCharacterImageSrc, setCharacterSpeechBubbleContent}) => {
     // State to manage the hint and image source
     const [passwordHint, setPasswordHint] = useState('');
+
+    // Modify speech bubble content when the LoginForm is rendered
+    useEffect(() => {
+        setCharacterSpeechBubbleContent('"Welcome Back!"'); // Set new speech bubble content for login
+        return () => {
+            setCharacterSpeechBubbleContent(""); // Clear speech bubble content when unmounted
+        };
+    }, [setCharacterSpeechBubbleContent]);
 
     // Function to show the password hint and change the image
     const showPasswordHint = () => {
