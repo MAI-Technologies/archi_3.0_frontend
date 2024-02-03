@@ -1,22 +1,22 @@
-import React from 'react';
-import { ContentWrapper } from "../components/Navbar/NavbarElements";
+import React, { useEffect, useState } from 'react';
+/*import { ContentWrapper } from "../components/Navbar/NavbarElements";*/
 import styles from "./LandingPage.module.css";
 
 const LandingPage = () => {
 	return (
-		<ContentWrapper>
+		/*<ContentWrapper>*/
 			<div className={styles.content}>
 
 				<div className={styles.section1}>
 					<div className={styles.visualBlock1}>
 						<div className={styles.archiButtonBlock}>
 							<img src="/img/archi_flipped_loop.gif" alt="archi gif"></img>
-							<img 
-								src="/img/getStarted.png" alt="get started button" /*
-								onMouseOver={e => (e.currentTarget.src = "/img/getStartedHover.png")} 
-								onMouseOut={e => (e.currentTarget.src = "/img/getStarted.png")} */
-							/>
-							<img src="/img/haveAcc.png" alt="have account button"></img>
+							<button type="getStarted" className={styles.getStartedBtn} onClick={() => window.location.href = '/'}>
+								Get Started
+							</button>
+							<button type="haveAcc" className={styles.haveAccBtn} onClick={() => window.location.href = '/'}>
+								I already have an account
+							</button>
 						</div>
 						<div className={styles.planetBlock}>
 							<img src="/img/planet.png" alt="planet image"></img>
@@ -50,7 +50,9 @@ const LandingPage = () => {
 							also to review material learned in previous courses.
 						</p>
 
-						<img src="/img/learn_more.png" alt="learn more button"></img>
+						<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/'}>
+							Learn More
+						</button>
 					</div>
 				</div>
 
@@ -66,7 +68,9 @@ const LandingPage = () => {
 							also to review material learned in previous courses.
 						</p>
 
-						<img src="/img/learn_more.png" alt="learn more button"></img>
+						<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/'}>
+							Learn More
+						</button>
 					</div>
 				</div>
 
@@ -79,25 +83,13 @@ const LandingPage = () => {
 							also to review material learned in previous courses.
 						</p>
 
-						<img src="/img/learn_more.png" alt="learn more button"></img>
+						<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/'}>
+							Learn More
+						</button>
 					</div>
 				</div>
 			</div>
-
-			{/* old stuff
-			<div className={styles.content}>
-				<div className={styles.innerContent}>
-				<img src="img/archimedes.jpg" alt="archi"></img>
-				<button type="try" onClick={() => window.location.href = '/tutor'}>
-					Try ArchI
-				</button>
-				<h1>
-					Your Personal Math Tutor
-				</h1>
-				</div>
-			</div>
-			*/}
-		</ContentWrapper>
+		/*</ContentWrapper>*/
 	);
 };
 

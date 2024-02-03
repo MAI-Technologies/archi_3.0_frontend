@@ -3,6 +3,7 @@
 /* Styles for the main container */
 .content {
   height: 435vh;
+  padding-top: 51px;
 }
 
 
@@ -53,27 +54,49 @@
   width: auto;
 }
 
-.archiButtonBlock img:nth-child(2) {
+.getStartedBtn {
   width: 260px;
-  height: auto;
-  margin-top: 0;
-  margin-bottom: 10px;
+  height: 34px;
+  background-color: #EA8363;
+  color: white;
+  font-weight: 600;
+  border-radius: 22px;
+  border: none;
+  box-shadow: 0px 3px rgba(0, 0, 0, 0.2);
+  margin-top: 3px;
+  margin-bottom: 11px;
   animation: fadeInLoad 1s 3s forwards;
   opacity: 0;
 }
 
-.archiButtonBlock img:nth-child(3) {
+.getStartedBtn:hover {
+  background-image: url("/img/btnHover.png");
+  background-size: cover;
+}
+
+.haveAccBtn {
   width: 260px;
-  height: auto;
+  height: 34px;
+  background-color: #BDD2DE;
+  color: #C05F41;
+  font-weight: 600;
+  border-radius: 22px;
+  border: none;
+  box-shadow: 0px 3px rgba(0, 0, 0, 0.2);
   animation: fadeInLoad 1s 3s forwards;
   opacity: 0;
+}
+
+.haveAccBtn:hover {
+  background-image: url("/img/btnHover.png");
+  background-size: cover;
 }
 
 .textBlock1 {
   position: absolute;
-  right: 150px;
+  right: 160px;
   margin-top: 160px;
-  width: 495px;
+  width: 500px;
   /*border: 1px solid red;*/
   animation: fadeInLoad 1s 3s forwards;
   opacity: 0;
@@ -148,6 +171,21 @@
   height: auto;
 }
 
+.learnMoreBtn {
+  width: 180px;
+  height: 34px;
+  background-color: #C05F41;
+  color: white;
+  font-weight: 600;
+  border-radius: 22px;
+  border: none;
+  box-shadow: 0px 3px rgba(0, 0, 0, 0.2);
+}
+
+.learnMoreBtn:hover {
+  background-image: url("/img/btnHover.png");
+  background-size: cover;
+}
 
 /* Section 3 elements */
 .section3 {
@@ -206,7 +244,7 @@
 .textBlock4 {
   width: 720px;
   padding-left: 240px;
-  padding-top: 190px;
+  padding-top: 160px;
 }
 
 .textBlock4 h2 {

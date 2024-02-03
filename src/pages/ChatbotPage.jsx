@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { ContentWrapper } from "../components/Navbar/NavbarElements";
+/*import { ContentWrapper } from "../components/Navbar/NavbarElements";*/
 import { v4 } from 'uuid';
 import TutorData from '../components/Tutor/TutorData';
 import styles from "./ChatbotPage.module.css";
@@ -117,7 +117,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
 
     return (
-        <ContentWrapper>
+        /*<ContentWrapper>*/
             <div className={styles.content}>
                 <div className={styles.history} style={{ backgroundColor: tutor.themeColor }}>
                     <button className={styles.newChat} onClick={() => window.location.href = `/chatbot/${tutor.id}`}>
@@ -174,7 +174,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     </div>
                 </div>
             </div>
-        </ContentWrapper>
+        /*</ContentWrapper>*/
     );
 };
 
