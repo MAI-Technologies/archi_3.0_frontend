@@ -124,9 +124,6 @@
   .firstButton:hover,
   .secondButton:hover,
   .thirdButton:hover,
-  .firstButton:focus,
-  .secondButton:focus,
-  .thirdButton:focus,
   .firstButton.active,
   .secondButton.active,
   .thirdButton.active {

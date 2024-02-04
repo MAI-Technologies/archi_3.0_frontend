@@ -115,6 +115,8 @@ const SignupPage = () => {
 };
 
 const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNextSection }) => {
+    const [activeButtonIndex, setActiveButtonIndex] = useState(null);
+    
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -158,8 +160,11 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                                 <button
                                     type="button"
                                     key={roleOption}
-                                    onClick={() => setRole(roleOption)}
-                                    className={getButtonClassName(index)}
+                                    onClick={() => {
+                                        setRole(roleOption);
+                                        setActiveButtonIndex(index); // Set the index of the active button
+                                    }}
+                                    className={`${styles.roleButton} ${getButtonClassName(index)} ${activeButtonIndex === index ? styles.active : ''}`}
                                 >
                                     {roleOption}
                                 </button>
@@ -326,7 +331,7 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
       <div className={styles.registrationForm}>
             <div class="signup-container">
                 <form class="signup-form">
-                    <h2>Sign Up</h2>
+                    <h2>Welcome back to Archimedes!</h2>
                     <p>We are excited to meet you again!</p>
                     <div class="input-group">
                     <label for="email">Email</label>
