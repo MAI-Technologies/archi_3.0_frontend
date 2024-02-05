@@ -10,24 +10,28 @@ const TutorPage = () => {
   return (
     /*<ContentWrapper>*/
 			<div className={styles.content}>
-        <div className={styles.contentInner}>
           <h1> Now Pick Your Tutor! </h1>
           <div className={styles.tutors}>
             {tutors.map((tutor) => (
-              <figure>
-              <Link key={tutor.id} to={`/chatbot/${tutor.id}`} style={{textDecoration: 'none'}}>
-                <button type="tutor-planet">
-                  <img src={`${tutor.planetImgSrc}`} alt="planet img"></img>
-                </button>
-                <button type="tutor-button">
-                  <img src={`${tutor.imageSrc}`} alt="profile img"></img>
-                </button>
-                
-              </Link>
-              </figure>
+              <div className={styles.tutorWithDes}>
+                <div className={styles.tutorStack}>
+                  <Link key={tutor.id} to={`/chatbot/${tutor.id}`} style={{textDecoration: 'none'}}>
+                    <button type="tutor-planet">
+                      <img src={`${tutor.planetImgSrc}`} alt="planet img"></img>
+                    </button>
+                    <button type="tutor-button">
+                      <img src={`${tutor.imageSrc}`} alt="profile img"></img>
+                    </button>
+                  </Link>
+                </div>
+
+                <div className={styles.tutorDes}>
+                  <h3>{tutor.name}</h3>
+                  <p>{tutor.description}</p>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
       </div>
     /*</ContentWrapper>*/
   );
