@@ -6,6 +6,7 @@
     width: 100%;
     min-height: 100vh;
     font-family: 'Arial', sans-serif;
+    
   }
 
   .contentContainer {
@@ -32,8 +33,8 @@
     min-height: 600px; 
     width: calc(50% - 40px);
     height: calc(100% - 80px);
-    display: fixed;
-    position: absolute;
+    display: relative;
+    position: fixed;
     flex-direction: column; /* Stack the children vertically */
     align-items: center; /* Center-align the children horizontally */
     flex-shrink: 0; /* Prevents the form from shrinking */
@@ -131,9 +132,13 @@
     color: white;
   }
 
+  
+
   .dobInputs {
     display: flex;
     margin-top: 0.5em; /* Add some space between the label and the input fields */
+    width: 100%; /* Full width for alignment */
+   
   }
 
   .firstInput {
@@ -227,7 +232,7 @@
   
   .characterContainer {
     margin-top: 220px;
-    margin-left: 760px;
+    margin-left: calc(61vw);
     position: absolute;
     width: calc(100% - 540px);
     min-width: 412px;
@@ -287,3 +292,11 @@
     max-width: 285px;
     height: 80px;
   }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* This will prevent scrolling */
+    height: 100%;
+    width: 100%;
+}
