@@ -132,9 +132,13 @@
     color: white;
   }
 
+  
+
   .dobInputs {
     display: flex;
     margin-top: 0.5em; /* Add some space between the label and the input fields */
+    width: 100%; /* Full width for alignment */
+   
   }
 
   .firstInput {
