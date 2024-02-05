@@ -1,6 +1,7 @@
 // SignupPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
+import DividerWithText from '../components/DividerWithText/DividerWithText';
 import styles from './SignupPage.module.css'; // Import your CSS module
 
 const SignupPage = () => {
@@ -116,7 +117,7 @@ const SignupPage = () => {
 
 const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNextSection }) => {
     const [activeButtonIndex, setActiveButtonIndex] = useState(null);
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -258,40 +259,65 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
     
     return (
       <div className={styles.registrationForm}>
-            <div class="signup-container">
-                <form class="signup-form">
-                    <h2>Sign Up</h2>
-                    <div class="input-group">
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" name="first_name" required/>
+            <div className={styles.signupContainer}>
+                <h2>Sign Up</h2>
+                <form className={styles.formContainer}>
+                    <div className={styles.shortFormEntry}>
+                        <div class="input-group">
+                            <label for="first-name">First Name</label>
+                            <input 
+                                type="text" 
+                                id="first-name" 
+                                name="first_name" 
+                                className={styles.longInput}
+                                required
+                                />
+                        </div>
+                        <div class="input-group">
+                            <label for="last-name">Last Name</label>
+                            <input 
+                                type="text" 
+                                id="last-name" 
+                                name="last_name" 
+                                className={styles.longInput}
+                                required
+                            />
+                        </div>
                     </div>
-                    <div class="input-group">
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" name="last_name" required/>
-                    </div>
-                    <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required/>
-                    </div>
-                    <div class="input-group">
-                    <label for="password">Password</label>
-                    <input
-                            type="password"
-                            id="password"
-                            name="password"
+                    <div className="input-group">
+                        <label for="email">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            className={styles.longInput} 
                             required
-                            onFocus={showPasswordHint}
-                            onBlur={clearPasswordHint}
                         />
-                        {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                     </div>
-                    <div class="submit-group">
-                    <button type="submit" class="signup-button">Sign Up</button>
-                    <p>---- or ----</p>
-                    <button type="button" class="google-signin-button">Sign in with Google</button>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                className={styles.longInput} 
+                                required
+                                onFocus={showPasswordHint}
+                                onBlur={clearPasswordHint}
+                            />
+                            {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                     </div>
-                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
-                    <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
+                    <DividerWithText>or</DividerWithText>
+                    <button type="button" className={styles.googleSigninButton}>
+                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                    </button>
+                    <div className={styles.navigate}>
+                        <button type="submit" class={styles.continueButton}>Sign Up</button>
+                        <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                    </div>
+                    <div className={styles.submitGroup}>
+                        <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
+                    </div>
                 </form>
             </div>
 
@@ -329,15 +355,15 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
     
     return (
       <div className={styles.registrationForm}>
-            <div class="signup-container">
-                <form class="signup-form">
+            <div className="signup-container">
+                <form className="signup-form">
                     <h2>Welcome back to Archimedes!</h2>
                     <p>We are excited to meet you again!</p>
-                    <div class="input-group">
+                    <div className="input-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required/>
                     </div>
-                    <div class="input-group">
+                    <div className="input-group">
                     <label for="password">Password</label>
                     <input
                             type="password"
@@ -350,12 +376,12 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                         {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                     <p>Forgot password?</p>
                     </div>
-                    <div class="submit-group">
-                    <button type="submit" class="signup-button">Log In</button>
-                    <p>---- or ----</p>
-                    <button type="button" class="google-signin-button">Sign in with Google</button>
+                    <div className="submit-group">
+                    <button type="submit" className="signup-button">Log In</button>
+                    
+                    <button type="button" className="google-signin-button">Sign in with Google</button>
                     </div>
-                    <div class="login-link">
+                    <div className={styles.loginLink}>
                     <a href="/signup" className={styles.loginLink}>Create a new account </a>
                     </div>
                 </form>

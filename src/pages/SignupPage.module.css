@@ -44,7 +44,7 @@
   }
 
   .registrationForm h2 {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 0px;
     justify-content: center;
@@ -62,9 +62,13 @@
     width: 100%; /* Ensure they span the full width of the registrationForm */
   }
 
+  .signupContainer h2 {
+    margin-bottom: 25px;
+  }
+
   .formContainer {
     color: black;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     width: 100%; /* Full width of the registration form */
     display: flex;
@@ -74,7 +78,7 @@
   
   .formGroup {
     color: black;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     width: 100%; /* Full width for alignment */
     text-align: left; /* Align text to the left for contents in formGroup */
@@ -137,8 +141,6 @@
     color: white;
   }
 
-  
-
   .dobInputs {
     display: flex;
     margin-top: 0.5em; /* Add some space between the label and the input fields */
@@ -198,6 +200,47 @@
     border-color: transparent; /* Highlight on focus */
   }
 
+  .longInput {
+    background-color: #F5F5F5; /* Light gray background */
+    border: none; /* No border */
+    border-radius: 10px !important; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside text fields */
+    width: 100%; /* Full width minus padding */
+    height: 38px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    font-size: 16px; /* Font size similar to the role buttons */
+    margin-bottom: 20px;
+  }
+
+  .shortFormEntry {
+    display: flex; /* This turns on flexbox */
+    justify-content: space-between; /* This lines up the children side by side, starting from the left */
+    align-items: center; /* This vertically centers the children (optional) */
+    gap: 30px;
+  }
+
+  .passwordHint {
+    color: #86AFC7;
+    font-size: 12px;
+    text-align: left;
+    margin-top: -10px;
+  }
+  
+  .googleSigninButton {
+    background-color: white;
+    border: none;
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+  }
+
+  .googleSigninButton img {
+    width: 100%;
+  }
+
   .navigate {
     position: absolute;
     bottom: 0;
@@ -236,6 +279,20 @@
     text-align: center;
     font-size: 18px;
   }
+
+  .submitGroup {
+    position: absolute;
+    bottom: 0;
+    margin-left: 10px;
+  }
+
+  .submitGroup p {
+    color: #A09F9F;
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  /* Character styles */
   
   .characterContainer {
     margin-top: 220px;
