@@ -232,7 +232,7 @@
   
   .characterContainer {
     margin-top: 220px;
-    margin-left: 760px;
+    margin-left: calc(61vw);
     position: absolute;
     width: calc(100% - 540px);
     min-width: 412px;
