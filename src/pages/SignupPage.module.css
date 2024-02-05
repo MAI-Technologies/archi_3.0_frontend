@@ -26,9 +26,10 @@
     padding-right: 70px;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    left: 20px;
-    top: 60px;
-    text-align: left;
+    position: fixed;
+     top: 54%; 
+    left: 25%;
+    transform: translate(-50%, -50%); /* Center the form on the page */
     min-width: 620px; /* Prevents form from having a smaller width than children */
     min-height: 600px; 
     width: calc(50% - 40px);
@@ -38,17 +39,21 @@
     flex-direction: column; /* Stack the children vertically */
     align-items: center; /* Center-align the children horizontally */
     flex-shrink: 0; /* Prevents the form from shrinking */
+    align-items: flex-start; /* Aligns children to the left */
+    
   }
 
   .registrationForm h2 {
     font-size: 23px;
     font-weight: 700;
     margin-bottom: 0px;
+    justify-content: center;
   }
   .registrationForm p {
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 20px;
+    justify-content: center;
   }
   .registrationForm h2,
   .registrationForm p,
@@ -138,6 +143,8 @@
     display: flex;
     margin-top: 0.5em; /* Add some space between the label and the input fields */
     width: 100%; /* Full width for alignment */
+    justify-content: center;
+    margin-left: calc(0vw);
    
   }
 
@@ -300,3 +307,4 @@
     height: 100%;
     width: 100%;
 }
+
