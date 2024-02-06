@@ -227,6 +227,17 @@
     text-align: left;
     margin-top: -10px;
   }
+
+  .inputGroup {
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .inputGroup p {
+    color: #C05F41;
+    font-size: 16px;
+  }
   
   .googleSigninButton {
     background-color: white;

@@ -312,14 +312,14 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
 
     // Function to show the password hint and change the image
     const showPasswordHint = () => {
-        // setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
+        setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
         setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image
         setShowSpeechBubble(false); // Hide speech bubble when password field is focused
     };
 
     // Function to clear the password hint and reset the image
     const clearPasswordHint = () => {
-        // setPasswordHint('');
+        setPasswordHint('');
         setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
         setShowSpeechBubble(true); // Show speech bubble when password field loses focus
     };
@@ -330,30 +330,36 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                 <form className="signup-form">
                     <h2>Welcome back to Archimedes!</h2>
                     <p>We are excited to meet you again!</p>
-                    <div className="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required/>
+                    <div className={styles.inputGroup}>
+                        <label for="email">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            className={styles.longInput} 
+                            required/>
                     </div>
-                    <div className="input-group">
-                    <label for="password">Password</label>
-                    <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            required
-                            onFocus={showPasswordHint}
-                            onBlur={clearPasswordHint}
-                        />
-                        {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
-                    <p>Forgot password?</p>
+                    <div className={styles.inputGroup}>
+                        <label for="password">Password</label>
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                className={styles.longInput}
+                                required
+                                onFocus={showPasswordHint}
+                                onBlur={clearPasswordHint}
+                            />
+                            {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
+                        <p>Forgot password?</p>
                     </div>
-                    <div className="submit-group">
-                    <button type="submit" className="signup-button">Log In</button>
-                    
-                    <button type="button" className="google-signin-button">Sign in with Google</button>
-                    </div>
-                    <div className={styles.loginLink}>
-                    <a href="/signup" className={styles.loginLink}>Create a new account </a>
+                    <DividerWithText>or</DividerWithText>
+                    <button type="button" className={styles.googleSigninButton}>
+                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                    </button>
+                    <div className={styles.navigate}>
+                        <button type="submit" class={styles.continueButton}>Log In</button>
+                        <a href="/login" className={styles.loginLink}>Create a new account</a>
                     </div>
                 </form>
             </div>
