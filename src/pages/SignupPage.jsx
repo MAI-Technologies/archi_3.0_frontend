@@ -45,6 +45,11 @@ const SignupPage = () => {
                 alert('Please select a role before proceeding.');
                 return;
             }
+            // Check if user entered dob
+            if (!dob.month || !dob.day || !dob.year) {
+                alert('Please fill out the date of birth before proceeding.');
+                return;
+            }
         }
   
       // Move to the next section
