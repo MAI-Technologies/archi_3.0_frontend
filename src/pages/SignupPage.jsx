@@ -90,9 +90,11 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
     // Style buttons based on order
     const getButtonClassName = (index) => {
         let className = "";
+
         if (index === 0) className += ` ${styles.firstButton}`;
         if (index === 1) className += ` ${styles.secondButton}`;
         if (index === 2) className += ` ${styles.thirdButton}`;
+
         return className;
     };
 
@@ -104,35 +106,40 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
     
     return (
         <div className={styles.registrationForm}>
-            {currentSection === 1 && (
-            <>
+
+            <div className={styles.header}>
                 <h2>Welcome to Archimedes</h2>
                 <p>Create an account to save your progress!</p>
-                <div className={styles.formContainer}>
-                    <form onSubmit={handleSubmit}>
-                        <div className={styles.roleSelection}>
-                            <label htmlFor="dob">Join Archimedes as a </label>
-                            <div className={styles.dobInputs}>
-                                {['Student', 'Teacher', 'Parent'].map((roleOption, index) => (
-                                <button
-                                    type="button"
-                                    key={roleOption}
-                                    onClick={() => {
-                                        setRole(roleOption);
-                                        setActiveButtonIndex(index); // Set the index of the active button
-                                    }}
-                                    className={`${styles.roleButton} ${getButtonClassName(index)} ${activeButtonIndex === index ? styles.active : ''}`}
-                                >
-                                    {roleOption}
-                                </button>
-                                ))}
-                            </div>
+            </div>
+
+            {currentSection === 1 && (
+            <>
+                
+
+                <form onSubmit={handleSubmit} className={styles.formContainer}>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="dob">Join Archimedes as a </label>
+                        <div className={styles.dobInputs}>
+                            {['Student', 'Teacher', 'Parent'].map((roleOption, index) => (
+                            <button
+                                type="button"
+                                key={roleOption}
+                                onClick={() => {
+                                    setRole(roleOption);
+                                    setActiveButtonIndex(index); // Set the index of the active button
+                                }}
+                                className={`${styles.roleButton} ${getButtonClassName(index)} ${activeButtonIndex === index ? styles.active : ''}`}
+                            >
+                                {roleOption}
+                            </button>
+                            ))}
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+                
                 {role === 'Student' && (
                     <>
-                        <div className={styles.formGroup}>
+                        <div className={styles.inputGroup}>
                             <label htmlFor="dob">What is your date of birth?</label>
                             <div className={styles.dobInputs}>
                                 <select
@@ -234,11 +241,15 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
     
     return (
       <div className={styles.registrationForm}>
-            <div className={styles.signupContainer}>
+        
+            <div className={styles.header}>
                 <h2>Sign Up</h2>
+            </div>
+            
+            <div className={styles.signupContainer}>
                 <form className={styles.formContainer}>
                     <div className={styles.shortFormEntry}>
-                        <div class="input-group">
+                        <div className={styles.inputGroup}>
                             <label for="first-name">First Name</label>
                             <input 
                                 type="text" 
@@ -248,7 +259,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
                                 required
                                 />
                         </div>
-                        <div class="input-group">
+                        <div className={styles.inputGroup}>
                             <label for="last-name">Last Name</label>
                             <input 
                                 type="text" 
@@ -259,7 +270,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
                             />
                         </div>
                     </div>
-                    <div className="input-group">
+                    <div className={styles.inputGroup}>
                         <label for="email">Email</label>
                         <input 
                             type="email" 
@@ -269,7 +280,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
                             required
                         />
                     </div>
-                    <div class="input-group">
+                    <div className={styles.inputGroup}>
                         <label for="password">Password</label>
                         <input
                                 type="password"
@@ -282,18 +293,18 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
                             />
                             {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                     </div>
-                    <DividerWithText>or</DividerWithText>
-                    <button type="button" className={styles.googleSigninButton}>
-                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
-                    </button>
-                    <div className={styles.navigate}>
-                        <button type="submit" class={styles.continueButton}>Sign Up</button>
-                        <a href="/login" className={styles.loginLink}>Already have an account?</a>
-                    </div>
-                    <div className={styles.submitGroup}>
-                        <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
-                    </div>
                 </form>
+                <DividerWithText>or</DividerWithText>
+                <button type="button" className={styles.googleSigninButton}>
+                    <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                </button>
+                <div className={styles.navigate}>
+                    <button type="submit" className={styles.continueButton}>Sign Up</button>
+                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                </div>
+                <div className={styles.privacyPolicy}>
+                    <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
+                </div>
             </div>
 
       </div>
@@ -330,10 +341,14 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
     
     return (
       <div className={styles.registrationForm}>
+
+            <div className={styles.header}>
+                <h2>Welcome back to Archimedes!</h2>
+                <p>We are excited to meet you again!</p>
+            </div>
+
             <div className="signup-container">
                 <form className="signup-form">
-                    <h2>Welcome back to Archimedes!</h2>
-                    <p>We are excited to meet you again!</p>
                     <div className={styles.inputGroup}>
                         <label for="email">Email</label>
                         <input 
@@ -357,15 +372,15 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                             {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                         <p>Forgot password?</p>
                     </div>
-                    <DividerWithText>or</DividerWithText>
-                    <button type="button" className={styles.googleSigninButton}>
-                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
-                    </button>
-                    <div className={styles.navigate}>
-                        <button type="submit" class={styles.continueButton}>Log In</button>
-                        <a href="/signup" className={styles.loginLink}>Create a new account</a>
-                    </div>
                 </form>
+                <DividerWithText>or</DividerWithText>
+                <button type="button" className={styles.googleSigninButton}>
+                    <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                </button>
+                <div className={styles.navigate}>
+                    <button type="submit" class={styles.continueButton}>Log In</button>
+                    <a href="/signup" className={styles.loginLink}>Create a new account</a>
+                </div>
             </div>
 
       </div>
