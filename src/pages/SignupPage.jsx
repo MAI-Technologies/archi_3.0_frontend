@@ -45,16 +45,45 @@ const SignupPage = () => {
                 alert('Please select a role before proceeding.');
                 return;
             }
-            // Check if user entered dob if "Student" role is selected
-            if (role === 'Student' && (!dob.month || !dob.day || !dob.year)) {
-                alert('Please fill out the date of birth before proceeding.');
-                return;
+            // Check if "Student" role selected
+            if (role === 'Student') {
+                // Check if user entered dob
+                if (!dob.month || !dob.day || !dob.year) {
+                    alert('Please fill out the date of birth before proceeding.');
+                    return;
+                }
+                // Check if user entered valid dob (Users must be at least 13)
+                const fullDob = `${dob.year}-${dob.month}-${dob.day}`; // Construct the full date of birth string
+                const age = calculateAge(fullDob);
+                console.log(`The user's age is ${age}`);
+                // Continue with form submission only if age is valid
+                if (age < 13) {
+                    alert('You must be at least 13 years old to use this application.');
+                    return;
+                }
             }
+
         }
   
       // Move to the next section
       setCurrentSection(currentSection + 1);
     };
+
+    // Calculate the age of a student given their dob
+    function calculateAge(dob) {
+        if (!dob) return 0;
+      
+        const birthday = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthday.getFullYear();
+        const monthDifference = today.getMonth() - birthday.getMonth();
+      
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
+          age--;
+        }
+      
+        return age;
+    }  
 
     return (
         <div className={styles.signupPage}>
@@ -241,7 +270,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
     
     return (
       <div className={styles.registrationForm}>
-        
+
             <div className={styles.header}>
                 <h2>Sign Up</h2>
             </div>
