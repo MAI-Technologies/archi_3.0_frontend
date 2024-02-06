@@ -359,7 +359,7 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                     </button>
                     <div className={styles.navigate}>
                         <button type="submit" class={styles.continueButton}>Log In</button>
-                        <a href="/login" className={styles.loginLink}>Create a new account</a>
+                        <a href="/signup" className={styles.loginLink}>Create a new account</a>
                     </div>
                 </form>
             </div>
