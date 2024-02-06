@@ -38,12 +38,14 @@ function App() {
           <Route exact path='/tutor' element={<TutorPage />} />
           <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
         </Routes>
+        {/*
         {showPopupButton && (
           <div className={styles.info}>
             <PopupButton onToggle={handlePopupToggle} buttonText="i" alignLeft buttonTextColor='#749AAB' text="Who's ArchI?" extraContent= "ArchI is an AI math tutor that you can consult to help solve your math homework!" >
             </PopupButton>
           </div>
         )}
+        */}
       </BrowserRouter>
     </div>
   );

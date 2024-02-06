@@ -119,7 +119,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     return (
         /*<ContentWrapper>*/
             <div className={styles.content}>
-                <div className={styles.history} style={{ backgroundColor: tutor.themeColor }}>
+                <div className={styles.history} style={{ backgroundImage: `url(${tutor.sideBarSrc})`, backgroundSize: 'cover'}}>
                     <button className={styles.newChat} onClick={() => window.location.href = `/chatbot/${tutor.id}`}>
                         <img src="/img/+.png" alt="plus"></img>
                         New Chat

@@ -45,19 +45,19 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
           <div className={styles.shortcuts}>
             <button 
               className={styles.shortcut} 
-              style={{ backgroundColor: tutorColor }}
+              style={{ color: tutorColor }}
               onClick={() => handleShortcut("Got It!")}>
               Got It!
             </button>
             <button 
               className={styles.shortcut} 
-              style={{ backgroundColor: tutorColor }}
+              style={{ color: tutorColor }}
               onClick={() => handleShortcut("More Hints")}>
               More Hints
             </button>
             <button 
               className={styles.shortcut} 
-              style={{ backgroundColor: tutorColor }}
+              style={{ color: tutorColor }}
               onClick={() => handleShortcut("Examples")}>
               Examples
             </button>

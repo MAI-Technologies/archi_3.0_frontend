@@ -9,23 +9,10 @@
     z-index: 2147483647;
 }
 
-.getStartedBarBtn {
-    /*display: none;*/
-    position: absolute;
-    width: 170px;
-    height: 34px;
-    background-color: black;
-    color: white;
-    font-weight: 600;
-    border-radius: 22px;
-    border: 1px solid white;
-    right: 50px;
-    top: 17px;
+.clickableArea {
+    position: fixed;
+    width: 180px;
+    height: 60px;
     z-index: 2147483647;
+    left: 640px;
 }
-
-.getStartedBarBtn:hover {
-    background-image: url("/img/btnHover.png");
-    background-size: cover;
-}
-

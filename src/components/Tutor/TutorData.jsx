@@ -5,7 +5,8 @@ const TutorData = [
       name: 'Archi',
       imageSrc: '/img/archi.png',
       planetImgSrc: '/img/archiPlanet.png',
-      themeColor: '#7DBBC1',
+      sideBarSrc: '/img/archiSideBar.png',
+      themeColor: '#C05F41',
       description: 'An ancient Greek mathematician, physicist, engineer, astronomer, and inventor of "Eureka"!',
     },
     {
@@ -13,7 +14,8 @@ const TutorData = [
       name: 'Hypatia',
       imageSrc: '/img/hypatia.png',
       planetImgSrc: '/img/hypatiaPlanet.png',
-      themeColor: '#547386',
+      sideBarSrc: '/img/hypatiaSideBar.png',
+      themeColor: '#466475',
       description: 'A woman mathematician and astronomer from Egypt back in 400 AD!',
     },
     {
@@ -21,7 +23,8 @@ const TutorData = [
         name: 'Mary J.',
         imageSrc: '/img/mary_j.png',
         planetImgSrc: '/img/mjPlanet.png',
-        themeColor: '#C06041',
+        sideBarSrc: '/img/mjSideBar.png',
+        themeColor: '#DF8845',
         description: 'An American mathematician and NASA\'s first black female engineer!',
       },
       {

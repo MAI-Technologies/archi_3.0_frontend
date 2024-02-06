@@ -9,13 +9,7 @@ function conditionalNav() {
 	} else if (window.location.pathname === "/chatbot/mary_j") {
 		return <div className={styles.bar} style={{ backgroundImage: "url(/img/mjHeader.png)" }}></div>;
 	} else {
-		return (<div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}> 
-
-			<button type="getStartedBar" className={styles.getStartedBarBtn} onClick={() => window.location.href = '/'}>
-				Get Started
-			</button>
-		
-		</div>);
+		return (<div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}></div>);
 	}
 };
 
@@ -24,6 +18,10 @@ const Navbar = () => {
 		<>
 			<div className={styles.content}>
 				{conditionalNav()}
+				<a href = '/'>
+					<div className={styles.clickableArea}>
+					</div>
+				</a>
 			</div>
 		</>
 	);
