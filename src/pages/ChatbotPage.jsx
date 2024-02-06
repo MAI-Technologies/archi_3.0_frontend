@@ -162,16 +162,6 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                         </div>
                         <ChatInputBar tutorColor={tutor.themeColor} sendMessageHandler={sendMessageHandler}></ChatInputBar>
                     </div>
-                    <div className={styles.help}>
-                        <PopupButton
-                            onToggle={handlePopupToggle}
-                            buttonText="?"
-                            buttonTextColor={tutor.themeColor}
-                            text="FAQs"
-                            extraContent="How can I use ArchI?"
-                        >
-                        </PopupButton>
-                    </div>
                 </div>
             </div>
         /*</ContentWrapper>*/
