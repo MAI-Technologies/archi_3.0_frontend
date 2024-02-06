@@ -130,50 +130,54 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                         </div>
                     </form>
                 </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="dob">What is your date of birth?</label>
-                    <div className={styles.dobInputs}>
-                        <select
-                            id="month"
-                            value={dob.month}
-                            onChange={(e) => setDob({ ...dob, month: e.target.value })}
-                            className={styles.firstInput}
-                        >
-                            <option value="" disabled>Month</option>
-                            {months.map((month, index) => (
-                            <option key={index} value={month}>
-                                {month}
-                            </option>
-                            ))}
-                        </select>
-                        <select
-                            id="day"
-                            value={dob.day}
-                            onChange={(e) => setDob({ ...dob, day: e.target.value })}
-                            className={styles.secondInput}
-                        >
-                            <option value="" disabled>Day</option>
-                            {days.map((day) => (
-                            <option key={day} value={day}>
-                                {day}
-                            </option>
-                            ))}
-                        </select>
-                        <select
-                            id="year"
-                            value={dob.year}
-                            onChange={(e) => setDob({ ...dob, year: e.target.value })}
-                            className={styles.thirdInput}
-                        >
-                            <option value="" disabled>Year</option>
-                            {years.map((year) => (
-                            <option key={year} value={year}>
-                                {year}
-                            </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
+                {role === 'Student' && (
+                    <>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="dob">What is your date of birth?</label>
+                            <div className={styles.dobInputs}>
+                                <select
+                                    id="month"
+                                    value={dob.month}
+                                    onChange={(e) => setDob({ ...dob, month: e.target.value })}
+                                    className={styles.firstInput}
+                                >
+                                    <option value="" disabled>Month</option>
+                                    {months.map((month, index) => (
+                                    <option key={index} value={month}>
+                                        {month}
+                                    </option>
+                                    ))}
+                                </select>
+                                <select
+                                    id="day"
+                                    value={dob.day}
+                                    onChange={(e) => setDob({ ...dob, day: e.target.value })}
+                                    className={styles.secondInput}
+                                >
+                                    <option value="" disabled>Day</option>
+                                    {days.map((day) => (
+                                    <option key={day} value={day}>
+                                        {day}
+                                    </option>
+                                    ))}
+                                </select>
+                                <select
+                                    id="year"
+                                    value={dob.year}
+                                    onChange={(e) => setDob({ ...dob, year: e.target.value })}
+                                    className={styles.thirdInput}
+                                >
+                                    <option value="" disabled>Year</option>
+                                    {years.map((year) => (
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </>
+                )}
                 <div className={styles.navigate}>
                     <button 
                         type="button" 
