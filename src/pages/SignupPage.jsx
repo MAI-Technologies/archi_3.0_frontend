@@ -134,6 +134,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                             onChange={(e) => setDob({ ...dob, month: e.target.value })}
                             className={styles.firstInput}
                         >
+                            <option value="" disabled>Month</option>
                             {months.map((month, index) => (
                             <option key={index} value={month}>
                                 {month}
@@ -146,6 +147,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                             onChange={(e) => setDob({ ...dob, day: e.target.value })}
                             className={styles.secondInput}
                         >
+                            <option value="" disabled>Day</option>
                             {days.map((day) => (
                             <option key={day} value={day}>
                                 {day}
@@ -158,6 +160,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                             onChange={(e) => setDob({ ...dob, year: e.target.value })}
                             className={styles.thirdInput}
                         >
+                            <option value="" disabled>Year</option>
                             {years.map((year) => (
                             <option key={year} value={year}>
                                 {year}
