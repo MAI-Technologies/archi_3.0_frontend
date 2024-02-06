@@ -37,63 +37,12 @@ const SignupPage = () => {
         }
     };
 
-    // Validate date strings in the format mm-dd-yyyy where mm is a month abbreviation
-    function isValidDate(dateStr) {
-        // Array of month abbreviations
-        const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-    
-        // Split the date string into components
-        const parts = dateStr.split('-');
-        if (parts.length !== 3) {
-            return false; // Incorrect format
-        }
-    
-        // Extract the components
-        const [monthStr, dayStr, yearStr] = parts;
-    
-        // Try to parse the month as a number
-        let monthIndex = parseInt(monthStr, 10) - 1; // -1 because months are 0-indexed in JavaScript Date
-
-        // If month is not a number, convert month abbreviation to an index
-        if (isNaN(monthIndex)) {
-            monthIndex = months.indexOf(monthStr.toLowerCase());
-            if (monthIndex === -1) {
-                return false; // Invalid month
-            }
-        } else if (monthIndex < 0 || monthIndex > 11) {
-            return false; // Month number out of range
-        }
-    
-        // Parse day and year
-        const day = parseInt(dayStr, 10);
-        const year = parseInt(yearStr, 10);
-    
-        // Check if day and year are valid numbers
-        if (isNaN(day) || isNaN(year)) {
-            return false;
-        }
-    
-        // Create a date object and check if it matches the provided values
-        const dateObj = new Date(year, monthIndex, day);
-        return dateObj.getFullYear() === year && dateObj.getMonth() === monthIndex && dateObj.getDate() === day;
-    }
-
     const handleNextSection = () => {
         // Validate the fields in section 1
         if (currentSection === 1) {
             // Check if user entered role
             if (!role) {
                 alert('Please select a role before proceeding.');
-                return;
-            }
-            // Check if user entered dob
-            if (!dob.month || !dob.day || !dob.year) {
-                alert('Please fill out the date of birth before proceeding.');
-                return;
-            }
-            // Check if the dob is valid
-            if (!isValidDate(dob.month + "-" + dob.day + "-" + dob.year)) {
-                alert('Please enter a valid date of birth before proceeding.');
                 return;
             }
         }
@@ -126,10 +75,6 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
             alert('Please select a role before proceeding.');
             return;
         }
-        if (!dob.month || !dob.day || !dob.year) {
-            alert('Please fill out the date of birth before proceeding.');
-            return;
-        }
         
         // Process the selectedRole state as needed
 
@@ -145,6 +90,12 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
         if (index === 2) className += ` ${styles.thirdButton}`;
         return className;
     };
+
+    // Arrays for dropdown options
+    const months = Array.from({ length: 12 }, (e, i) => new Date(0, i).toLocaleString('en-US', { month: 'long' }));
+    const days = Array.from({ length: 31 }, (e, i) => i + 1);
+    const years = Array.from({ length: 100 }, (e, i) => new Date().getFullYear() - i);
+
     
     return (
         <div className={styles.registrationForm}>
@@ -177,30 +128,42 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
                 <div className={styles.formGroup}>
                     <label htmlFor="dob">What is your date of birth?</label>
                     <div className={styles.dobInputs}>
-                        <input
-                            type="text"
+                        <select
                             id="month"
-                            placeholder="Jan"
                             value={dob.month}
                             onChange={(e) => setDob({ ...dob, month: e.target.value })}
                             className={styles.firstInput}
-                        />
-                        <input
-                            type="text"
+                        >
+                            {months.map((month, index) => (
+                            <option key={index} value={month}>
+                                {month}
+                            </option>
+                            ))}
+                        </select>
+                        <select
                             id="day"
-                            placeholder="16"
                             value={dob.day}
                             onChange={(e) => setDob({ ...dob, day: e.target.value })}
                             className={styles.secondInput}
-                        />
-                        <input
-                            type="text"
+                        >
+                            {days.map((day) => (
+                            <option key={day} value={day}>
+                                {day}
+                            </option>
+                            ))}
+                        </select>
+                        <select
                             id="year"
-                            placeholder="1994"
                             value={dob.year}
                             onChange={(e) => setDob({ ...dob, year: e.target.value })}
                             className={styles.thirdInput}
-                        />
+                        >
+                            {years.map((year) => (
+                            <option key={year} value={year}>
+                                {year}
+                            </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
                 <div className={styles.navigate}>

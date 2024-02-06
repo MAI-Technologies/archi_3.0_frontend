@@ -99,7 +99,7 @@
     border-left: #C05F41;
     border-top: #C05F41;
     border-bottom: #C05F41;
-    border-right: 1px solid #C05F41;
+    border-right: 0.5px solid #C05F41;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
@@ -107,15 +107,15 @@
   .secondButton {
     border-top: #C05F41;
     border-bottom: #C05F41;
-    border-right: 1px solid #C05F41;
-    border-left: 1px solid #C05F41;
+    border-right: 0.5px solid #C05F41;
+    border-left: 0.5px solid #C05F41;
   }
 
   .thirdButton {
     border-top: #C05F41;
     border-bottom: #C05F41;
     border-right: #C05F41;
-    border-left: 1px solid #C05F41;
+    border-left: 0.5px solid #C05F41;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
@@ -124,7 +124,7 @@
   .secondButton,
   .thirdButton {
     background-color: #F5F5F5;
-    width: 164px;
+    width: 160px;
     height: 47px;
     font-size: 16px;
     color: #C05F41;
@@ -154,7 +154,7 @@
     border-left: #C05F41;
     border-top: #C05F41;
     border-bottom: #C05F41;
-    border-right: 1px solid #C05F41;
+    border-right: 0.5px solid #C05F41;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
@@ -162,15 +162,15 @@
   .secondInput {
     border-top: #C05F41;
     border-bottom: #C05F41;
-    border-right: 1px solid #C05F41;
-    border-left: 1px solid #C05F41;
+    border-right: 0.5px solid #C05F41;
+    border-left: 0.5px solid #C05F41;
   }
 
   .thirdInput {
     border-top: #C05F41;
     border-bottom: #C05F41;
     border-right: #C05F41;
-    border-left: 1px solid #C05F41;
+    border-left: 0.5px solid #C05F41;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
@@ -184,6 +184,8 @@
     font-size: 16px;
     color: #C05F41;
     margin-top: 5px;
+    padding-left: 10px;
+    text-align: center;
   }
 
   .dobInputs input {
