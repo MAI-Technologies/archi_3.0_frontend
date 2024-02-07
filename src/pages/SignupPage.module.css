@@ -17,8 +17,10 @@
 .contentContainer {
   display: flex; /* Enable flex layout */
   flex-direction: row; /* Arrange children in a row */
-  justify-content: space-between; /* This will place children at start and end of container */
-  align-items: center; /* Vertically align children */
+  flex-wrap: wrap; /* Allow the items to wrap as needed */
+  justify-content: center; /* Center children horizontally */
+  align-items: flex-start; /* Align children to the top */
+  gap: 20px; /* Provide some space between the items */
   position: relative; /* Positioned absolutely within signupPage */
   width: 100%;
   height: 100vh;
@@ -48,8 +50,7 @@ html, body {
   left: 2%; /* Align to the left side */
   transform: translateY(-50%); /* Adjust for vertical centering */
   min-width: 620px; /* Prevents form from having a smaller width than children */
-  min-height: 600px; 
-  width: 50%;
+  min-height: 600px;
   max-width: 620px;
   height: auto;
   display: flex;
@@ -57,7 +58,6 @@ html, body {
   flex-direction: column; /* Stack the children vertically */
   align-items: center; /* Center-align the children horizontally */
   flex-shrink: 0; /* Prevents the form from shrinking */
-  align-items: center; /* Aligns children to the left */
 }
 
 .header {
@@ -318,13 +318,13 @@ html, body {
   position: absolute;
   margin-top: 100px;
   top: 50%;
-  right: 0;
-  transform: translateY(-50%); /* Adjust for vertical centering */
-  width: 50%;
-  min-width: 412px;
-  max-width: 50vw;
+  left: calc(50% + 310px); /* Start from the right edge of the registration form assuming it's max-width is 620px */
+  transform: translateY(-50%);
+  width: calc(50% - 310px); /* Take up the remaining space but subtract half the width of the registration form */
+  max-width: 412px; /* Maximum width of character image */
   height: auto; /* Let the height be determined by its content */
   display: flex;
+  flex: 0 0 auto; /* Don't grow, don't shrink, based on its width */
   align-items: center; /* Align the character image vertically */
   flex-direction: column; /* Stack children vertically */
   justify-content: center; /* Centers the character image horizontally */
@@ -385,16 +385,20 @@ html, body {
 }
 
 /* Media query for responsiveness */
-@media (max-width: 1200px) {
+@media (min-width: 768px) and (max-width: 1200px) {
+  .registrationForm {
+    /* The registration form should start to shrink if the screen width is less than 1240px */
+    width: calc(100% - 412px); /* Subtract the max width of the character container */
+  }
+
   .characterContainer {
-    /* Adjust the width dynamically */
-    width: calc(50% - 310px); /* Adjust the width based on the registration form's max-width */
-    right: 0;
-    transform: translate(0%, -50%);
+    /* The character container should stay to the right of the registration form */
+    left: calc(100% - 412px); /* Position it to the left of the character container's max width */
+    width: 412px; /* Fixed width equal to the maximum width of the character container */
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .characterContainer {
     display: none; /* Hide the character container on smaller screens */
   }
@@ -402,7 +406,8 @@ html, body {
     width: 100%; /* The registration form can take the full width on small screens */
     left: 0;
     transform: translateY(-50%);
-    max-width: none;
+    max-width: 620px;
+    flex: 1 0 auto; /* Allow the form to fill the available space*/
   }
 }
 
