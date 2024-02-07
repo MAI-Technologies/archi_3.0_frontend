@@ -8,21 +8,25 @@
   width: 100%;
   min-height: 100vh;
   font-family: 'Arial', sans-serif;
-  
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .contentContainer {
   display: flex; /* Enable flex layout */
   flex-direction: row; /* Arrange children in a row */
-  align-items: center; /* Vertically center the children */
-  justify-content: center; /* Horizontally center the children */
+  justify-content: space-between; /* This will place children at start and end of container */
+  align-items: center; /* Vertically align children */
+  position: absolute; /* Positioned absolutely within signupPage */
   width: 100%;
 }  
 
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden; /* This will prevent scrolling */
+  overflow-x: hidden; /* This will prevent scrolling */
   height: 100%;
   width: 100%;
 }
@@ -38,21 +42,20 @@ html, body {
   padding-right: 70px;
   border-radius: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 54%; 
-  left: 25%;
-  transform: translate(-50%, -50%); /* Center the form on the page */
+  top: 50%; 
+  left: 0;
+  transform: translateX(0%); /* Center the form on the page */
   min-width: 620px; /* Prevents form from having a smaller width than children */
   min-height: 600px; 
-  width: calc(50% - 40px);
+  width: 50%;
+  max-width: 620px;
   height: calc(100% - 80px);
-  display: relative;
-  position: fixed;
+  display: flex;
+  position: relative;
   flex-direction: column; /* Stack the children vertically */
   align-items: center; /* Center-align the children horizontally */
   flex-shrink: 0; /* Prevents the form from shrinking */
-  align-items: flex-start; /* Aligns children to the left */
-  
+  align-items: center; /* Aligns children to the left */
 }
 
 .header {
@@ -313,7 +316,10 @@ html, body {
   margin-top: 220px;
   margin-left: calc(61vw);
   position: absolute;
-  width: calc(100% - 540px);
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(50% - 620px);
   min-width: 412px;
   align-items: center; /* Align the character image vertically */
   flex-direction: column; /* Stack children vertically */
@@ -371,5 +377,22 @@ html, body {
   position: absolute;
   max-width: 285px;
   height: 80px;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 1200px) {
+  .characterContainer {
+    /* Adjust the width dynamically */
+    width: calc(50% - 310px); /* Adjust the width based on the registration form's max-width */
+  }
+}
+
+@media (max-width: 768px) {
+  .characterContainer {
+    display: none; /* Hide the character container on smaller screens */
+  }
+  .registrationForm {
+    width: 100%; /* The registration form can take the full width on small screens */
+  }
 }
 
