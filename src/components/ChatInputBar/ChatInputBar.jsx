@@ -8,6 +8,11 @@ import CalculatorButton from '../CalculatorButton/CalculatorButton.jsx';
 const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
   const [message, setMessage] = useState('');
   const chatInputRef = useRef(null); // Create a ref for the input field
+  const [isCalculatorExpanded, setIsCalculatorExpanded] = useState(false);
+
+  const toggleCalculator = () => {
+    setIsCalculatorExpanded(!isCalculatorExpanded);
+  };
 
   const sendMessage = () => {
     if (!message) return;
@@ -15,6 +20,9 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
     console.log(message); // For now, just log it to the console
     setMessage(''); // Clear the input field
     sendMessageHandler(message)
+    if (isCalculatorExpanded) {
+      toggleCalculator(); // Close the calculator if it's open
+    }
   };
 
   // Function to focus the chat input
@@ -29,6 +37,9 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
     setMessage(shortcutText);
     sendMessageHandler(shortcutText); // Send the message immediately
     setMessage(''); // Optionally clear the message
+    if (isCalculatorExpanded) {
+      toggleCalculator(); // Close the calculator if it's open
+    }
   };
 
   return (
@@ -40,6 +51,8 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
             outputValue={message} 
             setOutputValue={setMessage} 
             focusChatInput={focusChatInput} // Pass focus function as prop
+            isExpanded={isCalculatorExpanded} 
+            toggleCalculator={toggleCalculator}
             />
           </div>
           <div className={styles.shortcuts}>

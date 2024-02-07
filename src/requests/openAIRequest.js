@@ -6,7 +6,7 @@ export async function openAIRequest(prompt, sessionId) {
     if (!sessionId) throw new Error("No sessionId was given");
 
     try {
-        const res = await axios.post("http://localhost:4000/openai", {
+        const res = await axios.post("https://archi2-backend-d33aae681e67.herokuapp.com/openai", {
             prompt, sessionId
         });
 

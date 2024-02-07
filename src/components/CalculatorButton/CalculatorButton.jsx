@@ -2,14 +2,8 @@ import React, { useState } from 'react';
 import * as math from 'mathjs';
 import styles from './CalculatorButton.module.css'; // Adjust the path as needed
 
-const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  // Toggles the visibility of the calculator interface
-  const toggleCalculator = () => {
-    setIsExpanded(!isExpanded);
-  };
-
+const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput, isExpanded, toggleCalculator }) => {
+  
   const handleButtonPress = (content) => {
     setOutputValue(outputValue + content); // Update the chat input bar
     focusChatInput(); // Call the function passed as prop to focus chat input

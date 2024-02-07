@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-/*import { ContentWrapper } from "../components/Navbar/NavbarElements";*/
+// import { ContentWrapper } from "../components/Navbar/NavbarElements";
 import { v4 } from 'uuid';
 import TutorData from '../components/Tutor/TutorData';
 import styles from "./ChatbotPage.module.css";
@@ -8,6 +8,7 @@ import ChatInputBar from "../components/ChatInputBar/ChatInputBar";
 import userImage from "../../src/assets/user.png";
 // import axios from "axios";
 import PopupButton from '../components/PopupButton/PopupButton';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 // function getSessionId() {
 //     if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") === "") {
@@ -45,14 +46,21 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     if (!tutor) {
         return <div> Tutor not found </div>;
     }
+    const preprocessMath = (msg) => {
+        // Regular expression to match 'x^b' pattern and exclude 'x^{b}'
+        const regex = /(\w)\^([^\{])/g;
+        return msg.replace(regex, "$1^{$2}");
+    };
 
     async function sendMessageHandler(msg) {
-        setHistory(prev => [...prev, { isUser: true, msg }]);
+        // Format the user input for MathJax if it contains LaTeX
+        const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
+        setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
         setStreamText("")
         try {
             setIsThinking(true);
 
-            const res = await fetch("http://localhost:4000/openai", {
+            const res = await fetch("https://archi2-backend-d33aae681e67.herokuapp.com/openai", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
@@ -115,11 +123,15 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         scrollToBottom()
     }, [streamText]);
 
+    const config = {
+        loader: { load: ['input/tex', 'output/chtml'] },
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    };
 
     return (
-        /*<ContentWrapper>*/
+        <MathJaxContext config={config}>
             <div className={styles.content}>
-                <div className={styles.history} style={{ backgroundImage: `url(${tutor.sideBarSrc})`, backgroundSize: 'cover'}}>
+                <div className={styles.history} style={{ backgroundImage: `url(${tutor.sideBarSrc})`, backgroundSize: 'cover' }}>
                     <button className={styles.newChat} onClick={() => window.location.href = `/chatbot/${tutor.id}`}>
                         <img src="/img/+.png" alt="plus"></img>
                         New Chat
@@ -138,12 +150,16 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                             <div className={styles.purpose}><p>{purpose}</p></div>
 
                             {history && history.map((log, i) => {
-                                return <div key={i} className={styles.logMsg}>
-                                    <div className={styles.profile}>
-                                        {log.isUser ? <img src={userImage} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
+                                return (
+                                    <div key={i} className={styles.logMsg}>
+                                        <div className={styles.profile}>
+                                            {log.isUser ? <img src={userImage} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
+                                        </div>
+                                        <div className={styles.msg}>
+                                            <MathJax dynamic>{log.msg}</MathJax>
+                                        </div>
                                     </div>
-                                    <p className={styles.msg}>{log.msg}</p>
-                                </div>
+                                );
                             })}
 
                             {isThinking && <div className={styles.logMsg}>
@@ -158,13 +174,13 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                 </div>
                                 <p className={styles.msg}>{streamText}</p>
                             </div>}
-                            <div ref={messagesEndRef}/> 
+                            <div ref={messagesEndRef} />
                         </div>
                         <ChatInputBar tutorColor={tutor.themeColor} sendMessageHandler={sendMessageHandler}></ChatInputBar>
                     </div>
                 </div>
             </div>
-        /*</ContentWrapper>*/
+        </MathJaxContext>
     );
 };
 
