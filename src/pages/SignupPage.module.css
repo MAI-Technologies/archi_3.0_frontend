@@ -17,7 +17,6 @@
 .contentContainer {
   display: flex; /* Enable flex layout */
   flex-direction: row; /* Arrange children in a row */
-  flex-wrap: wrap; /* Allow the items to wrap as needed */
   justify-content: center; /* Center children horizontally */
   align-items: flex-start; /* Align children to the top */
   gap: 20px; /* Provide some space between the items */
@@ -316,11 +315,10 @@ html, body {
 
 .characterContainer {
   position: absolute;
-  margin-top: 100px;
-  top: 50%;
-  left: calc(50% + 310px); /* Start from the right edge of the registration form assuming it's max-width is 620px */
+  top: 60%;
+  left: 60%; /* Start from the right edge of the registration form assuming it's max-width is 620px */
   transform: translateY(-50%);
-  width: calc(50% - 310px); /* Take up the remaining space but subtract half the width of the registration form */
+  width: auto; /* Take up the remaining space but subtract half the width of the registration form */
   max-width: 412px; /* Maximum width of character image */
   height: auto; /* Let the height be determined by its content */
   display: flex;
@@ -328,6 +326,7 @@ html, body {
   align-items: center; /* Align the character image vertically */
   flex-direction: column; /* Stack children vertically */
   justify-content: center; /* Centers the character image horizontally */
+  align-self: center;
 }
 
 .characterImage {
