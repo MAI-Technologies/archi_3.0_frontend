@@ -6,12 +6,13 @@
   background: url(/img/bg.png) no-repeat center center;
   background-size: cover; /* Cover is usually better for full-screen backgrounds */
   width: 100%;
-  min-height: 100vh;
   font-family: 'Arial', sans-serif;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  min-height: 700px; /* Set the minimum height to match the registration form or the desired minimum */
 }
 
 .contentContainer {
