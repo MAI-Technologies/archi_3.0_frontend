@@ -6,23 +6,23 @@ import styles from "./LandingPage.module.css";
 const LandingPage = () => {
 
 	const [isVisible, setIsVisible] = useState(true);
-	const [height, setHeight] = useState(0);
-	
+  	const [height, setHeight] = useState(0);
+  
 	useEffect(() => {   
 		window.addEventListener("scroll", listenToScroll);
 		return () => 
 			window.removeEventListener("scroll", listenToScroll); 
 	}, []);
-
+	
 	const listenToScroll = () => {
 		let heightToHideFrom = 500;
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 		setHeight(winScroll);
 
 		if (winScroll > heightToHideFrom) {  
-				isVisible && setIsVisible(false);
+			isVisible && setIsVisible(false);
 		} else {
-				setIsVisible(true);
+			setIsVisible(true);
 		}  
 	};
 
@@ -31,7 +31,7 @@ const LandingPage = () => {
 			{ 
 				!isVisible &&
 				<div>
-					<button type="getStartedBarBtn" className={styles.getStartedBarBtn} onClick={() => window.location.href = '/'}>
+					<button type="getStartedBarBtn" className={styles.getStartedBarBtn} onClick={() => window.location.href = '/signup'}>
 						Get Started
 					</button>
 				</div>
@@ -41,10 +41,10 @@ const LandingPage = () => {
 				<div className={styles.visualBlock1}>
 					<div className={styles.archiButtonBlock}>
 						<img src="/img/archi_flipped_loop.gif" alt="archi gif"></img>
-						<button type="getStarted" className={styles.getStartedBtn} onClick={() => window.location.href = '/'}>
+						<button type="getStarted" className={styles.getStartedBtn} onClick={() => window.location.href = '/signup'}>
 							Get Started
 						</button>
-						<button type="haveAcc" className={styles.haveAccBtn} onClick={() => window.location.href = '/'}>
+						<button type="haveAcc" className={styles.haveAccBtn} onClick={() => window.location.href = '/login'}>
 							I already have an account
 						</button>
 					</div>

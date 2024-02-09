@@ -7,7 +7,7 @@ import LandingPage from './pages/LandingPage';
 import MetricsPage from './pages/MetricsPage';
 import TutorPage from './pages/TutorPage';
 import ChatbotPage from './pages/ChatbotPage';
-import SignupPage from './pages/SignupPage';
+import SignupPage from './pages/SignupPage'; 
 import PopupButton from './components/PopupButton/PopupButton';
 
 function App() {
@@ -39,10 +39,28 @@ function App() {
           <Route exact path='/tutor' element={<TutorPage />} />
           <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
           <Route exact path='/signup' element={<SignupPage />} />
+          <Route path='/login' element={<SignupPage />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
 };
+
+// New component to manage the display of the PopupButton
+function InfoButton() {
+  const location = useLocation();
+  const [showPopupButton, setShowPopupButton] = useState(true);
+
+  useEffect(() => {
+    // Hide the popup button on the signup and login pages
+    setShowPopupButton((location.pathname !== '/signup') && (location.pathname !== '/login'));
+  }, [location]);
+
+  return showPopupButton && (
+    <div className={styles.info}>
+      <PopupButton buttonText="i" alignLeft buttonTextColor='#749AAB' text="Who's ArchI?" extraContent="ArchI is an AI math tutor that you can consult to help solve your math homework!" />
+    </div>
+  );
+}
 
 export default App;

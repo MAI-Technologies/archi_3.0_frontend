@@ -1,0 +1,25 @@
+/* Styles for DividerWithText */
+
+.container{
+    display: flex;
+    align-self:center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .borderLeft {
+    border-bottom: 2px solid #A09F9F;
+    width: 50%;
+  }
+
+  .borderRight {
+    border-bottom: 2px solid #A09F9F;
+    width: 50%;
+  }
+  
+  .content {
+    padding: 0 10px 0 10px;
+    color: #A09F9F;
+    font-size: 18px;
+  }
