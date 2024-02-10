@@ -1,8 +1,10 @@
 // SignupPage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from "react-router-dom";
 import DividerWithText from '../components/DividerWithText/DividerWithText';
 import styles from './SignupPage.module.css'; // Import your CSS module
+import { loginWithEmailAndPassword, registerUserWithEmailAndPassword } from '../utils/auth';
+import { addUserRequest } from '../requests/addUserRequest';
 
 const SignupPage = () => {
     const location = useLocation();
@@ -17,7 +19,7 @@ const SignupPage = () => {
     const renderForms = () => {
         if (isLogin) {
             return <LoginForm setCharacterImageSrc={setCharacterImageSrc} setCharacterSpeechBubbleContent={setCharacterSpeechBubbleContent}
-            setShowSpeechBubble={setShowSpeechBubble}/>;
+                setShowSpeechBubble={setShowSpeechBubble} />;
         } else {
             return (
                 <>
@@ -31,7 +33,7 @@ const SignupPage = () => {
                             handleNextSection={handleNextSection}
                         />
                     )}
-                    {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} setShowSpeechBubble={setShowSpeechBubble}/>}
+                    {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} setShowSpeechBubble={setShowSpeechBubble} />}
                 </>
             );
         }
@@ -64,33 +66,33 @@ const SignupPage = () => {
             }
 
         }
-  
-      // Move to the next section
-      setCurrentSection(currentSection + 1);
+
+        // Move to the next section
+        setCurrentSection(currentSection + 1);
     };
 
     // Calculate the age of a student given their dob
     function calculateAge(dob) {
         if (!dob) return 0;
-      
+
         const birthday = new Date(dob);
         const today = new Date();
         let age = today.getFullYear() - birthday.getFullYear();
         const monthDifference = today.getMonth() - birthday.getMonth();
-      
+
         if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
-          age--;
+            age--;
         }
-      
+
         return age;
-    }  
+    }
 
     return (
         <div className={styles.signupPage}>
             <div className="contentContainer">
                 {renderForms()}
-                <Character 
-                    imageSrc={characterImageSrc} 
+                <Character
+                    imageSrc={characterImageSrc}
                     speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
                 /> {/* Render the character image */}
             </div>
@@ -109,7 +111,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
             alert('Please select a role before proceeding.');
             return;
         }
-        
+
         // Process the selectedRole state as needed
 
         // After processing, move to the next section
@@ -132,7 +134,7 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
     const days = Array.from({ length: 31 }, (e, i) => i + 1);
     const years = Array.from({ length: 100 }, (e, i) => new Date().getFullYear() - i);
 
-    
+
     return (
         <div className={styles.registrationForm}>
 
@@ -142,114 +144,118 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
             </div>
 
             {currentSection === 1 && (
-            <>
-                
+                <>
 
-                <form onSubmit={handleSubmit} className={styles.formContainer}>
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="dob">Join Archimedes as a </label>
-                        <div className={styles.dobInputs}>
-                            {['Student', 'Teacher', 'Parent'].map((roleOption, index) => (
-                            <button
-                                type="button"
-                                key={roleOption}
-                                onClick={() => {
-                                    setRole(roleOption);
-                                    setActiveButtonIndex(index); // Set the index of the active button
-                                }}
-                                className={`${styles.roleButton} ${getButtonClassName(index)} ${activeButtonIndex === index ? styles.active : ''}`}
-                            >
-                                {roleOption}
-                            </button>
-                            ))}
-                        </div>
-                    </div>
-                </form>
-                
-                {role === 'Student' && (
-                    <>
+
+                    <form onSubmit={handleSubmit} className={styles.formContainer}>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="dob">What is your date of birth?</label>
+                            <label htmlFor="dob">Join Archimedes as a </label>
                             <div className={styles.dobInputs}>
-                                <select
-                                    id="month"
-                                    value={dob.month}
-                                    onChange={(e) => setDob({ ...dob, month: e.target.value })}
-                                    className={styles.firstInput}
-                                >
-                                    <option value="" disabled>Month</option>
-                                    {months.map((month, index) => (
-                                    <option key={index} value={month}>
-                                        {month}
-                                    </option>
-                                    ))}
-                                </select>
-                                <select
-                                    id="day"
-                                    value={dob.day}
-                                    onChange={(e) => setDob({ ...dob, day: e.target.value })}
-                                    className={styles.secondInput}
-                                >
-                                    <option value="" disabled>Day</option>
-                                    {days.map((day) => (
-                                    <option key={day} value={day}>
-                                        {day}
-                                    </option>
-                                    ))}
-                                </select>
-                                <select
-                                    id="year"
-                                    value={dob.year}
-                                    onChange={(e) => setDob({ ...dob, year: e.target.value })}
-                                    className={styles.thirdInput}
-                                >
-                                    <option value="" disabled>Year</option>
-                                    {years.map((year) => (
-                                    <option key={year} value={year}>
-                                        {year}
-                                    </option>
-                                    ))}
-                                </select>
+                                {['Student', 'Teacher', 'Parent'].map((roleOption, index) => (
+                                    <button
+                                        type="button"
+                                        key={roleOption}
+                                        onClick={() => {
+                                            setRole(roleOption);
+                                            setActiveButtonIndex(index); // Set the index of the active button
+                                        }}
+                                        className={`${styles.roleButton} ${getButtonClassName(index)} ${activeButtonIndex === index ? styles.active : ''}`}
+                                    >
+                                        {roleOption}
+                                    </button>
+                                ))}
                             </div>
                         </div>
-                    </>
-                )}
-                <div className={styles.navigate}>
-                    <button 
-                        type="button" 
-                        onClick={handleSubmit} // Handle the click event
-                        className={styles.continueButton}>
-                        Continue
-                    </button>
-                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
-                </div>
-            </>
+                    </form>
+
+                    {role === 'Student' && (
+                        <>
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="dob">What is your date of birth?</label>
+                                <div className={styles.dobInputs}>
+                                    <select
+                                        id="month"
+                                        value={dob.month}
+                                        onChange={(e) => setDob({ ...dob, month: e.target.value })}
+                                        className={styles.firstInput}
+                                    >
+                                        <option value="" disabled>Month</option>
+                                        {months.map((month, index) => (
+                                            <option key={index} value={month}>
+                                                {month}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        id="day"
+                                        value={dob.day}
+                                        onChange={(e) => setDob({ ...dob, day: e.target.value })}
+                                        className={styles.secondInput}
+                                    >
+                                        <option value="" disabled>Day</option>
+                                        {days.map((day) => (
+                                            <option key={day} value={day}>
+                                                {day}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        id="year"
+                                        value={dob.year}
+                                        onChange={(e) => setDob({ ...dob, year: e.target.value })}
+                                        className={styles.thirdInput}
+                                    >
+                                        <option value="" disabled>Year</option>
+                                        {years.map((year) => (
+                                            <option key={year} value={year}>
+                                                {year}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                    <div className={styles.navigate}>
+                        <button
+                            type="button"
+                            onClick={handleSubmit} // Handle the click event
+                            className={styles.continueButton}>
+                            Continue
+                        </button>
+                        <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                    </div>
+                </>
             )}
         </div>
     );
 };
 
-const Character = ({imageSrc, speechBubbleContent}) => {
-  return (
-    <div className={styles.characterContainer}>
-        {speechBubbleContent && <SpeechBubble content={speechBubbleContent} />} {/* Conditional rendering based on content */}
-        <img src={imageSrc} alt="Archimedes character" className={styles.characterImage} />
-    </div>
-  );
+const Character = ({ imageSrc, speechBubbleContent }) => {
+    return (
+        <div className={styles.characterContainer}>
+            {speechBubbleContent && <SpeechBubble content={speechBubbleContent} />} {/* Conditional rendering based on content */}
+            <img src={imageSrc} alt="Archimedes character" className={styles.characterImage} />
+        </div>
+    );
 };
 
 const SpeechBubble = ({ content }) => {
-  return (
-    <div className={styles.speechBubble}>
-        <img src="/img/text_bubble.png" alt="Blank text bubble"/>
-        <p>{content}</p> {/* Render passed content */}
-    </div>
-  );
+    return (
+        <div className={styles.speechBubble}>
+            <img src="/img/text_bubble.png" alt="Blank text bubble" />
+            <p>{content}</p> {/* Render passed content */}
+        </div>
+    );
 };
 
 const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
     // State to manage the hint and image source
     const [passwordHint, setPasswordHint] = useState('');
+    const firstNameRef = useRef();
+    const lastNameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
 
     useEffect(() => {
         setShowSpeechBubble(false); // Hide speech bubble when this form is rendered
@@ -267,82 +273,116 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
         setPasswordHint('');
         setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
     };
-    
+
+    async function submitHandler(e) {
+        e.preventDefault();
+
+        const firstName = firstNameRef.current.value || null;
+        const lastName = lastNameRef.current.value || null;
+        const email = emailRef.current.value || null;
+        const password = passwordRef.current.value || null;
+
+        if (!firstName) return;
+        if (!lastName) return;
+        if (!email) return;
+        if (!password) return;
+
+        try {
+            const user = await registerUserWithEmailAndPassword(email, password);
+            console.log(user);
+            const res = await addUserRequest(firstName, lastName, "2020-10-10", email, password, "email")
+            // auwdha218@adwaA
+        } catch (err) {
+            if (err.message && err.message.includes("email-already-in-use")) {
+                console.log(`email in use`);
+                return;
+            }
+
+            console.log(err.message);
+        }
+    }
+
     return (
-      <div className={styles.registrationForm}>
+        <div className={styles.registrationForm}>
 
             <div className={styles.header}>
                 <h2>Sign Up</h2>
             </div>
-            
+
             <div className={styles.signupContainer}>
-                <form className={styles.formContainer}>
+                <form className={styles.formContainer} onSubmit={submitHandler}>
                     <div className={styles.shortFormEntry}>
                         <div className={styles.inputGroup}>
                             <label for="first-name">First Name</label>
-                            <input 
-                                type="text" 
-                                id="first-name" 
-                                name="first_name" 
+                            <input
+                                type="text"
+                                id="first-name"
+                                name="first_name"
                                 className={styles.longInput}
+                                ref={firstNameRef}
                                 required
-                                />
+                            />
                         </div>
                         <div className={styles.inputGroup}>
                             <label for="last-name">Last Name</label>
-                            <input 
-                                type="text" 
-                                id="last-name" 
-                                name="last_name" 
+                            <input
+                                type="text"
+                                id="last-name"
+                                name="last_name"
                                 className={styles.longInput}
+                                ref={lastNameRef}
                                 required
                             />
                         </div>
                     </div>
                     <div className={styles.inputGroup}>
                         <label for="email">Email</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            className={styles.longInput} 
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className={styles.longInput}
+                            ref={emailRef}
                             required
                         />
                     </div>
                     <div className={styles.inputGroup}>
                         <label for="password">Password</label>
                         <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                className={styles.longInput} 
-                                required
-                                onFocus={showPasswordHint}
-                                onBlur={clearPasswordHint}
-                            />
-                            {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
+                            type="password"
+                            id="password"
+                            name="password"
+                            className={styles.longInput}
+                            ref={passwordRef}
+                            required
+                            onFocus={showPasswordHint}
+                            onBlur={clearPasswordHint}
+                        />
+                        {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
+                    </div>
+                    <DividerWithText>or</DividerWithText>
+                    <button type="button" className={styles.googleSigninButton}>
+                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                    </button>
+                    <div className={styles.navigate}>
+                        <button type="submit" className={styles.continueButton}>Sign Up</button>
+                        <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                    </div>
+                    <div className={styles.privacyPolicy}>
+                        <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
                     </div>
                 </form>
-                <DividerWithText>or</DividerWithText>
-                <button type="button" className={styles.googleSigninButton}>
-                    <img src="./img/signin_w_google_button.png" alt="Google Image" />
-                </button>
-                <div className={styles.navigate}>
-                    <button type="submit" className={styles.continueButton}>Sign Up</button>
-                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
-                </div>
-                <div className={styles.privacyPolicy}>
-                    <p> By signing up for Archimedes, you agree to our Terms of Service and Privacy Policy.</p>
-                </div>
             </div>
 
-      </div>
+        </div>
     );
 };
 
 const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setShowSpeechBubble }) => {
     // State to manage the hint and image source
     const [passwordHint, setPasswordHint] = useState('');
+    const emailRef = useRef();
+    const passwordRef = useRef();
 
     // Modify speech bubble content when the LoginForm is rendered
     useEffect(() => {
@@ -367,9 +407,27 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
         setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
         setShowSpeechBubble(true); // Show speech bubble when password field loses focus
     };
-    
+
+    async function submitHandler(e) {
+        e.preventDefault();
+
+        const email = emailRef.current.value || null;
+        const password = passwordRef.current.value || null;
+
+        if (!email) return;
+        if (!password) return;
+
+        try {
+            const user = await loginWithEmailAndPassword(email, password);
+            console.log(user);
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
-      <div className={styles.registrationForm}>
+        <div className={styles.registrationForm}>
 
             <div className={styles.header}>
                 <h2>Welcome back to Archimedes!</h2>
@@ -377,42 +435,44 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
             </div>
 
             <div className="signup-container">
-                <form className="signup-form">
+                <form className="signup-form" onSubmit={submitHandler}>
                     <div className={styles.inputGroup}>
                         <label for="email">Email</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            className={styles.longInput} 
-                            required/>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className={styles.longInput}
+                            ref={emailRef}
+                            required />
                     </div>
                     <div className={styles.inputGroup}>
                         <label for="password">Password</label>
                         <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                className={styles.longInput}
-                                required
-                                onFocus={showPasswordHint}
-                                onBlur={clearPasswordHint}
-                            />
-                            {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
+                            type="password"
+                            id="password"
+                            name="password"
+                            className={styles.longInput}
+                            ref={passwordRef}
+                            required
+                            onFocus={showPasswordHint}
+                            onBlur={clearPasswordHint}
+                        />
+                        {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                         <p>Forgot password?</p>
                     </div>
+                    <DividerWithText>or</DividerWithText>
+                    <button type="button" className={styles.googleSigninButton}>
+                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                    </button>
+                    <div className={styles.navigate}>
+                        <button type="submit" class={styles.continueButton}>Log In</button>
+                        <a href="/signup" className={styles.loginLink}>Create a new account</a>
+                    </div>
                 </form>
-                <DividerWithText>or</DividerWithText>
-                <button type="button" className={styles.googleSigninButton}>
-                    <img src="./img/signin_w_google_button.png" alt="Google Image" />
-                </button>
-                <div className={styles.navigate}>
-                    <button type="submit" class={styles.continueButton}>Log In</button>
-                    <a href="/signup" className={styles.loginLink}>Create a new account</a>
-                </div>
             </div>
 
-      </div>
+        </div>
     );
 };
 
