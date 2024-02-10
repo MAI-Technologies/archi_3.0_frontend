@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { ContentWrapper } from "../components/Navbar/NavbarElements";
+// import { ContentWrapper } from "../components/Navbar/NavbarElements";
 import { v4 } from 'uuid';
 import TutorData from '../components/Tutor/TutorData';
 import styles from "./ChatbotPage.module.css";
@@ -130,9 +130,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
     return (
         <MathJaxContext config={config}>
-        <ContentWrapper>
             <div className={styles.content}>
-                <div className={styles.history} style={{ backgroundColor: tutor.themeColor }}>
+                <div className={styles.history} style={{ backgroundImage: `url(${tutor.sideBarSrc})`, backgroundSize: 'cover' }}>
                     <button className={styles.newChat} onClick={() => window.location.href = `/chatbot/${tutor.id}`}>
                         <img src="/img/+.png" alt="plus"></img>
                         New Chat
@@ -179,19 +178,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                         </div>
                         <ChatInputBar tutorColor={tutor.themeColor} sendMessageHandler={sendMessageHandler}></ChatInputBar>
                     </div>
-                    <div className={styles.help}>
-                        <PopupButton
-                            onToggle={handlePopupToggle}
-                            buttonText="?"
-                            buttonTextColor={tutor.themeColor}
-                            text="FAQs"
-                            extraContent="How can I use ArchI?"
-                        >
-                        </PopupButton>
-                    </div>
                 </div>
             </div>
-        </ContentWrapper>
         </MathJaxContext>
     );
 };

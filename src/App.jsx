@@ -41,7 +41,6 @@ function App() {
           <Route exact path='/signup' element={<SignupPage />} />
           <Route path='/login' element={<SignupPage />} />
         </Routes>
-        <InfoButton />
       </BrowserRouter>
     </div>
   );
