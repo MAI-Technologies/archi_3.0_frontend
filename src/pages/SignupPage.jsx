@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import DividerWithText from '../components/DividerWithText/DividerWithText';
 import styles from './SignupPage.module.css'; // Import your CSS module
 import { loginWithEmailAndPassword, registerUserWithEmailAndPassword } from '../utils/auth';
+import { addUserRequest } from '../requests/addUserRequest';
 
 const SignupPage = () => {
     const location = useLocation();
@@ -281,8 +282,6 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
         const email = emailRef.current.value || null;
         const password = passwordRef.current.value || null;
 
-        console.log(`here`);
-
         if (!firstName) return;
         if (!lastName) return;
         if (!email) return;
@@ -291,7 +290,8 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
         try {
             const user = await registerUserWithEmailAndPassword(email, password);
             console.log(user);
-            // 152637#awdawA
+            const res = await addUserRequest(firstName, lastName, "2020-10-10", email, password, "email")
+            // auwdha218@adwaA
         } catch (err) {
             if (err.message && err.message.includes("email-already-in-use")) {
                 console.log(`email in use`);
