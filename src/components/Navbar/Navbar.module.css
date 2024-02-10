@@ -1,0 +1,18 @@
+.bar {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 64px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2147483647;
+}
+
+.clickableArea {
+    position: fixed;
+    width: 180px;
+    height: 60px;
+    z-index: 2147483647;
+    left: 640px;
+}
