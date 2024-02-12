@@ -33,7 +33,12 @@ const SignupPage = () => {
                             handleNextSection={handleNextSection}
                         />
                     )}
-                    {currentSection === 2 && <CreateAccountForm setCharacterImageSrc={setCharacterImageSrc} setShowSpeechBubble={setShowSpeechBubble} />}
+                    {currentSection === 2 && (
+                        <CreateAccountForm 
+                            setCharacterImageSrc={setCharacterImageSrc} setShowSpeechBubble={setShowSpeechBubble} 
+                            dob={dob} 
+                        />
+                    )}
                 </>
             );
         }
@@ -249,7 +254,7 @@ const SpeechBubble = ({ content }) => {
     );
 };
 
-const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
+const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) => {
     // State to manage the hint and image source
     const [passwordHint, setPasswordHint] = useState('');
     const firstNameRef = useRef();
@@ -265,13 +270,40 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
     // Function to show the password hint and change the image
     const showPasswordHint = () => {
         setPasswordHint('Passwords should be at least 8 characters long and should contain a mixture of letters, numbers, and other characters');
-        setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image
+        setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image'
     };
 
     // Function to clear the password hint and reset the image
     const clearPasswordHint = () => {
         setPasswordHint('');
         setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
+    };
+
+    // Function to retrieve dob passed from registration form
+    const getDob = () => {
+        // create dict to convert dob.month to mm
+        const month = {
+            "January": "01",
+            "February": "02",
+            "March": "03",
+            "April": "04",
+            "May": "05",
+            "June": "06",
+            "July": "07",
+            "August": "08",
+            "September": "09",
+            "October": "10",
+            "November": "11",
+            "December": "12"
+        };
+
+        // convert day to dd
+        if ((dob.day).length == 1) {
+            dob.day = "0" + dob.day;
+        }
+
+        console.log(dob.year + "-" + month[dob.month] + "-" + dob.day);
+        return dob.year + "-" + month[dob.month] + "-" + dob.day;
     };
 
     async function submitHandler(e) {
@@ -290,7 +322,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
         try {
             const user = await registerUserWithEmailAndPassword(email, password);
             console.log(user);
-            const res = await addUserRequest(firstName, lastName, "2020-10-10", email, password, "email")
+            const res = await addUserRequest(firstName, lastName, getDob(), email, password, "email")
             // auwdha218@adwaA
         } catch (err) {
             if (err.message && err.message.includes("email-already-in-use")) {
