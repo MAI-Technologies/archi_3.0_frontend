@@ -193,7 +193,7 @@ html, body {
   background-image: url(/img/dropdown_arrow.png); /* Your custom arrow */
   background-repeat: no-repeat;
   background-position: right 10px center; /* Adjust as needed */
-  background-size: 15px; /* Adjust size of your custom arrow */
+  background-size: 10px; /* Adjust size of your custom arrow */
 }
 
 .firstInput {
