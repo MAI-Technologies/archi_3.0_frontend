@@ -15,6 +15,21 @@ const SignupPage = () => {
     const [characterImageSrc, setCharacterImageSrc] = useState('/img/archi_amazed.png'); // State for character image source
     const [characterSpeechBubbleContent, setCharacterSpeechBubbleContent] = useState('"Ooooo... A new student!"'); // State for character speech bubble content
     const [showSpeechBubble, setShowSpeechBubble] = useState(true); // State for speech bubble visibility
+    const [animationStarted, setAnimationStarted] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Start the animation after the component mounts
+    useEffect(() => {
+        const handleLoad = () => {
+            setIsLoading(false); // Set loading to false once the page is fully loaded
+        };
+    
+        window.addEventListener('load', handleLoad);
+    
+        return () => {
+            window.removeEventListener('load', handleLoad);
+        };
+    }, []);
 
     const renderForms = () => {
         if (isLogin) {
@@ -95,10 +110,11 @@ const SignupPage = () => {
     return (
         <div className={styles.signupPage}>
             <div className="contentContainer">
-                {renderForms()}
+                {animationStarted && renderForms()}
                 <Character
                     imageSrc={characterImageSrc}
                     speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
+                    className={!isLoading ? styles.finalPosition : styles.initialPosition}
                 /> {/* Render the character image */}
             </div>
         </div>
@@ -236,9 +252,9 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
     );
 };
 
-const Character = ({ imageSrc, speechBubbleContent }) => {
+const Character = ({ imageSrc, speechBubbleContent, className }) => {
     return (
-        <div className={styles.characterContainer}>
+        <div className={`${styles.characterContainer} ${className}`}>
             {speechBubbleContent && <SpeechBubble content={speechBubbleContent} />} {/* Conditional rendering based on content */}
             <img src={imageSrc} alt="Archimedes character" className={styles.characterImage} />
         </div>

@@ -325,6 +325,20 @@ html, body {
 
 /* ----------------Character styles---------------- */
 
+@keyframes moveCharacter {
+  from { transform: translateX(-80%) translateY(-50%); } /* Start higher */
+  to { transform: translateX(0%) translateY(-50%); } /* End at final location */
+}
+
+.initialPosition {
+  animation: loadingAnimation 10s infinite; /* Keep looping the initial animation */
+  /* Add initial transform if needed for static positioning before animation starts */
+}
+
+.finalPosition {
+  animation: moveCharacter 10s forwards; /* Adjust timing as needed */
+}
+
 .characterContainer {
   position: absolute;
   top: 60%;
