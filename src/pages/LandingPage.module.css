@@ -1,5 +1,7 @@
 /* LandingPage.module.css */
-
+.temp {
+  position: fixed;
+}
 /* Styles for the main container */
 .content {
   height: 435vh;
