@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styles from './SignoutButton.module.css'; // Import your CSS file
 
-function SignoutButton({ color }) {
+function SignoutButton({ color, filter }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
-    console.log(color);
+    console.log(color, filter);
 
     // Determine the button's className based on its state
     const buttonClass = `
@@ -15,19 +15,24 @@ function SignoutButton({ color }) {
         ${isClicked ? styles.buttonClicked : ''}
     `.trim();
 
-    // Dynamic inline styles based on props and state
+    // Apply the filter only when the button is not hovered and not clicked
+    const defaultStyle = !isHovered && !isClicked ? { filter: filter } : {};
+
+    // Dynamic inline styles for different states
     const dynamicStyles = {
-        color: isHovered || isClicked ? color: '#FFFFFF', // Text color changes on hover or click
+        ...defaultStyle,
+        color: isHovered ? color : isClicked ? '#FFFFFF' : '#FFFFFF', 
     };
 
     if (isHovered) {
-        dynamicStyles.backgroundColor = '#FFFFFF'; // Replace 'lightenColor' with actual color for hover
-        dynamicStyles.borderColor = color; // Replace 'lightenBorderColor' with actual border color for hover
+        dynamicStyles.backgroundColor = '#FFFFFF';
+        dynamicStyles.borderColor = color; 
     }
 
     if (isClicked) {
-        dynamicStyles.backgroundColor = color; // Replace 'darkenColor' with actual color for click
-        dynamicStyles.borderColor = '#FFFFFF'; // Replace 'darkenBorderColor' with actual border color for click
+        dynamicStyles.backgroundColor = color;
+        dynamicStyles.borderColor = '#FFFFFF';
+        dynamicStyles.color = '#FFFFFF';
     }
 
     return (

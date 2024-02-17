@@ -15,7 +15,7 @@ function conditionalNav() {
         // If tutor exists, return navbar with background image and SignoutButton with themeColor
         return (
             <div className={styles.bar} style={{ backgroundImage: `url(/img/${tutor.id}Header.png)` }}>
-                <SignoutButton color={`${tutor.themeColor}`}></SignoutButton>
+                <SignoutButton color={`${tutor.themeColor}`} filter={`${tutor.filter}`}></SignoutButton>
             </div>
         );
     } else if (window.location.pathname === "/tutor") {
