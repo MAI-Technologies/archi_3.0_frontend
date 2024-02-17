@@ -5,33 +5,35 @@ import styles from "./LandingPage.module.css";
 
 const LandingPage = () => {
 
-	const [isSeen, setIsSeen] = useState(true);
+	/*
+	const [isVisible, setIsVisible] = useState(true);
 	const [height, setHeight] = useState(0);
-  
-	useEffect(() => {   
-		function listenToScroll() {
-			console.log("entered");
-			let heightToHideFrom = 200;
-			const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-			setHeight(winScroll);
-	
-			if (winScroll > heightToHideFrom) {  
-				isSeen && setIsSeen(false);
-			} else {
-				setIsSeen(true);
-			}  
-		};
 
-		window.addEventListener("scroll", listenToScroll());
-		return () => {
-			console.log("leaving");
-			window.removeEventListener("scroll", listenToScroll()); }
-	}, []);
+	const listenToScroll = () => {
+		console.log("entered");
+		let heightToHideFrom = 200;
+		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+		setHeight(winScroll);
+
+		if (winScroll > heightToHideFrom) {  
+			isVisible && setIsVisible(false);
+		} else {
+			setIsVisible(true);
+		}  
+	};
+
+	useEffect(() => {   
+		console.log(height);
+		window.addEventListener("scroll", listenToScroll);
+		return () => 
+			window.removeEventListener("scroll", listenToScroll); 
+	}, [isVisible, height]);
+	*/
 
 	return (
 		<div className={styles.content}>
 			{ 
-				isSeen &&
+				//isVisible &&
 				<div>
 					<button type="getStartedBarBtn" className={styles.getStartedBarBtn} onClick={() => window.location.href = '/signup'}>
 						Get Started
