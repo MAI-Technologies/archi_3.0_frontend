@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './SignoutButton.module.css'; // Import your CSS file
 
-function SignoutButton() {
+function SignoutButton({ color }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -13,9 +13,14 @@ function SignoutButton() {
         ${isClicked ? styles.buttonClicked : ''}
     `.trim();
 
+    const buttonStyle = {
+        backgroundColor: color, // Use the color prop for background color
+    };
+
     return (
         <button
             className={buttonClass}
+            style={buttonStyle}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => {

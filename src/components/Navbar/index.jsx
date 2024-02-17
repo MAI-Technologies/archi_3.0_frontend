@@ -1,24 +1,36 @@
 import React from 'react';
 import SignoutButton from '../SignoutButton/SignoutButton';
+import TutorData from '../Tutor/TutorData';
 import styles from './Navbar.module.css';
 
 function conditionalNav() {
-	if (window.location.pathname === "/chatbot/archi") {
-		return <div className={styles.bar} style={{ backgroundImage: "url(/img/archiHeader.png)" }}> <SignoutButton></SignoutButton></div>;
-	} else if (window.location.pathname === "/chatbot/hypatia") {
-		return <div className={styles.bar} style={{ backgroundImage: "url(/img/hypatiaHeader.png)" }}> <SignoutButton></SignoutButton></div>;
-	} else if (window.location.pathname === "/chatbot/mary_j") {
-		return <div className={styles.bar} style={{ backgroundImage: "url(/img/mjHeader.png)" }}> <SignoutButton></SignoutButton></div>;
-	} else {
-		// render button only on tutor page
-		if (window.location.pathname === "/tutor") {
-			return (<div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}> <SignoutButton></SignoutButton></div>);
-		}
-		else {
-			return (<div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}></div>);
-		}
-		
-	}
+    // Extract the last part of the URL
+    const lastPath = window.location.pathname.split('/').pop();
+	console.log(lastPath);
+
+    // Find the tutor data based on the last part of the URL
+    const tutor = TutorData.find(t => t.id === lastPath);
+
+    if (tutor) {
+        // If tutor exists, return navbar with background image and SignoutButton with themeColor
+        return (
+            <div className={styles.bar} style={{ backgroundImage: `url(/img/${tutor.id}Header.png)` }}>
+                <SignoutButton themeColor={tutor.themeColor}></SignoutButton>
+            </div>
+        );
+    } else if (window.location.pathname === "/tutor") {
+        // Specific case for tutor main page
+        return (
+            <div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}>
+                <SignoutButton></SignoutButton>
+            </div>
+        );
+    } else {
+        // Default case where only the navbar is rendered
+        return (
+            <div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}></div>
+        );
+    }
 };
 
 const Navbar = () => {
