@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from "react-router-dom";
 import DividerWithText from '../components/DividerWithText/DividerWithText';
 import styles from './SignupPage.module.css'; // Import your CSS module
-import { loginWithEmailAndPassword, registerUserWithEmailAndPassword } from '../utils/auth';
+import { loginWithEmailAndPassword, loginWithGoogle, registerUserWithEmailAndPassword } from '../utils/auth';
 import { addUserRequest } from '../requests/addUserRequest';
 
 const SignupPage = () => {
@@ -34,9 +34,9 @@ const SignupPage = () => {
                         />
                     )}
                     {currentSection === 2 && (
-                        <CreateAccountForm 
-                            setCharacterImageSrc={setCharacterImageSrc} setShowSpeechBubble={setShowSpeechBubble} 
-                            dob={dob} 
+                        <CreateAccountForm
+                            setCharacterImageSrc={setCharacterImageSrc} setShowSpeechBubble={setShowSpeechBubble}
+                            dob={dob}
                         />
                     )}
                 </>
@@ -334,6 +334,16 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
         }
     }
 
+    async function signupWithGoogleHandler() {
+        try {
+            const user = await loginWithGoogle();
+            console.log(user);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
     return (
         <div className={styles.registrationForm}>
 
@@ -393,7 +403,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
                         {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
                     </div>
                     <DividerWithText>or</DividerWithText>
-                    <button type="button" className={styles.googleSigninButton}>
+                    <button type="button" className={styles.googleSigninButton} onClick={signupWithGoogleHandler}>
                         <img src="./img/signin_w_google_button.png" alt="Google Image" />
                     </button>
                     <div className={styles.navigate}>
