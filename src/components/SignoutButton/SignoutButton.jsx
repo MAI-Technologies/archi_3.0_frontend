@@ -18,7 +18,11 @@ function SignoutButton() {
             className={buttonClass}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={() => setIsClicked(!isClicked)}
+            onClick={() => {
+                setIsClicked(!isClicked);
+                // navigate back to landing page
+                window.location.href = '/';
+            }}
         >
             {(isHovered || isClicked) ? 'Sign Out' : ''}
         </button>
