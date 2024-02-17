@@ -320,9 +320,14 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
         if (!password) return;
 
         try {
-            const user = await registerUserWithEmailAndPassword(email, password);
-            console.log(user);
-            const res = await addUserRequest(firstName, lastName, getDob(), email, password, "email")
+            const firebaseRes = await registerUserWithEmailAndPassword(email, password);
+            console.log(firebaseRes);
+            if (!firebaseRes.user.uid) {
+                console.log(`Cannot get userId`);
+                return;
+            }
+
+            const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
             // auwdha218@adwaA
         } catch (err) {
             if (err.message && err.message.includes("email-already-in-use")) {
