@@ -10,12 +10,12 @@ function conditionalNav() {
 
     // Find the tutor data based on the last part of the URL
     const tutor = TutorData.find(t => t.id === lastPath);
-
+    
     if (tutor) {
         // If tutor exists, return navbar with background image and SignoutButton with themeColor
         return (
             <div className={styles.bar} style={{ backgroundImage: `url(/img/${tutor.id}Header.png)` }}>
-                <SignoutButton themeColor={tutor.themeColor}></SignoutButton>
+                <SignoutButton color={`${tutor.themeColor}`}></SignoutButton>
             </div>
         );
     } else if (window.location.pathname === "/tutor") {
