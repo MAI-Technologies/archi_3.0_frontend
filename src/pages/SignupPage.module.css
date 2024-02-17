@@ -325,20 +325,6 @@ html, body {
 
 /* ----------------Character styles---------------- */
 
-@keyframes moveCharacter {
-  from { transform: translateX(-80%) translateY(-50%); } /* Start higher */
-  to { transform: translateX(0%) translateY(-50%); } /* End at final location */
-}
-
-.initialPosition {
-  animation: loadingAnimation 10s infinite; /* Keep looping the initial animation */
-  /* Add initial transform if needed for static positioning before animation starts */
-}
-
-.finalPosition {
-  animation: moveCharacter 10s forwards; /* Adjust timing as needed */
-}
-
 .characterContainer {
   position: absolute;
   top: 60%;
@@ -353,6 +339,33 @@ html, body {
   flex-direction: column; /* Stack children vertically */
   justify-content: center; /* Centers the character image horizontally */
   align-self: center;
+}
+
+.characterContainer.loading,
+.characterContainer.loaded,
+.characterContainer.moving {
+  /* Apply uniform sizing and positioning across different stages */
+  width: 412px; /* Adjust based on actual image size for consistency */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.characterContainer.loading {
+  /* Styles for the loading stage */
+  animation: loadingAnimation 5s infinite; /* Keep looping the initial animation */
+  /* Add initial transform if needed for static positioning before animation starts */
+}
+
+.characterContainer.loading {
+  animation: moveCharacter 10s forwards; /* Adjust timing as needed */
+}
+
+.characterContainer.loaded {
+  /* Styles for the loaded stage */
+  animation: moveCharacter 10s forwards; /* Adjust timing as needed */
+}
+.characterContainer.moving {
+  /* Apply moving animation */
+  animation: moveCharacter 10s forwards; /* Adjust as necessary for your moving effect */
 }
 
 .characterImage {

@@ -17,19 +17,34 @@ const SignupPage = () => {
     const [showSpeechBubble, setShowSpeechBubble] = useState(true); // State for speech bubble visibility
     const [animationStarted, setAnimationStarted] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [imageStage, setImageStage] = useState('loading'); // 'loading', 'loaded', 'moving'
+
 
     // Start the animation after the component mounts
     useEffect(() => {
+        const minDisplayTime = 5000;
+    
         const handleLoad = () => {
-            setIsLoading(false); // Set loading to false once the page is fully loaded
+            // Calculate the remaining time needed to meet the minimum display time.
+            const elapsedTime = new Date().getTime() - startTime;
+            const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+    
+            // Wait for the remaining time before changing the image stage.
+            setTimeout(() => {
+                setImageStage('loaded'); // Change to the next stage after the remaining time.
+            }, remainingTime);
         };
     
+        // Record the start time when the component mounts.
+        const startTime = new Date().getTime();
+    
+        // Add event listener for when the window finishes loading.
         window.addEventListener('load', handleLoad);
     
         return () => {
-            window.removeEventListener('load', handleLoad);
+            window.removeEventListener('load', handleLoad); // Clean up the event listener when the component unmounts.
         };
-    }, []);
+    }, []);    
 
     const renderForms = () => {
         if (isLogin) {
@@ -112,9 +127,10 @@ const SignupPage = () => {
             <div className="contentContainer">
                 {animationStarted && renderForms()}
                 <Character
-                    imageSrc={characterImageSrc}
+                    imageSrc="/img/archi_amazed.png" // Your final character image
                     speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
-                    className={!isLoading ? styles.finalPosition : styles.initialPosition}
+                    className={styles.characterContainer} // This is your existing styling base class
+                    imageStage={imageStage} // Pass the state controlling the image stage
                 /> {/* Render the character image */}
             </div>
         </div>
@@ -252,11 +268,17 @@ const RegistrationForm = ({ currentSection, role, setRole, dob, setDob, handleNe
     );
 };
 
-const Character = ({ imageSrc, speechBubbleContent, className }) => {
+const Character = ({ imageSrc, speechBubbleContent, className, imageStage }) => {
+    // Determine the image source based on the imageStage
+    const currentImageSrc = imageStage === 'loading' ? '/img/archi_loading_from_cloud.gif' : imageSrc; // Adjust with your actual loading image path
+
+    // Combine CSS classes based on the provided className and the current image stage
+    const combinedClassName = `${styles.characterContainer} ${className} ${styles[imageStage] || ''}`;
+
     return (
-        <div className={`${styles.characterContainer} ${className}`}>
+        <div className={combinedClassName}>
             {speechBubbleContent && <SpeechBubble content={speechBubbleContent} />} {/* Conditional rendering based on content */}
-            <img src={imageSrc} alt="Archimedes character" className={styles.characterImage} />
+            <img src={currentImageSrc} alt="Archimedes character" className={styles.characterImage} />
         </div>
     );
 };
