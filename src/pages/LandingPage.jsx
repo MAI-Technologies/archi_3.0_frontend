@@ -4,14 +4,12 @@ import styles from "./LandingPage.module.css";
 
 
 const LandingPage = () => {
-
-	/*
+	
 	const [isVisible, setIsVisible] = useState(true);
 	const [height, setHeight] = useState(0);
 
 	const listenToScroll = () => {
-		console.log("entered");
-		let heightToHideFrom = 200;
+		let heightToHideFrom = 500;
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 		setHeight(winScroll);
 
@@ -23,17 +21,15 @@ const LandingPage = () => {
 	};
 
 	useEffect(() => {   
-		console.log(height);
-		window.addEventListener("scroll", listenToScroll);
+		window.addEventListener("scroll", listenToScroll, true);
 		return () => 
-			window.removeEventListener("scroll", listenToScroll); 
-	}, [isVisible, height]);
-	*/
-
+			window.removeEventListener("scroll", listenToScroll, true); 
+	}, [height]);
+	
 	return (
 		<div className={styles.content}>
 			{ 
-				//isVisible &&
+				!isVisible &&
 				<div>
 					<button type="getStartedBarBtn" className={styles.getStartedBarBtn} onClick={() => window.location.href = '/signup'}>
 						Get Started
