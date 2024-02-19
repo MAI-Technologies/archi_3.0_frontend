@@ -24,8 +24,14 @@ const SignupPage = () => {
     useEffect(() => {
         const minDisplayTime = 2000;
         const moveAnimationTime = 2000;
+
+        // Start with the GIF showing by setting the image stage to 'loading'.
+        setImageStage('loading');
     
         const handleLoad = () => {
+            // Record the start time when the component mounts.
+            const startTime = new Date().getTime();
+            
             // Calculate the remaining time needed to meet the minimum display time.
             const elapsedTime = new Date().getTime() - startTime;
             const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
@@ -46,9 +52,6 @@ const SignupPage = () => {
                 }, remainingTime);
             }, remainingTime);
         };
-    
-        // Record the start time when the component mounts.
-        const startTime = new Date().getTime();
     
         // Add event listener for when the window finishes loading.
         window.addEventListener('load', handleLoad);
