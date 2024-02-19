@@ -1,13 +1,15 @@
 // SignupPage.jsx
-import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import DividerWithText from '../components/DividerWithText/DividerWithText';
 import styles from './SignupPage.module.css'; // Import your CSS module
-import { loginWithEmailAndPassword, loginWithGoogle, registerUserWithEmailAndPassword } from '../utils/auth';
+import { authenticateUser, loginWithEmailAndPassword, loginWithGoogle, registerUserWithEmailAndPassword } from '../utils/auth';
 import { addUserRequest } from '../requests/addUserRequest';
+import { UserContext } from '../contexts/UserContext';
 
 const SignupPage = () => {
     const location = useLocation();
+    const { user, setUser } = useContext(UserContext);
     const isLogin = location.pathname === '/login';
     const [currentSection, setCurrentSection] = useState(1); // State to manage the current section
     const [role, setRole] = useState(''); // State to track the selected role in section 1
@@ -15,6 +17,35 @@ const SignupPage = () => {
     const [characterImageSrc, setCharacterImageSrc] = useState('/img/archi_amazed.png'); // State for character image source
     const [characterSpeechBubbleContent, setCharacterSpeechBubbleContent] = useState('"Ooooo... A new student!"'); // State for character speech bubble content
     const [showSpeechBubble, setShowSpeechBubble] = useState(true); // State for speech bubble visibility
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const auth = async () => {
+            try {
+                const user = await authenticateUser();
+
+                // not logged in
+                if (user == null) {
+                    setLoading(false);
+                    return;
+                }
+
+                console.log(user);
+                setUser(user);
+                navigate("/tutor");
+            } catch (err) {
+                console.log(err);
+                setLoading(true);
+            }
+        }
+
+        auth();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     const renderForms = () => {
         if (isLogin) {
@@ -261,6 +292,8 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
     const lastNameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setShowSpeechBubble(false); // Hide speech bubble when this form is rendered
@@ -327,8 +360,9 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
                 return;
             }
 
-            const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
-            // auwdha218@adwaA
+            // const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
+            setUser(firebaseRes.user);
+            navigate("/tutor");
         } catch (err) {
             if (err.message && err.message.includes("email-already-in-use")) {
                 console.log(`email in use`);

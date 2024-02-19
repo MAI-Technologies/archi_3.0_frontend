@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 // import { ContentWrapper } from "../components/Navbar/NavbarElements";
 import { v4 } from 'uuid';
 import TutorData from '../components/Tutor/TutorData';
@@ -9,15 +9,8 @@ import userImage from "../../src/assets/user.png";
 // import axios from "axios";
 import PopupButton from '../components/PopupButton/PopupButton';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
-
-// function getSessionId() {
-//     if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") === "") {
-//         sessionStorage.setItem("token", v4());
-//     }
-
-//     return sessionStorage.getItem("token");
-// }
-
+import { authenticateUser } from '../utils/auth';
+import { UserContext } from "../contexts/UserContext"
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
@@ -29,23 +22,47 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const [streaming, setStreaming] = useState(false);
     const [streamText, setStreamText] = useState("");
     const [sessionId, setSessionId] = useState("");
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     useEffect(() => {
-        // Hide the popup button when the ChatbotPage mounts
-        onPopupVisibility(false);
+        authenticateUser().then((user) => {
+            if (user == null) return navigate("/login");
+            setUser(user);
+            // Hide the popup button when the ChatbotPage mounts
+            onPopupVisibility(false);
 
-        // create a new session
-        setSessionId(v4());
+            // create a new session
+            setSessionId(v4());
+            setLoading(false);
+            scrollToBottom();
+            console.log(user);
+        }).then(err => {
+            if (!err) return;
+            console.log(err);
+            navigate("/login");
+        })
 
         // Show the popup button again when the ChatbotPage unmounts
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility]);
+    }, [onPopupVisibility, streamText, navigate]);
 
     if (!tutor) {
         return <div> Tutor not found </div>;
     }
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
     const preprocessMath = (msg) => {
         // Regular expression to match 'x^b' pattern and exclude 'x^{b}'
         const regex = /(\w)\^([^\{])/g;
@@ -96,11 +113,6 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         }
     }
 
-
-    if (!tutor) {
-        return <div> Tutor not found </div>;
-    }
-
     const handlePopupToggle = (isVisible) => {
         console.log("Popup visibility changed to:", isVisible);
         setIsPopupVisible(isVisible);
@@ -111,17 +123,6 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         if (!str) return str;
         return str.charAt(0).toLowerCase() + str.slice(1);
     };
-
-    /* For auto-scrolling to the latest message */
-    const messagesEndRef = useRef(null);
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    useEffect(() => {
-        scrollToBottom()
-    }, [streamText]);
 
     const config = {
         loader: { load: ['input/tex', 'output/chtml'] },

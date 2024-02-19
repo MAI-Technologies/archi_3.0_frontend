@@ -7,9 +7,10 @@ import LandingPage from './pages/LandingPage';
 import MetricsPage from './pages/MetricsPage';
 import TutorPage from './pages/TutorPage';
 import ChatbotPage from './pages/ChatbotPage';
-import SignupPage from './pages/SignupPage'; 
+import SignupPage from './pages/SignupPage';
 import LearnMorePage from './pages/LearnMorePage';
 import PopupButton from './components/PopupButton/PopupButton';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   // State for tracking popup visibility
@@ -30,23 +31,24 @@ function App() {
   }, []);
 
   return (
-
-    <div className='App'>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route exact path='/' element={<LandingPage />} />
-          <Route exact path='/metrics' element={<MetricsPage />} />
-          <Route exact path='/tutor' element={<TutorPage />} />
-          <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
-          <Route exact path='/signup' element={<SignupPage />} />
-          <Route path='/login' element={<SignupPage />} />
-          <Route exact path='/learnmore' element={<LearnMorePage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <UserProvider>
+      <div className='App'>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route exact path='/' element={<LandingPage />} />
+            <Route exact path='/metrics' element={<MetricsPage />} />
+            <Route exact path='/tutor' element={<TutorPage />} />
+            <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
+            <Route exact path='/signup' element={<SignupPage />} />
+            <Route path='/login' element={<SignupPage />} />
+            <Route exact path='/learnmore' element={<LearnMorePage />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </UserProvider>
   );
-};
+}
 
 // New component to manage the display of the PopupButton
 function InfoButton() {
