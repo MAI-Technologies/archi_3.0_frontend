@@ -325,7 +325,7 @@ html, body {
 
 /* ----------------Character styles---------------- */
 
-.characterContainer {
+.characterContainer1 {
   position: absolute;
   top: 60%;
   left: 60%; /* Start from the right edge of the registration form assuming it's max-width is 620px */
@@ -341,38 +341,46 @@ html, body {
   align-self: center;
 }
 
-.characterContainer.loading,
-.characterContainer.loaded,
-.characterContainer.moving {
-  /* Apply uniform sizing and positioning across different stages */
-  width: 412px; /* Adjust based on actual image size for consistency */
-  height: auto; /* Maintain aspect ratio */
+.characterContainer {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 2s ease; /* Smooth transition for any changes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto; /* Don't grow, don't shrink, based on its width */
 }
 
-.characterContainer.loading {
-  /* Styles for the loading stage */
-  animation: loadingAnimation 5s infinite; /* Keep looping the initial animation */
-  /* Add initial transform if needed for static positioning before animation starts */
+.characterContainer.loading .speechBubble {
+  appearance: none;
 }
 
-.characterContainer.loading {
-  animation: moveCharacter 10s forwards; /* Adjust timing as needed */
+.characterContainer.loading .characterImage {
+  height: 375px;
+  width: auto;
+  margin-bottom: 35px;
+  margin-left: 20px;
+}
+
+.characterContainer .characterImage {
+  max-height: 100%; /* Ensures image does not overflow its container */
+  height: 412px;
+  width: auto; /* Maintains the aspect ratio of the image */
 }
 
 .characterContainer.loaded {
-  /* Styles for the loaded stage */
-  animation: moveCharacter 10s forwards; /* Adjust timing as needed */
-}
-.characterContainer.moving {
-  /* Apply moving animation */
-  animation: moveCharacter 10s forwards; /* Adjust as necessary for your moving effect */
+  top: 60%; /* Adjust if you want to move up or down */
+  left: 80%; /* Increase this value to move further to the right */
+  height: 412px;
+  width: auto; /* Maintains the aspect ratio of the image */
+  transition: all 2s ease; /* Smooth transition for any changes */
 }
 
-.characterImage {
-  max-width: 100%; /* Ensures image does not overflow its container */
-  width: 412px;
-  min-width: 412px;
-  height: auto; /* Maintains the aspect ratio of the image */
+.characterContainer.moving {
+  height: 412px;
+  width: auto; /* Maintains the aspect ratio of the image */
 }
 
 .speechBubble {

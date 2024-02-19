@@ -127,7 +127,7 @@ const SignupPage = () => {
             <div className="contentContainer">
                 {animationStarted && renderForms()}
                 <Character
-                    imageSrc="/img/archi_amazed.png" // Your final character image
+                    imageSrc={characterImageSrc} // Your final character image
                     speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
                     className={styles.characterContainer} // This is your existing styling base class
                     imageStage={imageStage} // Pass the state controlling the image stage
