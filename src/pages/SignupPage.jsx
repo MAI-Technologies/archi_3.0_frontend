@@ -22,16 +22,28 @@ const SignupPage = () => {
 
     // Start the animation after the component mounts
     useEffect(() => {
-        const minDisplayTime = 5000;
+        const minDisplayTime = 2000;
+        const moveAnimationTime = 2000;
     
         const handleLoad = () => {
             // Calculate the remaining time needed to meet the minimum display time.
             const elapsedTime = new Date().getTime() - startTime;
             const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
     
-            // Wait for the remaining time before changing the image stage.
+            // First, ensure the loading image is displayed for a minimum time.
             setTimeout(() => {
-                setImageStage('loaded'); // Change to the next stage after the remaining time.
+                // Change the stage to 'moving' to signify that loading is complete.
+                setImageStage('moving');
+
+                // After the image is ready to move, wait for some additional time before starting the move animation.
+                setTimeout(() => {
+                    setImageStage('loaded'); // Change to the 'loaded' stage.
+
+                    // After the move animation time has passed, set animationStarted to true to render the form.
+                    setTimeout(() => {
+                        setAnimationStarted(true);
+                    }, moveAnimationTime);
+                }, remainingTime);
             }, remainingTime);
         };
     
@@ -40,7 +52,7 @@ const SignupPage = () => {
     
         // Add event listener for when the window finishes loading.
         window.addEventListener('load', handleLoad);
-    
+
         return () => {
             window.removeEventListener('load', handleLoad); // Clean up the event listener when the component unmounts.
         };

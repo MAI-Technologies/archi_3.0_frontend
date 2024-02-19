@@ -372,7 +372,7 @@ html, body {
 
 .characterContainer.loaded {
   top: 60%; /* Adjust if you want to move up or down */
-  left: 80%; /* Increase this value to move further to the right */
+  left: 75%; /* Increase this value to move further to the right */
   height: 412px;
   width: auto; /* Maintains the aspect ratio of the image */
   transition: all 2s ease; /* Smooth transition for any changes */
