@@ -8,6 +8,7 @@ import MetricsPage from './pages/MetricsPage';
 import TutorPage from './pages/TutorPage';
 import ChatbotPage from './pages/ChatbotPage';
 import SignupPage from './pages/SignupPage';
+import PasswordResetPage from './pages/PasswordResetPage';
 import LearnMorePage from './pages/LearnMorePage';
 import PopupButton from './components/PopupButton/PopupButton';
 import { UserProvider } from './contexts/UserContext';

@@ -37,6 +37,7 @@ html, body {
 /* ----------------Styles for signup and login forms---------------- */
 
 .registrationForm {
+  transition: all 2s ease; /* Smooth transition for any changes */
   background-color: #FFFFFF;
   color: #C05F41;
   padding-top: 50px;
@@ -173,6 +174,29 @@ html, body {
 }
 
 /* Style templates for three side-by-side dropdown inputs */
+
+.firstInput,
+.secondInput,
+.thirdInput {
+  background-color: #F5F5F5;
+  width: 160px;
+  height: 47px;
+  font-size: 16px;
+  color: #C05F41;
+  margin-top: 5px;
+  padding-left: 10px;
+  text-align: center;
+   -webkit-appearance: none; /* Removes default Chrome & Safari styling */
+  -moz-appearance: none;    /* Removes default Firefox styling */
+  appearance: none;         /* Removes default styling for IE */
+  background-color: #f5f5f5;
+  padding: 5px 10px;
+  background-image: url(/img/dropdown_arrow.png); /* Your custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Adjust as needed */
+  background-size: 10px; /* Adjust size of your custom arrow */
+}
+
 .firstInput {
   border-left: #C05F41;
   border-top: #C05F41;
@@ -187,6 +211,7 @@ html, body {
   border-bottom: #C05F41;
   border-right: 0.5px solid #C05F41;
   border-left: 0.5px solid #C05F41;
+  border-radius: none;
 }
 
 .thirdInput {
@@ -196,19 +221,6 @@ html, body {
   border-left: 0.5px solid #C05F41;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-}
-
-.firstInput,
-.secondInput,
-.thirdInput {
-  background-color: #F5F5F5;
-  width: 164px;
-  height: 47px;
-  font-size: 16px;
-  color: #C05F41;
-  margin-top: 5px;
-  padding-left: 10px;
-  text-align: center;
 }
 
 /* Style template for any form input bar */
@@ -314,7 +326,7 @@ html, body {
 
 /* ----------------Character styles---------------- */
 
-.characterContainer {
+.characterContainer1 {
   position: absolute;
   top: 60%;
   left: 60%; /* Start from the right edge of the registration form assuming it's max-width is 620px */
@@ -330,11 +342,50 @@ html, body {
   align-self: center;
 }
 
-.characterImage {
-  max-width: 100%; /* Ensures image does not overflow its container */
-  width: 412px;
-  min-width: 412px;
-  height: auto; /* Maintains the aspect ratio of the image */
+.characterContainer {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 2s ease; /* Smooth transition for any changes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto; /* Don't grow, don't shrink, based on its width */
+}
+
+.characterContainer.loading .speechBubble {
+  display: none;
+}
+
+.characterContainer.loading .characterImage {
+  height: 375px;
+  width: auto;
+  margin-bottom: 35px;
+  margin-left: 20px;
+}
+
+.characterContainer .characterImage {
+  max-height: 100%; /* Ensures image does not overflow its container */
+  height: 412px;
+  width: auto; /* Maintains the aspect ratio of the image */
+}
+
+.characterContainer.loaded {
+  top: 60%; /* Adjust if you want to move up or down */
+  left: 75%; /* Increase this value to move further to the right */
+  height: 412px;
+  width: auto; /* Maintains the aspect ratio of the image */
+  transition: all 2s ease; /* Smooth transition for any changes */
+}
+
+.characterContainer.loaded .speechBubble {
+  transition: all 2s ease; /* Smooth transition for any changes */
+}
+
+.characterContainer.moving {
+  height: 412px;
+  width: auto; /* Maintains the aspect ratio of the image */
 }
 
 .speechBubble {
