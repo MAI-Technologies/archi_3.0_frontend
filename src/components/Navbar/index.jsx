@@ -2,8 +2,18 @@ import React from 'react';
 import SignoutButton from '../SignoutButton/SignoutButton';
 import TutorData from '../Tutor/TutorData';
 import styles from './Navbar.module.css';
+import { logout } from '../../utils/auth';
 
 function conditionalNav() {
+	async function logoutHandler() {
+		try {
+			await logout();
+			console.log(`logout successful`);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+  
     // Extract the last part of the URL
     const lastPath = window.location.pathname.split('/').pop();
 	console.log(lastPath);
@@ -38,10 +48,10 @@ const Navbar = () => {
 		<>
 			<div className={styles.content}>
 				{conditionalNav()}
-				<a href = '/'>
+				{/* <a href='/'>
 					<div className={styles.clickableArea}>
 					</div>
-				</a>
+				</a> */}
 			</div>
 		</>
 	);

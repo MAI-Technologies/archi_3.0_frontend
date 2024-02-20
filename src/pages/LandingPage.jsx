@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 //import { ContentWrapper } from "../components/Navbar/NavbarElements";
 import styles from "./LandingPage.module.css";
+import { authenticateUser } from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 const LandingPage = () => {
@@ -19,17 +21,38 @@ const LandingPage = () => {
 			setIsVisible(true);
 		}  
 	};
+	
+	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
 
-	useEffect(() => {   
-		window.addEventListener("scroll", listenToScroll, true);
+	useEffect(() => {
+		const auth = async () => {
+			try {
+				const user = await authenticateUser();
+
+				// not logged in
+				if (!user) {
+					setLoading(false);
+				}
+
+				console.log({ user });
+			} catch (err) {
+				console.log(err);
+				setLoading(true);
+			}
+		}
+
+		auth();
+    window.addEventListener("scroll", listenToScroll, true);
 		return () => 
 			window.removeEventListener("scroll", listenToScroll, true); 
-	}, [height]);
-	
+	}, [isVisible, height]);
+
 	return (
 		<div className={styles.content}>
 			{ 
 				!isVisible &&
+
 				<div>
 					<button type="getStartedBarBtn" className={styles.getStartedBarBtn} onClick={() => window.location.href = '/signup'}>
 						Get Started
@@ -52,7 +75,7 @@ const LandingPage = () => {
 						<img src="/img/planet.png" alt="planet image"></img>
 					</div>
 				</div>
-				
+
 				<div className={styles.textBlock1}>
 					<h2>Welcome to Archimedes, </h2>
 					<h2>An AI tutor for mathematics!</h2>
@@ -70,13 +93,13 @@ const LandingPage = () => {
 				<div className={styles.textBlock2}>
 					<h2>Who We Are</h2>
 					<p>
-						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
-						tutor, that they can not only utilize to answer their questions for various coursework, but 
+						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math
+						tutor, that they can not only utilize to answer their questions for various coursework, but
 						also to review material learned in previous courses.
 					</p>
 					<p>
-						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
-						tutor, that they can not only utilize to answer their questions for various coursework, but 
+						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math
+						tutor, that they can not only utilize to answer their questions for various coursework, but
 						also to review material learned in previous courses.
 					</p>
 
@@ -93,8 +116,8 @@ const LandingPage = () => {
 				<div className={styles.textBlock3}>
 					<h2>How It Works</h2>
 					<p>
-						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
-						tutor, that they can not only utilize to answer their questions for various coursework, but 
+						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math
+						tutor, that they can not only utilize to answer their questions for various coursework, but
 						also to review material learned in previous courses.
 					</p>
 
@@ -108,8 +131,8 @@ const LandingPage = () => {
 				<div className={styles.textBlock4}>
 					<h2>FAQs</h2>
 					<p>
-						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math 
-						tutor, that they can not only utilize to answer their questions for various coursework, but 
+						We are a team of ... Our goal is to provide all students with a custom, high-quality, 24/7 math
+						tutor, that they can not only utilize to answer their questions for various coursework, but
 						also to review material learned in previous courses.
 					</p>
 
