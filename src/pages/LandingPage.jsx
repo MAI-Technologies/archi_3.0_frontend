@@ -4,16 +4,10 @@ import styles from "./LandingPage.module.css";
 
 
 const LandingPage = () => {
-
-	const [isVisible, setIsVisible] = useState(true);
-  	const [height, setHeight] = useState(0);
-  
-	useEffect(() => {   
-		window.addEventListener("scroll", listenToScroll);
-		return () => 
-			window.removeEventListener("scroll", listenToScroll); 
-	}, []);
 	
+	const [isVisible, setIsVisible] = useState(true);
+	const [height, setHeight] = useState(0);
+
 	const listenToScroll = () => {
 		let heightToHideFrom = 500;
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -26,6 +20,12 @@ const LandingPage = () => {
 		}  
 	};
 
+	useEffect(() => {   
+		window.addEventListener("scroll", listenToScroll, true);
+		return () => 
+			window.removeEventListener("scroll", listenToScroll, true); 
+	}, [height]);
+	
 	return (
 		<div className={styles.content}>
 			{ 
@@ -80,7 +80,7 @@ const LandingPage = () => {
 						also to review material learned in previous courses.
 					</p>
 
-					<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/'}>
+					<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/learnmore'}>
 						Learn More
 					</button>
 				</div>
@@ -98,7 +98,7 @@ const LandingPage = () => {
 						also to review material learned in previous courses.
 					</p>
 
-					<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/'}>
+					<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/learnmore'}>
 						Learn More
 					</button>
 				</div>
@@ -113,7 +113,7 @@ const LandingPage = () => {
 						also to review material learned in previous courses.
 					</p>
 
-					<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/'}>
+					<button type="learnMore" className={styles.learnMoreBtn} onClick={() => window.location.href = '/learnmore'}>
 						Learn More
 					</button>
 				</div>

@@ -1,0 +1,163 @@
+/* LearnMorePage.module.css */
+
+/* Styles for the main container */
+.content {
+    height: 315vh;
+    padding-top: 51px;
+}
+
+.getStartedBarBtn {
+    /*display: none;*/
+    position: fixed;
+    width: 170px;
+    height: 34px;
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    border-radius: 22px;
+    border: 1px solid white;
+    right: 50px;
+    top: 17px;
+    z-index: 2147483647;
+}
+
+.getStartedBarBtn:hover {
+    background-image: url("/img/btnHover.png");
+    background-size: cover;
+}
+
+/* Section 1 elements */
+.section1 {
+    position: relative;
+    height: 90vh;
+    width: 100vw;
+}
+
+.accordion {
+    max-width: 1000px;
+    overflow: hidden;
+    margin-top: 110px;
+    margin-left: 170px;
+    /*border: 1px yellow solid;*/
+}
+
+.accordion h2 {
+    font-family: 'Baloo 2';
+    color: white;
+    font-weight: 700;
+    padding-bottom: 30px;
+}
+
+.accordion p {
+    font-family: 'Baloo 2';
+    color: white;
+    font-size: 18px;
+}
+
+.accordion_label {
+    display: block;
+    font-family: 'Baloo 2';
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.accordion_label:hover {
+    color: #c5c5c5;
+}
+
+.accordion_content {
+    line-height: 1.6;
+    display: none;
+}
+
+.accordion_input {
+    display: none;
+}
+
+.accordion_input:checked ~ .accordion_label {
+    color: #EC9C74;
+}
+
+.accordion_input:checked ~ .accordion_content {
+    display: block;
+}
+
+/* Section 2 elements */
+.section2 {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+
+.mission {
+    position: absolute;
+    max-width: 550px;
+    margin-top: 200px;
+    right: 160px;
+}
+
+.mission h2 {
+    font-family: 'Baloo 2';
+    font-weight: 700;
+    padding-bottom: 10px;
+
+    background: linear-gradient(to right, #C05F41, #c2b0a7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    text-shadow: none;
+}
+
+.mission p {
+    font-family: 'Baloo 2';
+    color: white;
+    font-size: 18px;
+}
+
+/* Section 3 elements */
+.section3 {
+    position: relative;
+    height: 75vh;
+    width: 100vw;
+}
+
+.vision {
+    max-width: 550px;
+    margin-top: 150px;
+    margin-left: 170px;
+}
+
+.vision h2 {
+    font-family: 'Baloo 2';
+    color: white;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.vision p {
+    font-family: 'Baloo 2';
+    color: white;
+    font-size: 18px;
+}
+
+.tryArchiBtn {
+    width: 230px;
+    height: 34px;
+    background-color: #EA8363;
+    color: white;
+    font-weight: 600;
+    border-radius: 22px;
+    border: none;
+    box-shadow: 0px 3px rgba(0, 0, 0, 0.2);
+    margin-top: 5px;
+  }
+  
+  .tryArchiBtn:hover {
+    background-image: url("/img/btnHover.png");
+    background-size: cover;
+  }
