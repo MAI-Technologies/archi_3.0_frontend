@@ -5,8 +5,8 @@ import { v4 } from 'uuid';
 import TutorData from '../components/Tutor/TutorData';
 import styles from "./ChatbotPage.module.css";
 import ChatInputBar from "../components/ChatInputBar/ChatInputBar";
-import userImage from "../../src/assets/user.png";
-// import axios from "axios";
+// import userImage from "../../src/assets/user.png";
+import axios from "axios";
 import PopupButton from '../components/PopupButton/PopupButton';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { authenticateUser } from '../utils/auth';
@@ -27,9 +27,42 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const [loading, setLoading] = useState(true);
     const messagesEndRef = useRef(null);
 
+    const userImage = () => {
+        switch (tutor.name) {
+            case "Archi":
+                return "/img/archiUser.png";
+            case "Hypatia": 
+                return "/img/hypatiaUser.png";
+            case "Mary J.": 
+                return "/img/mjUser.png";
+            default:
+                return "";
+        }
+    };
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [streamText]);
+
+    // remodel this and change to useEffect and useState instead; refer to stackoverflow
+    async function getConvoHistory() {
+        try {
+            const result = await axios.get("http://localhost:4000/user/get-history", { params: { userId: user.uid } }); // fix this line. axios causes promises error
+            const convoHistory = result.data.convos;
+            console.log("TEST");
+            console.log(convoHistory); // so far this returns an array of all conversation history objects; next need to map each conversation object to a message object and extract the summary and conversations
+
+            return convoHistory;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    };
+
 
     useEffect(() => {
         authenticateUser().then((user) => {
@@ -41,7 +74,6 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // create a new session
             setSessionId(v4());
             setLoading(false);
-            scrollToBottom();
             console.log(user);
         }).then(err => {
             if (!err) return;
@@ -53,7 +85,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility, streamText, navigate]);
+    }, [onPopupVisibility, navigate]); 
 
     if (!tutor) {
         return <div> Tutor not found </div>;
@@ -77,12 +109,12 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             setIsThinking(true);
 
-            const res = await fetch("https://archi2-backend-d33aae681e67.herokuapp.com/openai", {
+            const res = await fetch("http://localhost:4000/openai", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
                 },
-                body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name })
+                body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
 
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
@@ -138,6 +170,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                         New Chat
                     </button>
                     <p className={styles.recent}> Recent </p>
+                    <div>
+                        {console.log(getConvoHistory())}
+                        {/*  {(getConvoHistory().length !== 0) && getConvoHistory().map((convo) => <p>{convo.summary}</p>)}  */}
+                    </div>
                 </div>
                 <div className={`${styles.chatbot} ${isPopupVisible ? styles.chatbotShifted : ''}`}>
                     <div className={styles.output}>
@@ -154,7 +190,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                 return (
                                     <div key={i} className={styles.logMsg}>
                                         <div className={styles.profile}>
-                                            {log.isUser ? <img src={userImage} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
+                                            {log.isUser ? <img src={userImage()} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
                                         </div>
                                         <div className={styles.msg}>
                                             <MathJax dynamic>{log.msg}</MathJax>
