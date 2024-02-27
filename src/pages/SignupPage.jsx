@@ -22,7 +22,7 @@ const SignupPage = () => {
     const [animationStarted, setAnimationStarted] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [imageStage, setImageStage] = useState('loading'); // 'loading', 'loaded', 'moving'
-  
+
     useEffect(() => {
         const auth = async () => {
             try {
@@ -49,15 +49,15 @@ const SignupPage = () => {
 
         // Start with the GIF showing by setting the image stage to 'loading'.
         setImageStage('loading');
-    
+
         const handleLoad = () => {
             // Record the start time when the component mounts.
             const startTime = new Date().getTime();
-            
+
             // Calculate the remaining time needed to meet the minimum display time.
             const elapsedTime = new Date().getTime() - startTime;
             const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-    
+
             // First, ensure the loading image is displayed for a minimum time.
             setTimeout(() => {
                 // Change the stage to 'moving' to signify that loading is complete.
@@ -74,7 +74,7 @@ const SignupPage = () => {
                 }, remainingTime);
             }, remainingTime);
         };
-    
+
         // Add event listener for when the window finishes loading.
         window.addEventListener('load', handleLoad);
 
@@ -423,8 +423,16 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
 
     async function signupWithGoogleHandler() {
         try {
-            const user = await loginWithGoogle();
-            console.log(user);
+            const firebaseRes = await loginWithGoogle();
+            const user = firebaseRes?.user;
+            if (!user) return;
+
+            const name = user.displayName.split(" ");
+            if (name.length < 1) return;
+
+            const res = await addUserRequest(user.uid, name[0], name[1] || "", getDob(), user.email, "NULL", "google")
+            setUser(user);
+            navigate("/tutor");
         } catch (err) {
             console.log(err);
         }

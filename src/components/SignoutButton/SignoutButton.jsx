@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './SignoutButton.module.css'; // Import your CSS file
+import { logout } from '../../utils/auth';
 
 function SignoutButton({ color, filter }) {
     const [isHovered, setIsHovered] = useState(false);
@@ -21,12 +22,12 @@ function SignoutButton({ color, filter }) {
     // Dynamic inline styles for different states
     const dynamicStyles = {
         ...defaultStyle,
-        color: isHovered ? color : isClicked ? '#FFFFFF' : '#FFFFFF', 
+        color: isHovered ? color : isClicked ? '#FFFFFF' : '#FFFFFF',
     };
 
     if (isHovered) {
         dynamicStyles.backgroundColor = '#FFFFFF';
-        dynamicStyles.borderColor = color; 
+        dynamicStyles.borderColor = color;
     }
 
     if (isClicked) {
@@ -41,8 +42,9 @@ function SignoutButton({ color, filter }) {
             style={dynamicStyles}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={() => {
+            onClick={async () => {
                 setIsClicked(!isClicked);
+                await logout();
                 // navigate back to landing page
                 window.location.href = '/';
             }}
