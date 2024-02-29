@@ -6,7 +6,6 @@ import { logout } from '../../utils/auth';
 
 function conditionalNav() {
 	async function logoutHandler() {
-        console.log("WTF");
 		try {
 			await logout();
 			console.log(`logout successful`);

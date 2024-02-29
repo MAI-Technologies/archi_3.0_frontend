@@ -7,7 +7,7 @@ const firebaseConfig = {
     projectId: "archi-3",
     storageBucket: "archi-3.appspot.com",
     messagingSenderId: "999325378837",
-    appId: "1:999325378837:web:04cd14c0911d8a6db5611c"
+    projectId: "1:999325378837:web:04cd14c0911d8a6db5611c"
 };
 
 const app = initializeApp(firebaseConfig);

@@ -43,9 +43,9 @@ function SignoutButton({ color, filter, onLogout }) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => {
-                setIsClicked(!isClicked);
                 // logout using firebase
                 onLogout();
+                setIsClicked(!isClicked);
                 // navigate back to landing page
                 window.location.href = '/';
             }}

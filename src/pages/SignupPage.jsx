@@ -512,6 +512,7 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
     const [passwordHint, setPasswordHint] = useState('');
     const emailRef = useRef();
     const passwordRef = useRef();
+    const navigate = useNavigate();
 
     // Modify speech bubble content when the LoginForm is rendered
     useEffect(() => {
@@ -549,6 +550,7 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
         try {
             const user = await loginWithEmailAndPassword(email, password);
             console.log(user);
+            navigate("/tutor"); // Navigate after successful login
 
         } catch (err) {
             console.log(err);
