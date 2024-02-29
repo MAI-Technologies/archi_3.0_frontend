@@ -6,6 +6,7 @@ import { logout } from '../../utils/auth';
 
 function conditionalNav() {
 	async function logoutHandler() {
+        console.log("WTF");
 		try {
 			await logout();
 			console.log(`logout successful`);
@@ -25,14 +26,14 @@ function conditionalNav() {
         // If tutor exists, return navbar with background image and SignoutButton with themeColor
         return (
             <div className={styles.bar} style={{ backgroundImage: `url(/img/${tutor.id}Header.png)` }}>
-                <SignoutButton color={`${tutor.themeColor}`} filter={`${tutor.filter}`}></SignoutButton>
+                <SignoutButton color={`${tutor.themeColor}`} filter={`${tutor.filter}`} onLogout={logoutHandler}></SignoutButton>
             </div>
         );
     } else if (window.location.pathname === "/tutor") {
         // Specific case for tutor main page
         return (
             <div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}>
-                <SignoutButton></SignoutButton>
+                <SignoutButton onLogout={logoutHandler}></SignoutButton>
             </div>
         );
     } else {

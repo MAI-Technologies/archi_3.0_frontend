@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './SignoutButton.module.css'; // Import your CSS file
+import { onLog } from 'firebase/app';
 
-function SignoutButton({ color, filter }) {
+function SignoutButton({ color, filter, onLogout }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -43,6 +44,8 @@ function SignoutButton({ color, filter }) {
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => {
                 setIsClicked(!isClicked);
+                // logout using firebase
+                onLogout();
                 // navigate back to landing page
                 window.location.href = '/';
             }}
