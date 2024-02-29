@@ -1,6 +1,6 @@
 .buttonBase {
     background-color: transparent;
-    background-image: url('../../../public/img/star.png');
+    background-image: url('../../../public/img/sign-out-star.png');
     width: 20px; 
     height: 24px;
     cursor: pointer;
@@ -40,7 +40,7 @@
 }
 
 .buttonNotHoveredNotClicked  {
-    background-image: url('../../../public/img/star.png');
+    background-image: url('../../../public/img/sign-out-star.png');
     background-size: cover; /* Cover the entire area of the button */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Do not repeat the image */
