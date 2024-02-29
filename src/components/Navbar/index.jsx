@@ -48,10 +48,10 @@ const Navbar = () => {
 		<>
 			<div className={styles.content}>
 				{conditionalNav()}
-				{/* <a href='/'>
+				<a href='/'>
 					<div className={styles.clickableArea}>
 					</div>
-				</a> */}
+				</a>
 			</div>
 		</>
 	);
