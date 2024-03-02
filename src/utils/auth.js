@@ -39,7 +39,7 @@ export async function loginWithGoogle() {
         const result = await signInWithPopup(auth, providerGoogle);
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        return result.user;
+        return result;
     } catch (err) {
         throw err;
     }

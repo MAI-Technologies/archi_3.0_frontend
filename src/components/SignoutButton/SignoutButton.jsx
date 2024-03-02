@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './SignoutButton.module.css'; // Import your CSS file
+import { logout } from '../../utils/auth';
 import { onLog } from 'firebase/app';
 
 function SignoutButton({ color, filter, onLogout }) {
@@ -22,12 +23,12 @@ function SignoutButton({ color, filter, onLogout }) {
     // Dynamic inline styles for different states
     const dynamicStyles = {
         ...defaultStyle,
-        color: isHovered ? color : isClicked ? '#FFFFFF' : '#FFFFFF', 
+        color: isHovered ? color : isClicked ? '#FFFFFF' : '#FFFFFF',
     };
 
     if (isHovered) {
         dynamicStyles.backgroundColor = '#FFFFFF';
-        dynamicStyles.borderColor = color; 
+        dynamicStyles.borderColor = color;
     }
 
     if (isClicked) {
@@ -42,10 +43,9 @@ function SignoutButton({ color, filter, onLogout }) {
             style={dynamicStyles}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={() => {
-                // logout using firebase
-                onLogout();
+            onClick={async () => {
                 setIsClicked(!isClicked);
+                await logout();
                 // navigate back to landing page
                 window.location.href = '/';
             }}
