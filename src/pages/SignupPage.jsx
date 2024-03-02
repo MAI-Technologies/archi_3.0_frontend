@@ -430,7 +430,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
             const name = user.displayName.split(" ");
             if (name.length < 1) return;
 
-            const res = await addUserRequest(user.uid, name[0], name[1] || "", getDob(), user.email, "NULL", "google")
+            // const res = await addUserRequest(user.uid, name[0], name[1] || "", getDob(), user.email, "NULL", "google")
             setUser(user);
             navigate("/tutor");
         } catch (err) {
@@ -565,6 +565,18 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
         }
     }
 
+    async function signInWithGoogleSubmitHandler(e) {
+        e.preventDefault();
+
+        try {
+            const user = await loginWithGoogle();
+            console.log(user);
+            navigate("/tutor"); // Navigate after successful login
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <div className={styles.registrationForm}>
 
@@ -601,7 +613,7 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                         <p>Forgot password?</p>
                     </div>
                     <DividerWithText>or</DividerWithText>
-                    <button type="button" className={styles.googleSigninButton}>
+                    <button type="button" className={styles.googleSigninButton} onClick={signInWithGoogleSubmitHandler}>
                         <img src="./img/signin_w_google_button.png" alt="Google Image" />
                     </button>
                     <div className={styles.navigate}>
