@@ -29,7 +29,7 @@ const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput, isExpan
     <>
       <div className={styles.buttonContainer}>
         <button className={`${styles.button} ${isExpanded ? styles.buttonClicked : ''}`} onClick={toggleCalculator}>
-          <img className={styles.calc} src="/img/calculator.png" alt="Calculator"></img>
+          <img className={styles.calc} src="/img/ios-calculator.png" alt="Calculator"></img>
           <img className={`${styles.expand} ${isExpanded ? styles.expandClicked : ''}`} src="/img/expand.png" alt="Expand"></img>
         </button>
       </div>
