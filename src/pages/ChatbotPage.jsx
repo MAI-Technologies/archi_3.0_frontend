@@ -10,7 +10,8 @@ import axios from "axios";
 import PopupButton from '../components/PopupButton/PopupButton';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { authenticateUser } from '../utils/auth';
-import { UserContext } from "../contexts/UserContext"
+import { UserContext } from "../contexts/UserContext";
+import { addConvoRequest } from '../requests/addConvoRequest';
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
@@ -26,6 +27,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const messagesEndRef = useRef(null);
+    const [convoHistory, setConvoHistory] = useState([]);
 
     const userImage = () => {
         switch (tutor.name) {
@@ -44,25 +46,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    // Must put scrollToBottom in its own useEffect() because putting it in the other one would keep regenerating a new sessionId every stream text
     useEffect(() => {
         scrollToBottom()
     }, [streamText]);
-
-    // remodel this and change to useEffect and useState instead; refer to stackoverflow
-    async function getConvoHistory() {
-        try {
-            const result = await axios.get("http://localhost:4000/user/get-history", { params: { userId: user.uid } }); // fix this line. axios causes promises error
-            const convoHistory = result.data.convos;
-            console.log("TEST");
-            console.log(convoHistory); // so far this returns an array of all conversation history objects; next need to map each conversation object to a message object and extract the summary and conversations
-
-            return convoHistory;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        }
-    };
-
 
     useEffect(() => {
         authenticateUser().then((user) => {
@@ -74,6 +61,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // create a new session
             setSessionId(v4());
             setLoading(false);
+            getConvoHistory(user);
             console.log(user);
         }).then(err => {
             if (!err) return;
@@ -85,7 +73,22 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility, navigate]); 
+    }, [onPopupVisibility]); 
+
+    // For displaying conversations history on the side bar
+    async function getConvoHistory(user) {
+        try {
+            const result = await axios.get("http://localhost:4000/user/get-history", { params: { userId: user.uid } });
+            const convos = result.data.convos;
+            convos.sort(function(x, y) {
+                return Date.parse(y.createdAt) - Date.parse(x.createdAt);
+            })
+            setConvoHistory(convos);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    };
 
     if (!tutor) {
         return <div> Tutor not found </div>;
@@ -102,6 +105,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     };
 
     async function sendMessageHandler(msg) {
+        console.log(sessionId);
         // Format the user input for MathJax if it contains LaTeX
         const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
         setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
@@ -161,6 +165,58 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
     };
 
+    // Load old convo on the screen
+    async function loadPastConvo(oldSessionId) {
+        try {
+            const result = await axios.get("http://localhost:4000/user/get-convo", { params: { sessionId: oldSessionId } });
+            const convo = result.data.convo;
+            const convos = convo.conversations;
+            const newSessionId = v4();
+    
+            // Navigate to the corresponding tutor page and create a new session
+            switch (convo.tutorName.toLowerCase()) {
+                case "hypatia":
+                    navigate("/chatbot/hypatia");
+                    setSessionId(newSessionId);
+                    break;
+                case "mary j.":
+                    navigate("/chatbot/mary_j");
+                    setSessionId(newSessionId);
+                    break;
+                default:
+                    navigate("/chatbot/archi");
+                    setSessionId(newSessionId);
+                    break;
+            }
+            console.log("NEW SESSION" + newSessionId);
+
+            // Display all previous messages 
+            const newConversation = [{ role: "system", content: convos[0].content }, { role: "assistant", content: convos[1].content }];
+            setHistory([]);
+            for(let i = 2; i < convos.length; i++) {
+                const msg = convos[i].content;
+                const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
+    
+                if (convos[i].role === "assistant") {
+                    setHistory(prev => [...prev, { isUser: false, msg: formattedMsg }]);
+                    newConversation.push({role: "assistant", content: msg});
+                } else {
+                    setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
+                    newConversation.push({role: "user", content: msg});
+                }
+            }
+
+            // create new convo with old convo info
+            await addConvoRequest(newSessionId, convo.userId, convo.summary, convo.tutorName, newConversation);
+            // then delete old convo from database
+            await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: oldSessionId } });
+            
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
     return (
         <MathJaxContext config={config}>
             <div className={styles.content}>
@@ -170,9 +226,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                         New Chat
                     </button>
                     <p className={styles.recent}> Recent </p>
-                    <div>
-                        {console.log(getConvoHistory())}
-                        {/*  {(getConvoHistory().length !== 0) && getConvoHistory().map((convo) => <p>{convo.summary}</p>)}  */}
+                    <div className={styles.convoHistoryContainer}>
+                        <ul className={styles.convoHistoryList}>
+                            {convoHistory.map(convo => ( <li className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 30)}</li> ))}
+                        </ul>
                     </div>
                 </div>
                 <div className={`${styles.chatbot} ${isPopupVisible ? styles.chatbotShifted : ''}`}>
