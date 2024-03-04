@@ -59,7 +59,7 @@ body {
 .recent {
     font-size: 17px;
     color: white;
-    padding-top: 10px;
+    padding-top: 22px;
 }
 
 /* Styles for chatbot container + when it shifts in response to the question button being clicked */
@@ -230,4 +230,20 @@ body {
 .purpose, .greeting, .botText {
     padding-right: -10px; 
     /*padding-left: 10px*/
+}
+
+.convoHistoryList {
+    padding-left: 12px;
+    width: 210px;
+    list-style-type: square;
+    font-weight: 100;
+}
+
+.convoHistoryItem {
+    padding-bottom: 6px;
+}
+
+.convoHistoryItem:hover {
+    color: rgb(170, 170, 170);
+    cursor: pointer;
 }

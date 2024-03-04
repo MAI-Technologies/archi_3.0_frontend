@@ -73,16 +73,25 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility]); 
+    }, [onPopupVisibility, navigate]); 
 
     // For displaying conversations history on the side bar
     async function getConvoHistory(user) {
         try {
             const result = await axios.get("http://localhost:4000/user/get-history", { params: { userId: user.uid } });
             const convos = result.data.convos;
+            // Order from most recent to least recent 
             convos.sort(function(x, y) {
                 return Date.parse(y.createdAt) - Date.parse(x.createdAt);
             })
+
+            // Remove oldest convo from history if there are more than five convos
+            if (convos.length > 5) {
+                await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: convos[convos.length-1].sessionId} });
+                convos.pop();
+            } 
+
+            // Update conversation history on sidebar
             setConvoHistory(convos);
         } catch (err) {
             console.log(err);
