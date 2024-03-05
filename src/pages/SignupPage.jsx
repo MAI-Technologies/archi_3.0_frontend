@@ -20,7 +20,6 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [animationStarted, setAnimationStarted] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const [imageStage, setImageStage] = useState('loading'); // 'loading', 'loaded', 'moving'
 
     useEffect(() => {
@@ -414,6 +413,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
         } catch (err) {
             if (err.message && err.message.includes("email-already-in-use")) {
                 console.log(`email in use`);
+                alert('Email already in use. Please enter another email or log in.'); // Alert if either email in use
                 return;
             }
 
@@ -552,8 +552,10 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
         const email = emailRef.current.value || null;
         const password = passwordRef.current.value || null;
 
-        if (!email) return;
-        if (!password) return;
+        if (!email || !password) {
+            alert('Please enter both email and password.'); // Alert if either email or password is missing
+            return;
+        }
 
         try {
             const user = await loginWithEmailAndPassword(email, password);
@@ -562,6 +564,11 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
 
         } catch (err) {
             console.log(err);
+            if (err.code === 'auth/invalid-credential') {
+                alert('Email or password incorrect. Please try again or sign up.'); // Alert the user if no user is found/ password incorrect
+            } else {
+                alert('Login failed. Please try again.'); // Generic alert for other errors
+            }
         }
     }
 
