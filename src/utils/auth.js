@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, sendPasswordResetEmail } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBpKl7WyQAF_O2SaipPBK8tY8OTgU7rfBs",
@@ -57,4 +57,13 @@ export async function authenticateUser() {
             reject(err);
         }
     });
+}
+
+export async function forgotPassword(email) {
+    try {
+        const res = await sendPasswordResetEmail(auth, email);
+        console.log(res);
+    } catch (err) {
+        throw err;
+    }
 }

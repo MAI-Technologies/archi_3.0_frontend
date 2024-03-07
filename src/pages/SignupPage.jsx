@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import DividerWithText from '../components/DividerWithText/DividerWithText';
 import styles from './SignupPage.module.css'; // Import your CSS module
-import { authenticateUser, loginWithEmailAndPassword, loginWithGoogle, registerUserWithEmailAndPassword } from '../utils/auth';
+import { authenticateUser, forgotPassword, loginWithEmailAndPassword, loginWithGoogle, registerUserWithEmailAndPassword } from '../utils/auth';
 import { addUserRequest } from '../requests/addUserRequest';
 import { UserContext } from '../contexts/UserContext';
 
@@ -520,6 +520,7 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
     const [passwordHint, setPasswordHint] = useState('');
     const emailRef = useRef();
     const passwordRef = useRef();
+    const tempRef = useRef();
     const navigate = useNavigate();
 
     // Modify speech bubble content when the LoginForm is rendered
@@ -621,6 +622,12 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                         <a href="/signup" className={styles.loginLink}>Create a new account</a>
                     </div>
                 </form>
+
+                <div>Forgot Password?</div>
+                <input width="500px" ref={tempRef} />
+                <button onClick={async () => {
+                    await forgotPassword(tempRef.current.value)
+                }}>Submit</button>
             </div>
 
         </div>
