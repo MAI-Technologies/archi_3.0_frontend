@@ -28,6 +28,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const [loading, setLoading] = useState(true);
     const messagesEndRef = useRef(null);
     const [convoHistory, setConvoHistory] = useState([]);
+    const [newChat, setNewChat] = useState(true);
 
     const userImage = () => {
         switch (tutor.name) {
@@ -62,7 +63,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             setSessionId(v4());
             setLoading(false);
             getConvoHistory(user);
+            setNewChat(true);
             console.log(user);
+            console.log(sessionId);
         }).then(err => {
             if (!err) return;
             console.log(err);
@@ -73,7 +76,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility, navigate]); 
+    }, [onPopupVisibility]); 
 
     // For displaying conversations history on the side bar
     async function getConvoHistory(user) {
@@ -137,6 +140,11 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
+
+            if (newChat) { // test this more; in the future, if new random convo keeps generating on side bar, this might be the cause
+                getConvoHistory(user);
+                setNewChat(false);
+            }
 
             // eslint-disable-next-line no-constant-condition
             while (true) {
@@ -204,7 +212,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             setHistory([]);
             for(let i = 2; i < convos.length; i++) {
                 const msg = convos[i].content;
-                const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
+                //const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg); // look into this line
+                const formattedMsg = preprocessMath(msg);
     
                 if (convos[i].role === "assistant") {
                     setHistory(prev => [...prev, { isUser: false, msg: formattedMsg }]);
@@ -226,6 +235,19 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         }
     }
 
+    async function deleteSingleConvo(id) {
+        try {
+            const answer = window.confirm("Are you sure you want to delete this conversation?");
+            if (answer) {
+                await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: id} });
+                window.location.reload();
+            }
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
     return (
         <MathJaxContext config={config}>
             <div className={styles.content}>
@@ -236,9 +258,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     </button>
                     <p className={styles.recent}> Recent </p>
                     <div className={styles.convoHistoryContainer}>
-                        <ul className={styles.convoHistoryList}>
-                            {convoHistory.map(convo => ( <li className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 30)}</li> ))}
-                        </ul>
+                        {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png"/> </div>))}
                     </div>
                 </div>
                 <div className={`${styles.chatbot} ${isPopupVisible ? styles.chatbotShifted : ''}`}>

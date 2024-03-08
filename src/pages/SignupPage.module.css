@@ -95,6 +95,7 @@ html, body {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 15px;
+  width: 100%;
 }
 
 .inputGroup p {
@@ -258,11 +259,11 @@ html, body {
   background-color: white;
   border: none;
   width: 100%;
-  height: 38px;
+  height: 40px;
   box-sizing: border-box; /* Include padding in width calculation */
   margin-top: 15px;
   margin-bottom: 15px;
-
+  padding: 0;
 }
 
 .googleSigninButton img {
