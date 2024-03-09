@@ -20,7 +20,6 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [animationStarted, setAnimationStarted] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const [imageStage, setImageStage] = useState('loading'); // 'loading', 'loaded', 'moving'
 
     useEffect(() => {
@@ -47,41 +46,51 @@ const SignupPage = () => {
         const minDisplayTime = 2000;
         const moveAnimationTime = 2000;
 
-        // Start with the GIF showing by setting the image stage to 'loading'.
-        setImageStage('loading');
 
-        const handleLoad = () => {
-            // Record the start time when the component mounts.
-            const startTime = new Date().getTime();
+        // Check if the page is not the login page before starting the animation.
+        if (!isLogin) {
+            // Start with the GIF showing by setting the image stage to 'loading'.
+            setImageStage('loading');
+            const handleLoad = () => {
+                // Record the start time when the component mounts.
+                const startTime = new Date().getTime();
 
-            // Calculate the remaining time needed to meet the minimum display time.
-            const elapsedTime = new Date().getTime() - startTime;
-            const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+                // Calculate the remaining time needed to meet the minimum display time.
+                const elapsedTime = new Date().getTime() - startTime;
+                const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
 
-            // First, ensure the loading image is displayed for a minimum time.
-            setTimeout(() => {
-                // Change the stage to 'moving' to signify that loading is complete.
-                setImageStage('moving');
-
-                // After the image is ready to move, wait for some additional time before starting the move animation.
+                // First, ensure the loading image is displayed for a minimum time.
                 setTimeout(() => {
-                    setImageStage('loaded'); // Change to the 'loaded' stage.
+                    // Change the stage to 'moving' to signify that loading is complete.
+                    setImageStage('moving');
 
-                    // After the move animation time has passed, set animationStarted to true to render the form.
+                    // After the image is ready to move, wait for some additional time before starting the move animation.
                     setTimeout(() => {
-                        setAnimationStarted(true);
-                    }, moveAnimationTime);
+                        setImageStage('loaded'); // Change to the 'loaded' stage.
+
+                        // After the move animation time has passed, set animationStarted to true to render the form.
+                        setTimeout(() => {
+                            setAnimationStarted(true);
+                        }, moveAnimationTime);
+                    }, remainingTime);
                 }, remainingTime);
-            }, remainingTime);
-        };
+            };
 
-        // Add event listener for when the window finishes loading.
-        window.addEventListener('load', handleLoad);
+            // Add event listener for when the window finishes loading.
+            window.addEventListener('load', handleLoad);
 
-        return () => {
-            window.removeEventListener('load', handleLoad); // Clean up the event listener when the component unmounts.
-        };
-    }, []);
+            return () => {
+                window.removeEventListener('load', handleLoad); // Clean up the event listener when the component unmounts.
+            };
+        } else {
+            // If it is the login page, skip the animation and render the form immediately.
+            setImageStage('loaded');
+            // Ensures the form is displayed immediately without animation.
+            setTimeout(() => {
+                setAnimationStarted(true);
+            }, 100); 
+        }
+    }, [isLogin]);
 
     if (loading) {
         return <div>Loading...</div>
@@ -408,12 +417,13 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
                 return;
             }
 
-            // const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
+            const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
             setUser(firebaseRes.user);
             navigate("/tutor");
         } catch (err) {
             if (err.message && err.message.includes("email-already-in-use")) {
                 console.log(`email in use`);
+                alert('Email already in use. Please enter another email or log in.'); // Alert if either email in use
                 return;
             }
 
@@ -553,8 +563,10 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
         const email = emailRef.current.value || null;
         const password = passwordRef.current.value || null;
 
-        if (!email) return;
-        if (!password) return;
+        if (!email || !password) {
+            alert('Please enter both email and password.'); // Alert if either email or password is missing
+            return;
+        }
 
         try {
             const user = await loginWithEmailAndPassword(email, password);
@@ -563,6 +575,11 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
 
         } catch (err) {
             console.log(err);
+            if (err.code === 'auth/invalid-credential') {
+                alert('Email or password incorrect. Please try again or sign up.'); // Alert the user if no user is found/ password incorrect
+            } else {
+                alert('Login failed. Please try again.'); // Generic alert for other errors
+            }
         }
     }
 
