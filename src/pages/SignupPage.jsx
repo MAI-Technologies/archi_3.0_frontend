@@ -417,7 +417,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
                 return;
             }
 
-            // const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
+            const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
             setUser(firebaseRes.user);
             navigate("/tutor");
         } catch (err) {

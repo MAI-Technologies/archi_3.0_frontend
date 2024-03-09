@@ -5,12 +5,13 @@ import { v4 } from 'uuid';
 import TutorData from '../components/Tutor/TutorData';
 import styles from "./ChatbotPage.module.css";
 import ChatInputBar from "../components/ChatInputBar/ChatInputBar";
-import userImage from "../../src/assets/user.png";
-// import axios from "axios";
+// import userImage from "../../src/assets/user.png";
+import axios from "axios";
 import PopupButton from '../components/PopupButton/PopupButton';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { authenticateUser } from '../utils/auth';
-import { UserContext } from "../contexts/UserContext"
+import { UserContext } from "../contexts/UserContext";
+import { addConvoRequest } from '../requests/addConvoRequest';
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
@@ -26,10 +27,30 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const messagesEndRef = useRef(null);
+    const [convoHistory, setConvoHistory] = useState([]);
+    const [newChat, setNewChat] = useState(true);
+
+    const userImage = () => {
+        switch (tutor.name) {
+            case "Archi":
+                return "/img/archiUser.png";
+            case "Hypatia": 
+                return "/img/hypatiaUser.png";
+            case "Mary J.": 
+                return "/img/mjUser.png";
+            default:
+                return "";
+        }
+    };
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    // Must put scrollToBottom in its own useEffect() because putting it in the other one would keep regenerating a new sessionId every stream text
+    useEffect(() => {
+        scrollToBottom()
+    }, [streamText]);
 
     useEffect(() => {
         authenticateUser().then((user) => {
@@ -41,8 +62,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // create a new session
             setSessionId(v4());
             setLoading(false);
-            scrollToBottom();
+            getConvoHistory(user);
+            setNewChat(true);
             console.log(user);
+            console.log(sessionId);
         }).then(err => {
             if (!err) return;
             console.log(err);
@@ -53,7 +76,31 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility, streamText, navigate]);
+    }, [onPopupVisibility]); 
+
+    // For displaying conversations history on the side bar
+    async function getConvoHistory(user) {
+        try {
+            const result = await axios.get("http://localhost:4000/user/get-history", { params: { userId: user.uid } });
+            const convos = result.data.convos;
+            // Order from most recent to least recent 
+            convos.sort(function(x, y) {
+                return Date.parse(y.createdAt) - Date.parse(x.createdAt);
+            })
+
+            // Remove oldest convo from history if there are more than five convos
+            if (convos.length > 5) {
+                await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: convos[convos.length-1].sessionId} });
+                convos.pop();
+            } 
+
+            // Update conversation history on sidebar
+            setConvoHistory(convos);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    };
 
     if (!tutor) {
         return <div> Tutor not found </div>;
@@ -70,6 +117,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     };
 
     async function sendMessageHandler(msg) {
+        console.log(sessionId);
         // Format the user input for MathJax if it contains LaTeX
         const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
         setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
@@ -77,12 +125,12 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             setIsThinking(true);
 
-            const res = await fetch("https://archi2-backend-d33aae681e67.herokuapp.com/openai", {
+            const res = await fetch("http://localhost:4000/openai", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
                 },
-                body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name })
+                body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
 
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
@@ -92,6 +140,11 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
+
+            if (newChat) { // test this more; in the future, if new random convo keeps generating on side bar, this might be the cause
+                getConvoHistory(user);
+                setNewChat(false);
+            }
 
             // eslint-disable-next-line no-constant-condition
             while (true) {
@@ -129,6 +182,72 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
     };
 
+    // Load old convo on the screen
+    async function loadPastConvo(oldSessionId) {
+        try {
+            const result = await axios.get("http://localhost:4000/user/get-convo", { params: { sessionId: oldSessionId } });
+            const convo = result.data.convo;
+            const convos = convo.conversations;
+            const newSessionId = v4();
+    
+            // Navigate to the corresponding tutor page and create a new session
+            switch (convo.tutorName.toLowerCase()) {
+                case "hypatia":
+                    navigate("/chatbot/hypatia");
+                    setSessionId(newSessionId);
+                    break;
+                case "mary j.":
+                    navigate("/chatbot/mary_j");
+                    setSessionId(newSessionId);
+                    break;
+                default:
+                    navigate("/chatbot/archi");
+                    setSessionId(newSessionId);
+                    break;
+            }
+            console.log("NEW SESSION" + newSessionId);
+
+            // Display all previous messages 
+            const newConversation = [{ role: "system", content: convos[0].content }, { role: "assistant", content: convos[1].content }];
+            setHistory([]);
+            for(let i = 2; i < convos.length; i++) {
+                const msg = convos[i].content;
+                //const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg); // look into this line
+                const formattedMsg = preprocessMath(msg);
+    
+                if (convos[i].role === "assistant") {
+                    setHistory(prev => [...prev, { isUser: false, msg: formattedMsg }]);
+                    newConversation.push({role: "assistant", content: msg});
+                } else {
+                    setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
+                    newConversation.push({role: "user", content: msg});
+                }
+            }
+
+            // create new convo with old convo info
+            await addConvoRequest(newSessionId, convo.userId, convo.summary, convo.tutorName, newConversation);
+            // then delete old convo from database
+            await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: oldSessionId } });
+            
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
+    async function deleteSingleConvo(id) {
+        try {
+            const answer = window.confirm("Are you sure you want to delete this conversation?");
+            if (answer) {
+                await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: id} });
+                window.location.reload();
+            }
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
     return (
         <MathJaxContext config={config}>
             <div className={styles.content}>
@@ -138,6 +257,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                         New Chat
                     </button>
                     <p className={styles.recent}> Recent </p>
+                    <div className={styles.convoHistoryContainer}>
+                        {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png"/> </div>))}
+                    </div>
                 </div>
                 <div className={`${styles.chatbot} ${isPopupVisible ? styles.chatbotShifted : ''}`}>
                     <div className={styles.output}>
@@ -154,7 +276,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                 return (
                                     <div key={i} className={styles.logMsg}>
                                         <div className={styles.profile}>
-                                            {log.isUser ? <img src={userImage} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
+                                            {log.isUser ? <img src={userImage()} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
                                         </div>
                                         <div className={styles.msg}>
                                             <MathJax dynamic>{log.msg}</MathJax>
