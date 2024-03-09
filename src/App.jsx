@@ -12,6 +12,7 @@ import PasswordResetPage from './pages/PasswordResetPage';
 import LearnMorePage from './pages/LearnMorePage';
 import PopupButton from './components/PopupButton/PopupButton';
 import { UserProvider } from './contexts/UserContext';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
   // State for tracking popup visibility
@@ -43,6 +44,7 @@ function App() {
             <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
             <Route exact path='/signup' element={<SignupPage />} />
             <Route path='/login' element={<SignupPage />} />
+            <Route path='/forgot-password' element={<ForgotPasswordPage />} />
             <Route exact path='/learnmore' element={<LearnMorePage />} />
           </Routes>
         </BrowserRouter>

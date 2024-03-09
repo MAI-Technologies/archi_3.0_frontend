@@ -611,7 +611,7 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                             onBlur={clearPasswordHint}
                         />
                         {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
-                        <p>Forgot password?</p>
+                        <p onClick={() => navigate("/forgot-password")}>Forgot password?</p>
                     </div>
                     <DividerWithText>or</DividerWithText>
                     <button type="button" className={styles.googleSigninButton} onClick={signInWithGoogleSubmitHandler}>
@@ -623,11 +623,6 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                     </div>
                 </form>
 
-                <div>Forgot Password?</div>
-                <input width="500px" ref={tempRef} />
-                <button onClick={async () => {
-                    await forgotPassword(tempRef.current.value)
-                }}>Submit</button>
             </div>
 
         </div>
