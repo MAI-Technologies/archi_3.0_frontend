@@ -1,28 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import * as math from 'mathjs';
 import styles from './CalculatorButton.module.css'; // Adjust the path as needed
 
-const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput, isExpanded, toggleCalculator }) => {
+const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput, cursorPosition, setCursorPosition, isExpanded, toggleCalculator }) => {
+
+  const updateCursorPosition = () => {
+    const position = inputRef.current ? inputRef.current.selectionStart : 0;
+    setCursorPosition(position);
+  };
   
   const handleButtonPress = (content) => {
-    setOutputValue(outputValue + content); // Update the chat input bar
-    focusChatInput(); // Call the function passed as prop to focus chat input
+    if (cursorPosition !== null) {
+      const newValue = 
+        outputValue.substring(0, cursorPosition) + 
+        content + 
+        outputValue.substring(cursorPosition);
+      setOutputValue(newValue);
+      const newPosition = cursorPosition + content.length;
+      // Call a function passed from the ChatInputBar to update cursor position
+      setCursorPosition(newPosition);
+      // After setting the value, ensure focus goes back to the chat input
+      setTimeout(() => focusChatInput(), 0); // setTimeout ensures the focus call happens after state updates
+    } else {
+      // Fallback if cursorPosition is not available
+      setOutputValue(outputValue + content);
+      focusChatInput();
+    }
   };
 
   const calculateResult = () => {
     try {
       const result = math.evaluate(outputValue);
       setOutputValue(result.toString()); // Update chat input bar with the result
-      focusChatInput(); // Also focus after calculating the result
+      setCursorPosition(result.toString().length); // Move cursor to the end
+      setTimeout(() => focusChatInput(), 0);
     } catch (error) {
       setOutputValue('Error'); // Update chat input bar with error message
-      focusChatInput(); // Focus even if there's an error
+      setCursorPosition('Error'.length); // Move cursor to the end of 'Error'
+      fsetTimeout(() => focusChatInput(), 0);
     }
   };
 
   const clearScreen = () => {
     setOutputValue(''); // Clear the chat input bar
-    focusChatInput(); // Focus after clearing the screen
+    setCursorPosition(0); // Reset cursor position
+    setTimeout(() => focusChatInput(), 0);
   };
 
   return (

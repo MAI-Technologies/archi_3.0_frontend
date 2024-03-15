@@ -8,6 +8,7 @@ import CalculatorButton from '../CalculatorButton/CalculatorButton.jsx';
 const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
   const [message, setMessage] = useState('');
   const chatInputRef = useRef(null); // Create a ref for the input field
+  const [cursorPosition, setCursorPosition] = useState(null);
   const [isCalculatorExpanded, setIsCalculatorExpanded] = useState(false);
 
   const toggleCalculator = () => {
@@ -42,6 +43,20 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
     }
   };
 
+  // Update the cursor position whenever the input changes
+  useEffect(() => {
+    if (chatInputRef.current) {
+      setCursorPosition(chatInputRef.current.selectionStart);
+    }
+  }, [message]);
+
+  // Listen to cursor movements
+  const updateCursorPosition = () => {
+    if (chatInputRef.current) {
+      setCursorPosition(chatInputRef.current.selectionStart);
+    }
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -51,6 +66,8 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
             outputValue={message} 
             setOutputValue={setMessage} 
             focusChatInput={focusChatInput} // Pass focus function as prop
+            cursorPosition={cursorPosition} // Pass the cursor position to CalculatorButton
+            setCursorPosition={setCursorPosition} // Pass the setCursorPosition to CalculatorButton
             isExpanded={isCalculatorExpanded} 
             toggleCalculator={toggleCalculator}
             />
@@ -84,8 +101,13 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
             placeholder="Your message"
             value={message}
             autoFocus={true}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              setMessage(e.target.value);
+              updateCursorPosition();
+            }}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+            onClick={updateCursorPosition} // Update cursor position when the input field is clicked
+            onKeyUp={updateCursorPosition} // Update cursor position when key is released
           />
           <button className={styles.sendButton} onClick={sendMessage}>
             <img src="/img/arrow.png" alt="arrow" />
