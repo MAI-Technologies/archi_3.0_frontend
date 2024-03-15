@@ -28,9 +28,12 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
 
   // Function to focus the chat input
   const focusChatInput = () => {
-    if (chatInputRef.current) {
-      chatInputRef.current.focus();
-    }
+    setTimeout(() => { // Delay ensures updates happen after state changes
+      if (chatInputRef.current) {
+        chatInputRef.current.focus();
+        chatInputRef.current.setSelectionRange(cursorPosition, cursorPosition);
+      }
+    }, 0); // Delay ensures this happens after the DOM has been updated
   };
 
   // Function to handle shortcut button click
@@ -45,10 +48,14 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
 
   // Update the cursor position whenever the input changes
   useEffect(() => {
-    if (chatInputRef.current) {
-      setCursorPosition(chatInputRef.current.selectionStart);
+    // Ensures the cursor is correctly positioned after message changes
+    if (chatInputRef.current && message && typeof cursorPosition === 'number') {
+      // Ensure DOM updates have occurred
+      requestAnimationFrame(() => {
+        chatInputRef.current.setSelectionRange(cursorPosition, cursorPosition);
+      });
     }
-  }, [message]);
+  }, [message, cursorPosition]); // Depend on message and cursorPosition to re-run
 
   // Listen to cursor movements
   const updateCursorPosition = () => {

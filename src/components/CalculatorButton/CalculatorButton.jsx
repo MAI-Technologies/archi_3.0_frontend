@@ -5,8 +5,9 @@ import styles from './CalculatorButton.module.css'; // Adjust the path as needed
 const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput, cursorPosition, setCursorPosition, isExpanded, toggleCalculator }) => {
 
   const updateCursorPosition = () => {
-    const position = inputRef.current ? inputRef.current.selectionStart : 0;
-    setCursorPosition(position);
+    if (chatInputRef.current) {
+      setCursorPosition(chatInputRef.current.selectionStart);
+    }
   };
   
   const handleButtonPress = (content) => {
@@ -23,8 +24,10 @@ const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput, cursorP
       setTimeout(() => focusChatInput(), 0); // setTimeout ensures the focus call happens after state updates
     } else {
       // Fallback if cursorPosition is not available
-      setOutputValue(outputValue + content);
-      focusChatInput();
+      const newOutputValue = outputValue + content;
+      setOutputValue(newOutputValue);
+      setCursorPosition(newOutputValue.length);
+      setTimeout(() => focusChatInput(), 0);
     }
   };
 
