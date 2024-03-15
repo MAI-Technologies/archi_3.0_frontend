@@ -31,6 +31,7 @@
   position: relative;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: flex-start;
   height: 100vh;
   width: 100vw;
@@ -119,6 +120,8 @@
   /*border: 1px solid red;*/
   animation: fadeInLoad 1s 3s forwards;
   opacity: 0;
+  max-width: 500px;
+  width: 50%;
 }
 
 @keyframes fadeInLoad {
@@ -281,4 +284,16 @@
 .textBlock4 img {
   width: 160px;
   height: auto;
+}
+
+@media (max-width: 1200px) {
+  .textBlock1 {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .textBlock3 {
+    display: none;
+  }
 }
