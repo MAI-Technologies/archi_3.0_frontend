@@ -22,6 +22,16 @@ function ForgotPasswordPage() {
 
     }
 
+    // Function to show the password hint and change the image
+    const showPasswordHint = () => {
+        setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image'
+    };
+
+    // Function to clear the password hint and reset the image
+    const clearPasswordHint = () => {
+        setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
+    };
+
     const Character = ({ imageSrc, speechBubbleContent, className, imageStage }) => {
          // Determine the image source based on the imageStage
         const currentImageSrc = imageStage === 'loaded' ? '/img/archi_amazed.png' : imageSrc; // Adjust with your actual loading image path
@@ -54,21 +64,21 @@ function ForgotPasswordPage() {
                 <p>Reset your password below.</p>
             </div>
 
-            <div className={styles.signupContainer}>
-                <form className={styles.formContainer} onSubmit={submitHandler}>
-                    <div className={styles.inputGroup}>
-                        <label for="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className={styles.longInput}
-                            ref={emailRef}
-                            required />
-                    </div>
-                </form>
-            </div>
-
+            <form className={styles.formContainer} onSubmit={submitHandler}>
+                <div className={styles.inputGroup}>
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className={styles.longInput}
+                        ref={emailRef}
+                        required 
+                        onFocus={showPasswordHint}
+                        onBlur={clearPasswordHint}/>
+                </div>   
+            </form>
+            
             <div className={styles.navigate}>
                 <button
                     type="submit"
@@ -79,14 +89,16 @@ function ForgotPasswordPage() {
                 <a href="/login" className={styles.loginLink}>Already have an account?</a>
             </div>
 
-        </div><div className="contentContainer">
-                <Character
-                    imageSrc={characterImageSrc} // Your final character image
-                    speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
-                    className={styles.characterContainer} // This is your existing styling base class
-                    imageStage={imageStage} // Pass the state controlling the image stage
-                /> {/* Render the character image */}
-            </div></>
+            </div>
+                <div className="contentContainer">
+                    <Character
+                        imageSrc={characterImageSrc} // Your final character image
+                        speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
+                        className={styles.characterContainer} // This is your existing styling base class
+                        imageStage={imageStage} // Pass the state controlling the image stage
+                    /> {/* Render the character image */}
+                </div>
+        </>
     )
 }
 
