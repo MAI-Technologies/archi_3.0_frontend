@@ -62,7 +62,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // create a new session
             setSessionId(v4());
             setLoading(false);
-            getConvoHistory(user);
+            getConvoHistory(user); // show history on side bar
             setNewChat(true);
             console.log(user);
             console.log(sessionId);
@@ -141,6 +141,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             let completedText = "";
             setIsThinking(false);
 
+            // If the current convo is a new convo, then update side bar and show new convo 
             if (newChat) { // test this more; in the future, if new random convo keeps generating on side bar, this might be the cause
                 getConvoHistory(user);
                 setNewChat(false);
@@ -229,6 +230,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // then delete old convo from database
             await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: oldSessionId } });
             
+            // Update side bar
+            getConvoHistory(user);
         } catch (err) {
             console.log(err);
             throw err;
