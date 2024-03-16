@@ -22,19 +22,9 @@ function ForgotPasswordPage() {
 
     }
 
-    // Function to show the password hint and change the image
-    const showPasswordHint = () => {
-        setCharacterImageSrc('/img/archi_eyes_closed_flipped.png'); // Update with the path to your new image'
-    };
-
-    // Function to clear the password hint and reset the image
-    const clearPasswordHint = () => {
-        setCharacterImageSrc('/img/archi_amazed.png'); // Reset to the initial image
-    };
-
     const Character = ({ imageSrc, speechBubbleContent, className, imageStage }) => {
          // Determine the image source based on the imageStage
-        const currentImageSrc = imageStage === 'loaded' ? '/img/archi_amazed.png' : imageSrc; // Adjust with your actual loading image path
+        const currentImageSrc = imageStage === 'loaded' ? '/img/archi_amazed.png' : imageSrc;
     
         // Combine CSS classes based on the provided className and the current image stage
         const combinedClassName = `${styles.characterContainer} ${className} ${styles[imageStage] || ''}`;
@@ -57,48 +47,50 @@ function ForgotPasswordPage() {
     };
 
     return (
-        <><div className={styles.registrationForm}>
+        <div>
 
-            <div className={styles.header}>
-                <h2>Forgot Password?</h2>
-                <p>Reset your password below.</p>
-            </div>
+            <div className={styles.registrationForm}>
 
-            <form className={styles.formContainer} onSubmit={submitHandler}>
-                <div className={styles.inputGroup}>
-                    <label for="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className={styles.longInput}
-                        ref={emailRef}
-                        required 
-                        onFocus={showPasswordHint}
-                        onBlur={clearPasswordHint}/>
-                </div>   
-            </form>
-            
-            <div className={styles.navigate}>
-                <button
-                    type="submit"
-                    // onClick={handleSubmit} // Handle the click event
-                    className={styles.continueButton}>
-                    Submit
-                </button>
-                <a href="/login" className={styles.loginLink}>Already have an account?</a>
-            </div>
-
-            </div>
-                <div className="contentContainer">
-                    <Character
-                        imageSrc={characterImageSrc} // Your final character image
-                        speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
-                        className={styles.characterContainer} // This is your existing styling base class
-                        imageStage={imageStage} // Pass the state controlling the image stage
-                    /> {/* Render the character image */}
+                <div className={styles.header}>
+                    <h2>Forgot Password?</h2>
+                    <p>Reset your password below.</p>
                 </div>
-        </>
+
+                <form className={styles.formContainer} onSubmit={submitHandler}>
+                    <div className={styles.inputGroup}>
+                        <label for="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className={styles.longInput}
+                            ref={emailRef}
+                            required/>
+                    </div>   
+                </form>
+                
+                <div className={styles.navigate}>
+                    <button
+                        type="submit"
+                        className={styles.continueButton}>
+                        Submit
+                    </button>
+                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                </div>
+
+            </div>
+
+            <div className="contentContainer">
+                <Character
+                    imageSrc={characterImageSrc}
+                    speechBubbleContent={showSpeechBubble ? characterSpeechBubbleContent : ""}
+                    className={styles.characterContainer}
+                    imageStage={imageStage}
+                /> {/* Render the character image */}
+            </div>
+
+        </div>
+        
     )
 }
 
