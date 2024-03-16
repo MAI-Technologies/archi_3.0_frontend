@@ -21,16 +21,34 @@ function ForgotPasswordPage() {
         <div className={styles.registrationForm}>
 
             <div className={styles.header}>
-                <h2>Forgot Password</h2>
+                <h2>Forgot Password?</h2>
+                <p>Reset your password below.</p>
             </div>
 
             <div className={styles.signupContainer}>
                 <form className={styles.formContainer} onSubmit={submitHandler}>
-                    <input ref={emailRef} type='email' />
-                    <div className={styles.navigate}>
-                        <button type="submit" className={styles.continueButton}>Submit</button>
+                    <div className={styles.inputGroup}>
+                        <label for="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className={styles.longInput}
+                            ref={emailRef}
+                            required
+                        />
                     </div>
                 </form>
+            </div>
+
+            <div className={styles.navigate}>
+                <button
+                    type="submit"
+                    // onClick={handleSubmit} // Handle the click event
+                    className={styles.continueButton}>
+                    Submit
+                </button>
+                <a href="/login" className={styles.loginLink}>Already have an account?</a>
             </div>
 
         </div>
