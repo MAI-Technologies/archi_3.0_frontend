@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styles from './SignupPage.module.css'; // Import your CSS module
+import { forgotPassword } from '../utils/auth';
 
 function ForgotPasswordPage() {
     const emailRef = useRef();
