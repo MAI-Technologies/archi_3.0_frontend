@@ -8,7 +8,7 @@ function ForgotPasswordPage() {
     async function submitHandler(e) {
         e.preventDefault();
 
-        const email = emailRef.currentUser.value;
+        const email = emailRef.current.value;
 
         try {
             await forgotPassword(email);
