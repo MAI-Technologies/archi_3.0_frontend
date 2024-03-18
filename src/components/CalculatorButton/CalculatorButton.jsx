@@ -1,28 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import * as math from 'mathjs';
 import styles from './CalculatorButton.module.css'; // Adjust the path as needed
 
-const CalculatorButton = ({ outputValue, setOutputValue, focusChatInput, isExpanded, toggleCalculator }) => {
+const CalculatorButton = ({ outputValue, setOutputValue, chatInputRef, cursorPosition, setCursorPosition, isExpanded, toggleCalculator, focusChatInput }) => {
+
+  const updateCursorPosition = () => {
+    if (chatInputRef.current) {
+      setCursorPosition(chatInputRef.current.selectionStart);
+    }
+  };
   
   const handleButtonPress = (content) => {
-    setOutputValue(outputValue + content); // Update the chat input bar
-    focusChatInput(); // Call the function passed as prop to focus chat input
+    if (cursorPosition !== null) {
+      const newValue = 
+        outputValue.substring(0, cursorPosition) + 
+        content + 
+        outputValue.substring(cursorPosition);
+      setOutputValue(newValue);
+      const newPosition = cursorPosition + content.length;
+      setCursorPosition(newPosition);
+      setTimeout(() => {
+        if(chatInputRef.current) {
+          chatInputRef.current.focus(); // Focus the chat input
+          chatInputRef.current.setSelectionRange(newPosition, newPosition); // Set cursor position
+        }
+      }, 0);
+    } else {
+      const newOutputValue = outputValue + content;
+      setOutputValue(newOutputValue);
+      setCursorPosition(newOutputValue.length);
+      setTimeout(() => {
+        if(chatInputRef.current) {
+          chatInputRef.current.focus();
+          chatInputRef.current.setSelectionRange(newOutputValue.length, newOutputValue.length);
+        }
+      }, 0);
+    }
   };
 
   const calculateResult = () => {
     try {
       const result = math.evaluate(outputValue);
-      setOutputValue(result.toString()); // Update chat input bar with the result
-      focusChatInput(); // Also focus after calculating the result
+      setOutputValue(result.toString());
+      setCursorPosition(result.toString().length);
+      setTimeout(() => {
+        if(chatInputRef.current) {
+          chatInputRef.current.focus();
+          chatInputRef.current.setSelectionRange(result.toString().length, result.toString().length);
+        }
+      }, 0); // Correctly managing focus and cursor after calculation
     } catch (error) {
-      setOutputValue('Error'); // Update chat input bar with error message
-      focusChatInput(); // Focus even if there's an error
+      setOutputValue('Error');
+      setCursorPosition(5); // 'Error' length
+      setTimeout(() => {
+        if(chatInputRef.current) {
+          chatInputRef.current.focus();
+          chatInputRef.current.setSelectionRange(5, 5);
+        }
+      }, 0); // Fixed the typo here, changing 'fsetTimeout' to 'setTimeout'
     }
   };
 
   const clearScreen = () => {
-    setOutputValue(''); // Clear the chat input bar
-    focusChatInput(); // Focus after clearing the screen
+    setOutputValue('');
+    setCursorPosition(0);
+    setTimeout(() => {
+      if(chatInputRef.current) {
+        chatInputRef.current.focus();
+        chatInputRef.current.setSelectionRange(0, 0);
+      }
+    }, 0); // Ensuring focus and cursor reset after screen clear
   };
 
   return (
