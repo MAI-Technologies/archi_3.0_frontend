@@ -6,6 +6,7 @@ import styles from './SignupPage.module.css'; // Import your CSS module
 import { authenticateUser, forgotPassword, loginWithEmailAndPassword, loginWithGoogle, registerUserWithEmailAndPassword } from '../utils/auth';
 import { addUserRequest } from '../requests/addUserRequest';
 import { UserContext } from '../contexts/UserContext';
+import { Link } from 'react-router-dom';
 
 const SignupPage = () => {
     const location = useLocation();
@@ -628,7 +629,8 @@ const LoginForm = ({ setCharacterImageSrc, setCharacterSpeechBubbleContent, setS
                             onBlur={clearPasswordHint}
                         />
                         {passwordHint && <div className={styles.passwordHint}>{passwordHint}</div>}
-                        <p onClick={() => navigate("/forgot-password")}>Forgot password?</p>
+                        <Link to="/forgot-password" className={styles.resetLink}>Forgot password?</Link>
+
                     </div>
                     <DividerWithText>or</DividerWithText>
                     <button type="button" className={styles.googleSigninButton} onClick={signInWithGoogleSubmitHandler}>
