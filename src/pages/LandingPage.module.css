@@ -31,16 +31,18 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100vw;
 }
 
 .visualBlock1 {
-  position: absolute;
   /*border: 1px solid yellow;*/
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 50%;
 }
 
 .planetBlock {
@@ -112,13 +114,13 @@
 }
 
 .textBlock1 {
-  position: absolute;
-  right: 160px;
   margin-top: 160px;
-  width: 500px;
   /*border: 1px solid red;*/
   animation: fadeInLoad 1s 3s forwards;
   opacity: 0;
+  max-width: 500px;
+  width: 50%;
+  height: 75vh;
 }
 
 @keyframes fadeInLoad {
@@ -160,7 +162,7 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding-top: 250px;
+  padding-top: 200px;
   padding-left: 150px;
 }
 
@@ -208,7 +210,7 @@
 
 /* Section 3 elements */
 .section3 {
-  padding-top: 280px;
+  padding-top: 50px;
   position: relative;
   height: 120vh;
   width: 100vw;
@@ -281,4 +283,19 @@
 .textBlock4 img {
   width: 160px;
   height: auto;
+}
+
+@media (max-width: 1200px) {
+  .textBlock1 {
+    display: none;
+  }
+  .visualBlock1 {
+    width: 100vh;
+  }
+}
+
+@media (max-width: 1000px) {
+  .textBlock3 {
+    display: none;
+  }
 }
