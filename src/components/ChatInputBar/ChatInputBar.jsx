@@ -72,11 +72,12 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
             <CalculatorButton 
             outputValue={message} 
             setOutputValue={setMessage} 
-            focusChatInput={focusChatInput} // Pass focus function as prop
+            chatInputRef={chatInputRef}
             cursorPosition={cursorPosition} // Pass the cursor position to CalculatorButton
             setCursorPosition={setCursorPosition} // Pass the setCursorPosition to CalculatorButton
             isExpanded={isCalculatorExpanded} 
             toggleCalculator={toggleCalculator}
+            focusChatInput={focusChatInput} // Pass focus function as prop
             />
           </div>
           <div className={styles.shortcuts}>
