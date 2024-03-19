@@ -77,7 +77,7 @@ function ForgotPasswordPage() {
                         className={styles.continueButton}>
                         Submit
                     </button>
-                    <a href="/login" className={styles.loginLink}>Already have an account?</a>
+                    <a href="/login" className={styles.loginLink}>Log In</a>
                 </div>
 
             </div>
