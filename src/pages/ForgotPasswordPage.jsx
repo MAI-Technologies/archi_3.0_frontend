@@ -57,7 +57,7 @@ function ForgotPasswordPage() {
                     <p>Reset your password below.</p>
                 </div>
 
-                <form className={styles.formContainer} onSubmit={submitHandler}>
+                <form className={styles.formContainer}>
                     <div className={styles.inputGroup}>
                         <label for="email">Email</label>
                         <input
@@ -73,6 +73,7 @@ function ForgotPasswordPage() {
                 <div className={styles.navigate}>
                     <button
                         type="submit"
+                        onClick={submitHandler}
                         className={styles.continueButton}>
                         Submit
                     </button>
