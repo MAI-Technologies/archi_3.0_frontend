@@ -6,8 +6,8 @@ const TutorData = [
       imageSrc: '/img/archi.png',
       planetImgSrc: '/img/archiPlanet.png',
       sideBarSrc: '/img/archiSideBar.png',
-      themeColor: '#C05F41',
-      filter: 'brightness(0) saturate(100%) invert(46%) sepia(65%) saturate(496%) hue-rotate(328deg) brightness(85%) contrast(92%)',
+      themeColor: '#C25F43',
+      filter: 'invert(45%) sepia(76%) saturate(528%) hue-rotate(326deg) brightness(83%) contrast(80%)',
       description: 'An ancient Greek mathematician, physicist, engineer, astronomer, and inventor of "Eureka"!',
     },
     {
