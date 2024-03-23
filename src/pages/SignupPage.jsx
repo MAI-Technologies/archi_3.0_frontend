@@ -6,6 +6,7 @@ import styles from './SignupPage.module.css'; // Import your CSS module
 import { authenticateUser, forgotPassword, loginWithEmailAndPassword, loginWithGoogle, registerUserWithEmailAndPassword } from '../utils/auth';
 import { addUserRequest } from '../requests/addUserRequest';
 import { UserContext } from '../contexts/UserContext';
+import { increaseVisitorCountForMakingAnAccountRequest } from '../requests/increaseVisitorCountForMakingAnAccount';
 
 const SignupPage = () => {
     const location = useLocation();
@@ -88,7 +89,7 @@ const SignupPage = () => {
             // Ensures the form is displayed immediately without animation.
             setTimeout(() => {
                 setAnimationStarted(true);
-            }, 100); 
+            }, 100);
         }
     }, [isLogin]);
 
@@ -419,6 +420,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
 
             const res = await addUserRequest(firebaseRes.user.uid, firstName, lastName, getDob(), email, password, "email")
             setUser(firebaseRes.user);
+            await increaseVisitorCountForMakingAnAccountRequest();
             navigate("/tutor");
         } catch (err) {
             if (err.message && err.message.includes("email-already-in-use")) {
@@ -440,8 +442,9 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
             const name = user.displayName.split(" ");
             if (name.length < 1) return;
 
-            // const res = await addUserRequest(user.uid, name[0], name[1] || "", getDob(), user.email, "NULL", "google")
+            const res = await addUserRequest(user.uid, name[0], name[1] || "", getDob(), user.email, "NULL", "google")
             setUser(user);
+            await increaseVisitorCountForMakingAnAccountRequest();
             navigate("/tutor");
         } catch (err) {
             console.log(err);

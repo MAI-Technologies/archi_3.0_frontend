@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import styles from "./LandingPage.module.css";
 import { authenticateUser } from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
+import { increaseTotalVisitorRequest } from '../requests/increaseTotalVisitorRequest';
+import { increaseTotalVisitorForSignInRequest } from '../requests/increaseTotalVisitorForSignInRequest';
 
 
 const LandingPage = () => {
-	
+
 	const [isVisible, setIsVisible] = useState(true);
 	const [height, setHeight] = useState(0);
 
@@ -15,19 +17,20 @@ const LandingPage = () => {
 		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 		setHeight(winScroll);
 
-		if (winScroll > heightToHideFrom) {  
+		if (winScroll > heightToHideFrom) {
 			isVisible && setIsVisible(false);
 		} else {
 			setIsVisible(true);
-		}  
+		}
 	};
-	
+
 	const [loading, setLoading] = useState(true);
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const auth = async () => {
 			try {
+				await increaseTotalVisitorRequest();
 				const user = await authenticateUser();
 
 				// not logged in
@@ -43,18 +46,23 @@ const LandingPage = () => {
 		}
 
 		auth();
-    window.addEventListener("scroll", listenToScroll, true);
-		return () => 
-			window.removeEventListener("scroll", listenToScroll, true); 
+		window.addEventListener("scroll", listenToScroll, true);
+		return () =>
+			window.removeEventListener("scroll", listenToScroll, true);
 	}, [isVisible, height]);
+
+	async function onClickGetStartedHandler() {
+		await increaseTotalVisitorForSignInRequest();
+		window.location.href = '/signup';
+	}
 
 	return (
 		<div className={styles.content}>
-			{ 
+			{
 				!isVisible &&
 
 				<div>
-					<button type="getStartedBarBtn" className={styles.getStartedBarBtn} onClick={() => window.location.href = '/signup'}>
+					<button type="getStartedBarBtn" className={styles.getStartedBarBtn} onClick={onClickGetStartedHandler}>
 						Get Started
 					</button>
 				</div>
@@ -64,7 +72,7 @@ const LandingPage = () => {
 				<div className={styles.visualBlock1}>
 					<div className={styles.archiButtonBlock}>
 						<img src="/img/archi_flipped_loop.gif" alt="archi gif"></img>
-						<button type="getStarted" className={styles.getStartedBtn} onClick={() => window.location.href = '/signup'}>
+						<button type="getStarted" className={styles.getStartedBtn} onClick={onClickGetStartedHandler}>
 							Get Started
 						</button>
 						<button type="haveAcc" className={styles.haveAccBtn} onClick={() => window.location.href = '/login'}>
