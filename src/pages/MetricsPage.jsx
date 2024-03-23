@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import styles from "./MetricsPage.module.css";
 import { metricsRequest } from '../request/metricsRequest';
+import { metricsPasswordRequest } from '../requests/metricsPasswordRequest';
 
 export default function MetricsPage() {
     const [lockedPage, setLockedPage] = useState(true);
@@ -19,9 +20,12 @@ export default function MetricsPage() {
         const password = passwordRef.current.value;
         if (!password) return;
 
-        if (password !== "abc123") {
-            alert("Invalid password");
-            return navigate("/")
+        try {
+            await metricsPasswordRequest(password);
+        } catch (err) {
+            console.log(err);
+            alert("Invalid Password");
+            return;
         }
 
         setLockedPage(false);
