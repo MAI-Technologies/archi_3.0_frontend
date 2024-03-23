@@ -11,6 +11,7 @@ const TutorPage = () => {
   const tutors = TutorData.slice(0, 3);
   const { user, setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
+  const [selectedTutorIndex, setSelectedTutorIndex] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,9 +47,10 @@ const TutorPage = () => {
               </Link>
             </div>
 
-            <div className={styles.tutorDes}>
-              <h3>{tutor.name}</h3>
-              <p>{tutor.description}</p>
+            <div
+              className={styles.tutorDes}>
+              <h3 style={{ color: `${tutor.themeColor}` }}>{tutor.name}</h3> {/* Apply color to h3 */}
+              <p style={{color: `${tutor.themeColor}`}}>{tutor.description}</p> {/* Apply color to p */}
             </div>
           </div>
         ))}
