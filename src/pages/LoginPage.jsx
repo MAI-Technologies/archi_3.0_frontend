@@ -177,7 +177,7 @@ const LoginForm = ({ setCharacterImageSrc, setShowSpeechBubble }) => {
                     </div>
                     <DividerWithText>or</DividerWithText>
                     <button type="button" className={styles.googleSigninButton} onClick={signInWithGoogleSubmitHandler}>
-                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                        <img src="/img/signin_w_google_button.png" alt="Google Image" />
                     </button>
                     <div className={styles.navigate}>
                         <button type="submit" class={styles.continueButton}>Log In</button>

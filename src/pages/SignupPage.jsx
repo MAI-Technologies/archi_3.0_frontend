@@ -496,7 +496,7 @@ const CreateAccountForm = ({ setCharacterImageSrc, setShowSpeechBubble, dob }) =
                     </div>
                     <DividerWithText>or</DividerWithText>
                     <button type="button" className={styles.googleSigninButton} onClick={signupWithGoogleHandler}>
-                        <img src="./img/signin_w_google_button.png" alt="Google Image" />
+                        <img src="/img/signin_w_google_button.png" alt="Google Image" />
                     </button>
                     <div className={styles.navigate}>
                         <button type="submit" className={styles.continueButton}>Sign Up</button>
