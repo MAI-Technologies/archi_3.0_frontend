@@ -62,7 +62,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // create a new session
             setSessionId(v4());
             setLoading(false);
-            getConvoHistory(user); // show history on side bar
+            //getConvoHistory(user); // show history on side bar
             setNewChat(true);
             console.log(user);
             console.log(sessionId);
@@ -145,7 +145,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
             // If the current convo is a new convo, then update side bar and show new convo 
             if (newChat) { // test this more; in the future, if new random convo keeps generating on side bar, this might be the cause
-                getConvoHistory(user);
+                //getConvoHistory(user);
                 setNewChat(false);
             }
 
@@ -233,7 +233,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             await axios.delete("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/delete-convo", { params: { sessionId: oldSessionId } });
             
             // Update side bar
-            getConvoHistory(user);
+            //getConvoHistory(user);
         } catch (err) {
             console.log(err);
             throw err;
@@ -263,7 +263,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     </button>
                     <p className={styles.recent}> Recent </p>
                     <div className={styles.convoHistoryContainer}>
-                        {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png"/> </div>))}
+                        {/* {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png"/> </div>))} */}
                     </div>
                 </div>
                 <div className={`${styles.chatbot} ${isPopupVisible ? styles.chatbotShifted : ''}`}>
