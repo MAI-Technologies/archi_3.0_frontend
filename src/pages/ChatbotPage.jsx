@@ -129,6 +129,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
+                    'Access-Control-Allow-Origin':'*'
                 },
                 body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
