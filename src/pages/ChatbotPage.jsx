@@ -125,13 +125,19 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             setIsThinking(true);
 
+            /*
             const res = await fetch("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/openai", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
-                    'Access-Control-Allow-Origin':'*'
                 },
                 body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
+            });
+            */
+            const tutorName = tutor.name;
+            const userId = user.uid;
+            const res = await axios.post("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/openai", {
+                msg, sessionId, tutorName, userId
             });
 
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
