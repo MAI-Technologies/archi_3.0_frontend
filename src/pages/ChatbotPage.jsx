@@ -141,9 +141,11 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             });
 
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
+            console.log("TEST");
+            console.log(res.body);
             const reader = res.body
                 .pipeThrough(new TextDecoderStream())
-                .getReader()
+                .getReader();
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
