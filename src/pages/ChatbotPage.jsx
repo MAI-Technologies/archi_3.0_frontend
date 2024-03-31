@@ -96,6 +96,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
             // Update conversation history on sidebar
             setConvoHistory(convos);
+            console.log(convos);
         } catch (err) {
             console.log(err);
             throw err;
