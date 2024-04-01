@@ -82,6 +82,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     async function getConvoHistory(user) {
         try {
             const result = await axios.get("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/get-history", { params: { userId: user.uid } });
+            console.log(result.data);
             const convos = result.data.convos;
             // Order from most recent to least recent 
             convos.sort(function(x, y) {
