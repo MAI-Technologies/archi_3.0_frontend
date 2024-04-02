@@ -250,7 +250,8 @@ body {
 }
 
 .convoHistoryItem:hover {
-    color: rgb(170, 170, 170);
+    font-weight: bold;
+    font-size: 14.5px;
     cursor: pointer;
 }
 
