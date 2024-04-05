@@ -122,7 +122,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         // Format the user input for MathJax if it contains LaTeX
         const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
         setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
-        setStreamText("")
+        setStreamText("");
         try {
             setIsThinking(true);
 
@@ -137,7 +137,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
             const reader = res.body
                 .pipeThrough(new TextDecoderStream())
-                .getReader()
+                .getReader();
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
@@ -150,13 +150,13 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
             // eslint-disable-next-line no-constant-condition
             while (true) {
-                const { value, done } = await reader.read()
+                const { value, done } = await reader.read();
                 if (done) {
                     setStreaming(false);
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
                     break;
                 }
-
+                console.log(value);
                 completedText += value;
                 setStreamText(prev => prev + value);
             }
