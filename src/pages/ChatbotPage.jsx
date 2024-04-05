@@ -135,6 +135,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             });
 
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
+            console.log(res.body);
             const reader = res.body
                 .pipeThrough(new TextDecoderStream())
                 .getReader();
@@ -156,7 +157,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
                     break;
                 }
-                console.log(value);
+                const chunk = new TextDecoder().decode(value);
+                console.log(chunk);
                 completedText += value;
                 setStreamText(prev => prev + value);
             }
