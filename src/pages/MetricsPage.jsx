@@ -113,9 +113,9 @@ export default function MetricsPage() {
 
             </table>
         </div>}
-        {metrics.length > 0 ? <div ref={accordionDiv} className={styles.metrics}>
+        {metrics.data?.length > 0 ? <div ref={accordionDiv} className={styles.metrics}>
             <div className={styles.totalSessions}>{metrics.length} sessions found</div>
-            {metrics.map(metric => {
+            {metrics.data.map(metric => {
                 return <div key={metric.id} className={styles.metricDiv}>
                     <div className={styles.title}><strong>Session Id</strong>: {metric.sessionId}</div>
                     <div className={styles.desc}>
