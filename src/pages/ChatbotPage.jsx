@@ -15,7 +15,7 @@ import { addConvoRequest } from '../requests/addConvoRequest';
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
-    const tutor = TutorData.find((char) => char.id === tutorId);
+    const [tutor, setTutor] = useState(() => TutorData.find((char) => char.id === tutorId));
     const purpose = `I'm here to help you navigate through any math challenges you're facing! 🌟 Do you have a math problem or concept you need help with today? If so, let's solve it together!` // TODO: Get from backend later!
     const [isThinking, setIsThinking] = useState(false);
     const [history, setHistory] = useState([]);
@@ -51,6 +51,19 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     useEffect(() => {
         scrollToBottom()
     }, [streamText]);
+
+    // New useEffect hook for updating the tutor state when tutorId changes
+    useEffect(() => {
+        const newTutor = TutorData.find(t => t.id === tutorId);
+        if (!newTutor) {
+            console.error('Tutor not found:', tutorId);
+            // Optionally, handle the case where the tutor is not found more gracefully
+            // e.g., navigate to a default page or show an error message
+            return;
+        }
+        setTutor(newTutor); // Update the tutor state
+        // You could also perform other actions here as needed, based on the new tutor
+    }, [tutorId]); // This effect depends on tutorId, so it runs whenever tutorId changes
 
     useEffect(() => {
         authenticateUser().then((user) => {
