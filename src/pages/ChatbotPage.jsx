@@ -136,9 +136,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
             console.log(res.body);
-            const reader = res.body
-                .pipeThrough(new TextDecoderStream())
-                .getReader();
+            const reader = res.body.getReader();
+                //.pipeThrough(new TextDecoderStream())
+                //.getReader();
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
@@ -157,10 +157,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
                     break;
                 }
-                const chunk = new TextDecoder().decode(value);
-                console.log(chunk);
-                completedText += value;
-                setStreamText(prev => prev + value);
+                const strVal = new TextDecoder().decode(value);
+                console.log(strVal);
+                completedText += strVal;
+                setStreamText(prev => prev + strVal);
             }
         } catch (err) {
             console.log(err);
