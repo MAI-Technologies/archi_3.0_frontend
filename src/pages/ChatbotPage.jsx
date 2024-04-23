@@ -129,16 +129,21 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             const res = await fetch("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/openai", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/event-stream',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
 
+            const data = await res.json();
+            console.log("TEST: ")
+            console.log(data);
+
             // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
-            console.log(res.body);
-            const reader = res.body.getReader();
-                //.pipeThrough(new TextDecoderStream())
-                //.getReader();
+            /*
+            const reader = res.body
+                .pipeThrough(new TextDecoderStream())
+                .getReader();
+            */
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
@@ -149,7 +154,12 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 setNewChat(false);
             }
 
+            setHistory(prev => [...prev, { isUser: false, msg: data }]);
+            setStreamText(data);
+            setStreaming(false);
+
             // eslint-disable-next-line no-constant-condition
+            /*
             while (true) {
                 const { value, done } = await reader.read();
                 if (done) {
@@ -157,11 +167,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
                     break;
                 }
-                const strVal = new TextDecoder().decode(value);
-                console.log(strVal);
-                completedText += strVal;
-                setStreamText(prev => prev + strVal);
-            }
+                console.log(value);
+                completedText += value;
+                setStreamText(prev => prev + value);
+            }*/
         } catch (err) {
             console.log(err);
             setHistory(prev => [...prev, { isUser: false, msg: "Something went wrong on my endpoint, please try again later" }]);
