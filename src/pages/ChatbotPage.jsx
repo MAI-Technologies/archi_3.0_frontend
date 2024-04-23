@@ -134,7 +134,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
 
-            const data = await res.json();
+            const data = res;
             console.log("TEST: ")
             console.log(data);
 
