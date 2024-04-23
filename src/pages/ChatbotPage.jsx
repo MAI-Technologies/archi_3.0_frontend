@@ -170,7 +170,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 console.log(value);
                 completedText += value;
                 setStreamText(prev => prev + value);
-            }*/
+            }*/ 
         } catch (err) {
             console.log(err);
             setHistory(prev => [...prev, { isUser: false, msg: "Something went wrong on my endpoint, please try again later" }]);
