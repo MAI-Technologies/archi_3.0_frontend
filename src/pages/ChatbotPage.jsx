@@ -12,6 +12,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { authenticateUser } from '../utils/auth';
 import { UserContext } from "../contexts/UserContext";
 import { addConvoRequest } from '../requests/addConvoRequest';
+import Typewriter from "typewriter-effect";
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
@@ -129,21 +130,15 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             const res = await fetch("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/openai", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/event-stream',
                 },
                 body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
 
-            const data = res.json()[1];
-            console.log("TEST: ")
-            console.log(data);
-
-            // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
-            /*
             const reader = res.body
                 .pipeThrough(new TextDecoderStream())
                 .getReader();
-            */
+            
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
@@ -154,14 +149,11 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 setNewChat(false);
             }
 
-            setHistory(prev => [...prev, { isUser: false, msg: data }]);
-            setStreamText(data);
-            setStreaming(false);
-
             // eslint-disable-next-line no-constant-condition
-            /*
             while (true) {
                 const { value, done } = await reader.read();
+                console.log(value);
+                console.log(done);
                 if (done) {
                     setStreaming(false);
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
@@ -169,8 +161,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 }
                 console.log(value);
                 completedText += value;
-                setStreamText(prev => prev + value);
-            }*/ 
+                //setStreamText(prev => prev + value);
+            }
         } catch (err) {
             console.log(err);
             setHistory(prev => [...prev, { isUser: false, msg: "Something went wrong on my endpoint, please try again later" }]);
@@ -294,11 +286,12 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                             {log.isUser ? <img src={userImage()} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
                                         </div>
                                         <div className={styles.msg}>
-                                            <MathJax dynamic>{log.msg}</MathJax>
+                                            <MathJax dynamic><Typewriter onInit={(typewriter) => {typewriter.typeString(log.msg).start();}} options={{delay: 1, showCursor: false,}}/></MathJax>
                                         </div>
                                     </div>
                                 );
                             })}
+                            <div ref={messagesEndRef} />
 
                             {isThinking && <div className={styles.logMsg}>
                                 <div className={styles.profile}>
@@ -310,9 +303,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                 <div className={styles.profile}>
                                     <img src={tutor.imageSrc} alt={tutor.name} />
                                 </div>
-                                <p className={styles.msg}>{streamText}</p>
+                                {/* <p className={styles.msg}></p> */}
+                                <Typewriter onInit={(typewriter) => {typewriter.typeString("hello world im just testing").start()}}/>
                             </div>}
-                            <div ref={messagesEndRef} />
                         </div>
                         <ChatInputBar tutorColor={tutor.themeColor} sendMessageHandler={sendMessageHandler}></ChatInputBar>
                     </div>

@@ -25,6 +25,7 @@
     "remark-math": "^6.0.0",
     "rollup": "^4.9.1",
     "styled-components": "^6.1.1",
+    "typewriter-effect": "^2.21.0",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"
   },
