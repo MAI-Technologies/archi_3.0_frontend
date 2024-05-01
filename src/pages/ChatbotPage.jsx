@@ -151,17 +151,15 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
             // eslint-disable-next-line no-constant-condition
             while (true) {
-                const { value, done } = await reader.read();
-                console.log(value);
-                console.log(done);
+                const { value, done } = await reader.read()
                 if (done) {
                     setStreaming(false);
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
                     break;
                 }
-                console.log(value);
+
                 completedText += value;
-                //setStreamText(prev => prev + value);
+                setStreamText(prev => prev + value);
             }
         } catch (err) {
             console.log(err);
@@ -286,12 +284,14 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                             {log.isUser ? <img src={userImage()} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
                                         </div>
                                         <div className={styles.msg}>
-                                            <MathJax dynamic><Typewriter onInit={(typewriter) => {typewriter.typeString(log.msg).start();}} options={{delay: 1, showCursor: false,}}/></MathJax>
+                                            <MathJax dynamic>
+                                                {i == history.length-1 ? <Typewriter onInit={(typewriter) => {typewriter.typeString(log.msg).start();}} options={{delay: 1, cursor: '',}}/> : log.msg}
+                                            </MathJax>
                                         </div>
                                     </div>
                                 );
                             })}
-                            <div ref={messagesEndRef} />
+                           
 
                             {isThinking && <div className={styles.logMsg}>
                                 <div className={styles.profile}>
@@ -303,9 +303,11 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                 <div className={styles.profile}>
                                     <img src={tutor.imageSrc} alt={tutor.name} />
                                 </div>
-                                {/* <p className={styles.msg}></p> */}
-                                <Typewriter onInit={(typewriter) => {typewriter.typeString("hello world im just testing").start()}}/>
+                                <div className={styles.msg}>
+                                    <Typewriter onInit={(typewriter) => {typewriter.typeString(streamText).start();}} options={{delay: 1, cursor: '',}}/>
+                                </div>
                             </div>}
+                            <div ref={messagesEndRef} />
                         </div>
                         <ChatInputBar tutorColor={tutor.themeColor} sendMessageHandler={sendMessageHandler}></ChatInputBar>
                     </div>
