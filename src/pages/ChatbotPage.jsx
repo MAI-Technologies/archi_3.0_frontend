@@ -34,9 +34,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         switch (tutor.name) {
             case "Archi":
                 return "/img/archiUser.png";
-            case "Hypatia": 
+            case "Hypatia":
                 return "/img/hypatiaUser.png";
-            case "Mary J.": 
+            case "Mary J.":
                 return "/img/mjUser.png";
             default:
                 return "";
@@ -76,23 +76,23 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility]); 
+    }, [onPopupVisibility]);
 
     // For displaying conversations history on the side bar
     async function getConvoHistory(user) {
         try {
-            const result = await axios.get("http://localhost:4000/user/get-history", { params: { userId: user.uid } });
+            const result = await axios.get("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/get-history", { params: { userId: user.uid } });
             const convos = result.data.convos;
             // Order from most recent to least recent 
-            convos.sort(function(x, y) {
+            convos.sort(function (x, y) {
                 return Date.parse(y.createdAt) - Date.parse(x.createdAt);
             })
 
             // Remove oldest convo from history if there are more than five convos
             if (convos.length > 5) {
-                await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: convos[convos.length-1].sessionId} });
+                await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: convos[convos.length - 1].sessionId } });
                 convos.pop();
-            } 
+            }
 
             // Update conversation history on sidebar
             setConvoHistory(convos);
@@ -125,7 +125,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             setIsThinking(true);
 
-            const res = await fetch("http://localhost:4000/openai", {
+            const res = await fetch("https://archi-3-backend-fabe5cbde85f.herokuapp.com/openai", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
@@ -186,11 +186,11 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     // Load old convo on the screen
     async function loadPastConvo(oldSessionId) {
         try {
-            const result = await axios.get("http://localhost:4000/user/get-convo", { params: { sessionId: oldSessionId } });
+            const result = await axios.get("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/get-convo", { params: { sessionId: oldSessionId } });
             const convo = result.data.convo;
             const convos = convo.conversations;
             const newSessionId = v4();
-    
+
             // Navigate to the corresponding tutor page and create a new session
             switch (convo.tutorName.toLowerCase()) {
                 case "hypatia":
@@ -211,25 +211,25 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // Display all previous messages 
             const newConversation = [{ role: "system", content: convos[0].content }, { role: "assistant", content: convos[1].content }];
             setHistory([]);
-            for(let i = 2; i < convos.length; i++) {
+            for (let i = 2; i < convos.length; i++) {
                 const msg = convos[i].content;
                 //const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg); // look into this line
                 const formattedMsg = preprocessMath(msg);
-    
+
                 if (convos[i].role === "assistant") {
                     setHistory(prev => [...prev, { isUser: false, msg: formattedMsg }]);
-                    newConversation.push({role: "assistant", content: msg});
+                    newConversation.push({ role: "assistant", content: msg });
                 } else {
                     setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
-                    newConversation.push({role: "user", content: msg});
+                    newConversation.push({ role: "user", content: msg });
                 }
             }
 
             // create new convo with old convo info
             await addConvoRequest(newSessionId, convo.userId, convo.summary, convo.tutorName, newConversation);
             // then delete old convo from database
-            await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: oldSessionId } });
-            
+            await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: oldSessionId } });
+
             // Update side bar
             getConvoHistory(user);
         } catch (err) {
@@ -242,7 +242,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             const answer = window.confirm("Are you sure you want to delete this conversation?");
             if (answer) {
-                await axios.delete("http://localhost:4000/user/delete-convo", { params: { sessionId: id} });
+                await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: id } });
                 window.location.reload();
             }
         } catch (err) {
@@ -261,7 +261,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     </button>
                     <p className={styles.recent}> Recent </p>
                     <div className={styles.convoHistoryContainer}>
-                        {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png"/> </div>))}
+                        {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png" /> </div>))}
                     </div>
                 </div>
                 <div className={`${styles.chatbot} ${isPopupVisible ? styles.chatbotShifted : ''}`}>
