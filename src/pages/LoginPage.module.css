@@ -1,0 +1,345 @@
+/* LoginPage.module.css */
+
+/* ----------------Styles for entire signup/login page----------------*/
+
+.signupPage {
+    background: url(/img/bg.png) no-repeat center center;
+    background-size: cover; /* Cover is usually better for full-screen backgrounds */
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-height: 700px; /* Set the minimum height to match the registration form or the desired minimum */
+  }
+  
+  .contentContainer {
+    display: flex; /* Enable flex layout */
+    flex-direction: row; /* Arrange children in a row */
+    justify-content: center; /* Center children horizontally */
+    align-items: flex-start; /* Align children to the top */
+    gap: 20px; /* Provide some space between the items */
+    position: relative; /* Positioned absolutely within signupPage */
+    width: 100%;
+    height: 100vh;
+  }  
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* This will prevent scrolling */
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* ----------------Styles for login forms---------------- */
+  
+  .registrationForm {
+    transition: all 2s ease; /* Smooth transition for any changes */
+    background-color: #FFFFFF;
+    color: #C05F41;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 70px;
+    padding-right: 70px;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    top: 50%;
+    left: 2%; /* Align to the left side */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    min-width: 620px; /* Prevents form from having a smaller width than children */
+    min-height: 600px;
+    max-width: 620px;
+    height: auto;
+    display: flex;
+    position: absolute;
+    flex-direction: column; /* Stack the children vertically */
+    align-items: center; /* Center-align the children horizontally */
+    flex-shrink: 0; /* Prevents the form from shrinking */
+  }
+  
+  .header {
+    text-align: left; /* Align text to the left for these elements */
+    width: 100%; /* Ensure they span the full width of the registrationForm */
+    margin-bottom: 10px;
+  }
+  
+  .header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    justify-content: center;
+    margin-bottom: 0px;
+  }
+  
+  .header p {
+    font-size: 18px;
+    font-weight: 400;
+    justify-content: center;
+    margin-bottom: 0px;
+  }
+  
+  .formContainer {
+    width: 100%; /* Full width of the registration form */
+    display: flex;
+    flex-direction: column; /* Stack the form elements */
+    align-items: flex-start; /* Center-align the form elements */
+  }
+  
+  /* ----------------Form fields and divs---------------- */
+  
+  .inputGroup {
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .inputGroup p {
+    color: #C05F41;
+    font-size: 16px;
+  }
+  
+  /* Style template for any form input bar */
+  .longInput {
+    background-color: #F5F5F5; /* Light gray background */
+    border: none; /* No border */
+    border-radius: 10px !important; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside text fields */
+    width: 100%; /* Full width minus padding */
+    height: 38px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    font-size: 16px; /* Font size similar to the role buttons */
+  }
+  
+  /* Div for side-by-side short form entry bar */
+  /* (Place around two long inputs to get a short input) */
+  .shortFormEntry {
+    display: flex; /* This turns on flexbox */
+    justify-content: space-between; /* This lines up the children side by side, starting from the left */
+    align-items: center; /* This vertically centers the children (optional) */
+    gap: 30px;
+  }
+  
+  /* Styles for password hint text */
+  .passwordHint {
+    color: #86AFC7;
+    font-size: 12px;
+    text-align: left;
+    margin-top: 10px;
+  }
+  
+  /* ----------------Sign in with Google---------------- */
+  
+  .googleSigninButton {
+    background-color: white;
+    border: none;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 0;
+  }
+  
+  .googleSigninButton img {
+    width: 100%;
+  }
+  
+  /* ----------------Styles for navigation links to other pages---------------- */
+  
+  /* Div containing button for submitting form + navigating to either signup/login form */
+  .navigate {
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Position the left edge of the inner div in the middle of the outer div */
+    transform: translateX(-50%); /* Shift the inner div leftwards by half its width */
+    margin-bottom: 50px;
+    text-align: center; /* Align children to the center */
+  }
+  
+  .continueButton {
+    width: 172px;
+    height: 40px;
+    background-color: #C05F41;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover */
+    margin-bottom: 10px;
+  }
+  
+  .continueButton:hover,
+  .continueButton:focus,
+  .continueButton.active {
+    background-image: linear-gradient(to bottom right, #C05F41, #86AFC7);
+    transition: background-color 0.3s; /* Smooth transition for hover */
+  }
+  
+  .loginLink {
+    display: block;
+    color: #C05F41;
+    text-decoration: none;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .privacyPolicy {
+    position: absolute;
+    bottom: 0;
+    margin-left: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .privacyPolicy p {
+    color: #A09F9F;
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  /* ----------------Character styles---------------- */
+  
+  .characterContainer1 {
+    position: absolute;
+    top: 60%;
+    left: 60%; /* Start from the right edge of the registration form assuming it's max-width is 620px */
+    transform: translateY(-50%);
+    width: auto; /* Take up the remaining space but subtract half the width of the registration form */
+    max-width: 412px; /* Maximum width of character image */
+    height: auto; /* Let the height be determined by its content */
+    display: flex;
+    flex: 0 0 auto; /* Don't grow, don't shrink, based on its width */
+    align-items: center; /* Align the character image vertically */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Centers the character image horizontally */
+    align-self: center;
+  }
+  
+  .characterContainer {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 2s ease; /* Smooth transition for any changes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto; /* Don't grow, don't shrink, based on its width */
+  }
+  
+  .characterContainer.loading .speechBubble {
+    display: none;
+  }
+  
+  .characterContainer.loading .characterImage {
+    height: 375px;
+    width: auto;
+    margin-bottom: 35px;
+    margin-left: 20px;
+  }
+  
+  .characterContainer .characterImage {
+    max-height: 100%; /* Ensures image does not overflow its container */
+    height: 412px;
+    width: auto; /* Maintains the aspect ratio of the image */
+  }
+  
+  .characterContainer.loaded {
+    top: 60%; /* Adjust if you want to move up or down */
+    left: 75%; /* Increase this value to move further to the right */
+    height: 412px;
+    width: auto; /* Maintains the aspect ratio of the image */
+    transition: all 2s ease; /* Smooth transition for any changes */
+  }
+  
+  .characterContainer.loaded .speechBubble {
+    transition: all 2s ease; /* Smooth transition for any changes */
+  }
+  
+  .characterContainer.moving {
+    height: 412px;
+    width: auto; /* Maintains the aspect ratio of the image */
+  }
+  
+  .speechBubble {
+    align-items: center;
+    position: absolute;  /* MUST HAVE for archi img to not shift up */
+    text-align: center;
+    max-width: 100%; /* Ensure they do not overflow their container */
+    width: 100%;
+    height: 80px;
+    margin-top: -40px; /* Add spacing below speech bubble */
+    top: 0;  /* MUST HAVE for archi img to not shift up */
+    left: 0;  /* MUST HAVE for archi img to not shift up */
+  }
+  
+  .speechBubbleContainer.hidden .speechBubble {
+    display: none; /* Hide the speech bubble but keep its space */
+  }
+  
+  .speechBubble p {
+    position: absolute;
+    top: 40%; /* Center vertically + move up some more */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%);
+    width: 285px; /* Take full width of the parent */
+    text-align: center;
+    white-space: nowrap; /* Ensures the text is in a single line */
+    overflow: hidden; /* Prevents text from overflowing */
+    text-overflow: ellipsis; /* Adds ellipsis if text is too long */
+    font-size: 20px;
+    font-weight: bold;
+    color: #EC9C74;
+  }
+  
+  .speechBubble img {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%);
+    max-width: 412px;
+    width: 285px;
+    height: 80px;
+  }
+  
+  .textBubbleImage {
+    position: absolute;
+    max-width: 285px;
+    height: 80px;
+  }
+  
+  /* Media query for responsiveness */
+  @media (min-width: 768px) and (max-width: 1200px) {
+    .registrationForm {
+      /* The registration form should start to shrink if the screen width is less than 1240px */
+      width: calc(100% - 412px); /* Subtract the max width of the character container */
+    }
+  
+    .characterContainer {
+      /* The character container should stay to the right of the registration form */
+      left: calc(100% - 412px); /* Position it to the left of the character container's max width */
+      width: 412px; /* Fixed width equal to the maximum width of the character container */
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .characterContainer {
+      display: none; /* Hide the character container on smaller screens */
+    }
+    .registrationForm {
+      width: 100%; /* The registration form can take the full width on small screens */
+      left: 0;
+      transform: translateY(-50%);
+      max-width: 620px;
+      flex: 1 0 auto; /* Allow the form to fill the available space*/
+    }
+  }
+  
+  

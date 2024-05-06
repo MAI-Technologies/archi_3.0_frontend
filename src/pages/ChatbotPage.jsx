@@ -12,6 +12,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { authenticateUser } from '../utils/auth';
 import { UserContext } from "../contexts/UserContext";
 import { addConvoRequest } from '../requests/addConvoRequest';
+import Typewriter from "typewriter-effect";
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
@@ -81,7 +82,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     // For displaying conversations history on the side bar
     async function getConvoHistory(user) {
         try {
-            const result = await axios.get("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/get-history", { params: { userId: user.uid } });
+            const result = await axios.get("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/get-history", { params: { userId: user.uid } });
+            console.log(result.data);
             const convos = result.data.convos;
             // Order from most recent to least recent 
             convos.sort(function (x, y) {
@@ -90,7 +92,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
             // Remove oldest convo from history if there are more than five convos
             if (convos.length > 5) {
-                await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: convos[convos.length - 1].sessionId } });
+                await axios.delete("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/delete-convo", { params: { sessionId: convos[convos.length-1].sessionId} });
                 convos.pop();
             }
 
@@ -121,11 +123,11 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         // Format the user input for MathJax if it contains LaTeX
         const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
         setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
-        setStreamText("")
+        setStreamText("");
         try {
             setIsThinking(true);
 
-            const res = await fetch("https://archi-3-backend-fabe5cbde85f.herokuapp.com/openai", {
+            const res = await fetch("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/openai", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
@@ -133,10 +135,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
 
-            // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
             const reader = res.body
                 .pipeThrough(new TextDecoderStream())
-                .getReader()
+                .getReader();
+            
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
@@ -186,7 +188,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     // Load old convo on the screen
     async function loadPastConvo(oldSessionId) {
         try {
-            const result = await axios.get("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/get-convo", { params: { sessionId: oldSessionId } });
+            const result = await axios.get("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/get-convo", { params: { sessionId: oldSessionId } });
             const convo = result.data.convo;
             const convos = convo.conversations;
             const newSessionId = v4();
@@ -228,8 +230,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // create new convo with old convo info
             await addConvoRequest(newSessionId, convo.userId, convo.summary, convo.tutorName, newConversation);
             // then delete old convo from database
-            await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: oldSessionId } });
-
+            await axios.delete("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/delete-convo", { params: { sessionId: oldSessionId } });
+            
             // Update side bar
             getConvoHistory(user);
         } catch (err) {
@@ -242,7 +244,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             const answer = window.confirm("Are you sure you want to delete this conversation?");
             if (answer) {
-                await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: id } });
+                await axios.delete("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/delete-convo", { params: { sessionId: id} });
                 window.location.reload();
             }
         } catch (err) {
@@ -282,11 +284,14 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                             {log.isUser ? <img src={userImage()} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
                                         </div>
                                         <div className={styles.msg}>
-                                            <MathJax dynamic>{log.msg}</MathJax>
+                                            <MathJax dynamic>
+                                                {i == history.length-1 ? <Typewriter onInit={(typewriter) => {typewriter.typeString(log.msg).start();}} options={{delay: 1, cursor: '',}}/> : log.msg}
+                                            </MathJax>
                                         </div>
                                     </div>
                                 );
                             })}
+                           
 
                             {isThinking && <div className={styles.logMsg}>
                                 <div className={styles.profile}>
@@ -298,7 +303,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                 <div className={styles.profile}>
                                     <img src={tutor.imageSrc} alt={tutor.name} />
                                 </div>
-                                <p className={styles.msg}>{streamText}</p>
+                                <div className={styles.msg}>
+                                    <Typewriter onInit={(typewriter) => {typewriter.typeString(streamText).start();}} options={{delay: 1, cursor: '',}}/>
+                                </div>
                             </div>}
                             <div ref={messagesEndRef} />
                         </div>
