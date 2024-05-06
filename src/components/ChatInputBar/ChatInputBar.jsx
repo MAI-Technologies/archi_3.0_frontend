@@ -121,6 +121,10 @@ const ChatInputBar = ({ tutorColor, sendMessageHandler }) => {
             <img src="/img/arrow.png" alt="arrow" />
           </button>
         </div>
+        <div className={styles.bottomElements}>
+          <p className={styles.disclaimer}> Just as tutors can make mistakes in real life, so can Archimedes!</p>
+        </div>
+
       </div>
     </>
   );

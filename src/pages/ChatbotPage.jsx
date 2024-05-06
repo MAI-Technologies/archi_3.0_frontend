@@ -35,9 +35,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         switch (tutor.name) {
             case "Archi":
                 return "/img/archiUser.png";
-            case "Hypatia": 
+            case "Hypatia":
                 return "/img/hypatiaUser.png";
-            case "Mary J.": 
+            case "Mary J.":
                 return "/img/mjUser.png";
             default:
                 return "";
@@ -77,7 +77,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         return () => {
             onPopupVisibility(true);
         };
-    }, [onPopupVisibility]); 
+    }, [onPopupVisibility]);
 
     // For displaying conversations history on the side bar
     async function getConvoHistory(user) {
@@ -86,7 +86,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             console.log(result.data);
             const convos = result.data.convos;
             // Order from most recent to least recent 
-            convos.sort(function(x, y) {
+            convos.sort(function (x, y) {
                 return Date.parse(y.createdAt) - Date.parse(x.createdAt);
             })
 
@@ -94,7 +94,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             if (convos.length > 5) {
                 await axios.delete("https://ebg5arj53no65jmdwx6srlesxm0vxljl.lambda-url.us-east-1.on.aws/user/delete-convo", { params: { sessionId: convos[convos.length-1].sessionId} });
                 convos.pop();
-            } 
+            }
 
             // Update conversation history on sidebar
             setConvoHistory(convos);
@@ -192,7 +192,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             const convo = result.data.convo;
             const convos = convo.conversations;
             const newSessionId = v4();
-    
+
             // Navigate to the corresponding tutor page and create a new session
             switch (convo.tutorName.toLowerCase()) {
                 case "hypatia":
@@ -213,17 +213,17 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // Display all previous messages 
             const newConversation = [{ role: "system", content: convos[0].content }, { role: "assistant", content: convos[1].content }];
             setHistory([]);
-            for(let i = 2; i < convos.length; i++) {
+            for (let i = 2; i < convos.length; i++) {
                 const msg = convos[i].content;
                 //const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg); // look into this line
                 const formattedMsg = preprocessMath(msg);
-    
+
                 if (convos[i].role === "assistant") {
                     setHistory(prev => [...prev, { isUser: false, msg: formattedMsg }]);
-                    newConversation.push({role: "assistant", content: msg});
+                    newConversation.push({ role: "assistant", content: msg });
                 } else {
                     setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
-                    newConversation.push({role: "user", content: msg});
+                    newConversation.push({ role: "user", content: msg });
                 }
             }
 
@@ -263,7 +263,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                     </button>
                     <p className={styles.recent}> Recent </p>
                     <div className={styles.convoHistoryContainer}>
-                        {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png"/> </div>))}
+                        {convoHistory.map(convo => (<div className={styles.convoHistoryList}> <p className={styles.convoHistoryItem} id={convo.sessionId} onClick={(e) => loadPastConvo(e.target.id)}>{convo.summary.slice(0, 25)}...</p> <img className={styles.trashcan} id={convo.sessionId} onClick={(e) => deleteSingleConvo(e.target.id)} src="/img/trash.png" /> </div>))}
                     </div>
                 </div>
                 <div className={`${styles.chatbot} ${isPopupVisible ? styles.chatbotShifted : ''}`}>
