@@ -193,22 +193,34 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             const convos = convo.conversations;
             const newSessionId = v4();
 
-            // Navigate to the corresponding tutor page and create a new session
-            switch (convo.tutorName.toLowerCase()) {
-                case "hypatia":
-                    navigate("/chatbot/hypatia");
-                    setSessionId(newSessionId);
-                    break;
-                case "mary j.":
-                    navigate("/chatbot/mary_j");
-                    setSessionId(newSessionId);
-                    break;
-                default:
-                    navigate("/chatbot/archi");
-                    setSessionId(newSessionId);
-                    break;
+            // Find the tutor associated with this conversation
+            const tutorForConvo = TutorData.find(t => t.name.toLowerCase() === convo.tutorName.toLowerCase());
+            
+            // Update the context with this tutor
+            if (tutorForConvo) {
+                setTutor(tutorForConvo);  // Assuming setTutor is from useContext(TutorContext)
             }
+
+            navigate(`/chatbot/${tutorForConvo.id}`);
+            setSessionId(newSessionId);
             console.log("NEW SESSION" + newSessionId);
+        
+            // Navigate to the corresponding tutor page and create a new session
+            // switch (convo.tutorName.toLowerCase()) {
+            //     case "hypatia":
+            //         navigate("/chatbot/hypatia");
+            //         setSessionId(newSessionId);
+            //         break;
+            //     case "mary j.":
+            //         navigate("/chatbot/mary_j");
+            //         setSessionId(newSessionId);
+            //         break;
+            //     default:
+            //         navigate("/chatbot/archi");
+            //         setSessionId(newSessionId);
+            //         break;
+            // }
+            // console.log("NEW SESSION" + newSessionId);
 
             // Display all previous messages 
             const newConversation = [{ role: "system", content: convos[0].content }, { role: "assistant", content: convos[1].content }];
