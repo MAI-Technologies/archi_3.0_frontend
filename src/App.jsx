@@ -13,11 +13,12 @@ import PasswordResetPage from './pages/PasswordResetPage';
 import LearnMorePage from './pages/LearnMorePage';
 import PopupButton from './components/PopupButton/PopupButton';
 import { UserProvider } from './contexts/UserContext';
+import { TutorProvider } from './contexts/TutorContext';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
   // State for tracking popup visibility
-  const [setIsPopupVisible] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   // State for tracking "info" popup button visibillity
   const [showPopupButton, setShowPopupButton] = useState(true);
@@ -35,21 +36,23 @@ function App() {
 
   return (
     <UserProvider>
-      <div className='App'>
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route exact path='/' element={<LandingPage />} />
-            <Route exact path='/metrics' element={<MetricsPage />} />
-            <Route exact path='/tutor' element={<TutorPage />} />
-            <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
-            <Route exact path='/signup' element={<SignupPage />} />
-            <Route exact path='/login' element={<LoginPage />} />
-            <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-            <Route exact path='/learnmore' element={<LearnMorePage />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <TutorProvider>
+        <div className='App'>
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route exact path='/' element={<LandingPage />} />
+              <Route exact path='/metrics' element={<MetricsPage />} />
+              <Route exact path='/tutor' element={<TutorPage />} />
+              <Route exact path='/chatbot/:tutorId' element={<ChatbotPage onPopupVisibility={handlePopupVisibility} />} />
+              <Route exact path='/signup' element={<SignupPage />} />
+              <Route exact path='/login' element={<LoginPage />} />
+              <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+              <Route exact path='/learnmore' element={<LearnMorePage />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </TutorProvider>
     </UserProvider>
   );
 }
