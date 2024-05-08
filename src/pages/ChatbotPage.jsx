@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import { ContentWrapper } from "../components/Navbar/NavbarElements";
 import { v4 } from 'uuid';
+import { useTutor } from '../contexts/TutorContext';
 import TutorData from '../components/Tutor/TutorData';
 import styles from "./ChatbotPage.module.css";
 import ChatInputBar from "../components/ChatInputBar/ChatInputBar";
@@ -16,7 +17,7 @@ import Typewriter from "typewriter-effect";
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
-    const tutor = TutorData.find((char) => char.id === tutorId);
+    const { tutor, setTutor } = useTutor();
     const purpose = `I'm here to help you navigate through any math challenges you're facing! 🌟 Do you have a math problem or concept you need help with today? If so, let's solve it together!` // TODO: Get from backend later!
     const [isThinking, setIsThinking] = useState(false);
     const [history, setHistory] = useState([]);
@@ -47,6 +48,20 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    useEffect(() => {
+        if (!tutor || tutor.id !== tutorId) {
+            const matchedTutor = TutorData.find(t => t.id === tutorId);
+            if (matchedTutor) {
+                setTutor(matchedTutor);
+            } else {
+                console.error("Tutor not found with id:", tutorId);
+                navigate("/"); // redirect if no tutor found
+            }
+        }
+
+        // Authentication and initial data fetching logic here
+    }, [tutorId, setTutor, navigate]);
 
     // Must put scrollToBottom in its own useEffect() because putting it in the other one would keep regenerating a new sessionId every stream text
     useEffect(() => {
