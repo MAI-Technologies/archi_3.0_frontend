@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { TutorContext } from './TutorContext';
+import { TutorContext } from '../../contexts/TutorContext';
 import SignoutButton from '../SignoutButton/SignoutButton';
 import styles from './Navbar.module.css';
 import { logout } from '../../utils/auth';
