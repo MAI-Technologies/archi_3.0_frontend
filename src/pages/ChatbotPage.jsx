@@ -285,7 +285,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                         </div>
                                         <div className={styles.msg}>
                                             <MathJax dynamic>
-                                                {i == history.length-1 ? <Typewriter onInit={(typewriter) => {typewriter.typeString(log.msg).start();}} options={{delay: 1, cursor: '',}}/> : log.msg}
+                                                {i == history.length-1 ? <Typewriter onInit={(typewriter) => {typewriter.typeString(log.msg).start();}} options={{delay: 0.1, cursor: '',}}/> : log.msg}
                                             </MathJax>
                                         </div>
                                     </div>
