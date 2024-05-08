@@ -27,8 +27,7 @@ const Navbar = () => {
                     :
                     <SignoutButton onLogout={logoutHandler} />
                 }
-                <a href='/'>
-                    <div className={styles.clickableArea}></div>
+                <a href='/' className={styles.clickableArea}>
                 </a>
             </div>
         </div>
