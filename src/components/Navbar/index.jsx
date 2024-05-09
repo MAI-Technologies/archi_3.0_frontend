@@ -1,60 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TutorContext } from '../../contexts/TutorContext';
 import SignoutButton from '../SignoutButton/SignoutButton';
-import TutorData from '../Tutor/TutorData';
 import styles from './Navbar.module.css';
 import { logout } from '../../utils/auth';
 
-function conditionalNav() {
-	async function logoutHandler() {
-		try {
-			await logout();
-			console.log(`logout successful`);
-		} catch (err) {
-			console.log(err);
-		}
-	}
-  
-    // Extract the last part of the URL
-    const lastPath = window.location.pathname.split('/').pop();
-	console.log(lastPath);
-
-    // Find the tutor data based on the last part of the URL
-    const tutor = TutorData.find(t => t.id === lastPath);
-    
-    if (tutor) {
-        // If tutor exists, return navbar with background image and SignoutButton with themeColor
-        return (
-            <div className={styles.bar} style={{ backgroundImage: `url(/img/${tutor.id}Header.png)` }}>
-                <SignoutButton color={`${tutor.themeColor}`} filter={`${tutor.filter}`} onLogout={logoutHandler}></SignoutButton>
-            </div>
-        );
-    } else if (window.location.pathname === "/tutor") {
-        // Specific case for tutor main page
-        return (
-            <div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}>
-                <SignoutButton onLogout={logoutHandler}></SignoutButton>
-            </div>
-        );
-    } else {
-        // Default case where only the navbar is rendered
-        return (
-            <div className={styles.bar} style={{ backgroundImage: "url(/img/mainHeader.png)" }}></div>
-        );
-    }
-};
-
 const Navbar = () => {
-	return (
-		<>
-			<div className={styles.content}>
-				{conditionalNav()}
-				<a href='/'>
-					<div className={styles.clickableArea}>
-					</div>
-				</a>
-			</div>
-		</>
-	);
+	const { tutor } = useContext(TutorContext);  // Access the tutor context
+
+    async function logoutHandler() {
+        try {
+            await logout();
+            console.log(`Logout successful`);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    // Set the default or tutor-specific background image
+    const backgroundImage = tutor ? `url(/img/${tutor.id}Header.png)` : "url(/img/mainHeader.png)";
+
+    return (
+        <div className={styles.content}>
+            <div className={styles.bar} style={{ backgroundImage }}>
+                {tutor ? 
+                    <SignoutButton color={tutor.themeColor} filter={tutor.filter} onLogout={logoutHandler} />
+                    :
+                    <SignoutButton onLogout={logoutHandler} />
+                }
+                <a href='/' className={styles.clickableArea}>
+                </a>
+            </div>
+        </div>
+    );
 };
 
 export default Navbar;
