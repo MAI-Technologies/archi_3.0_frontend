@@ -27,6 +27,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const [currentChatMessages, setCurrentChatMessages] = useState([]);
     const messagesEndRef = useRef(null);
     const [convoHistory, setConvoHistory] = useState([]);
     const [newChat, setNewChat] = useState(true);
@@ -51,7 +52,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     // Must put scrollToBottom in its own useEffect() because putting it in the other one would keep regenerating a new sessionId every stream text
     useEffect(() => {
         scrollToBottom()
-    }, [streamText]);
+    }, [currentChatMessages, streamText]);
 
     useEffect(() => {
         authenticateUser().then((user) => {
@@ -124,6 +125,8 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
         setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
         setStreamText("");
+        // Assuming we add a new user message to currentChatMessages
+        setCurrentChatMessages(prev => [...prev, { isUser: true, msg }]);
         try {
             setIsThinking(true);
 
@@ -155,11 +158,14 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 if (done) {
                     setStreaming(false);
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
+                    // Assuming we finalize the bot response and update currentChatMessages
+                    setCurrentChatMessages(prev => [...prev, { isUser: false, msg: completedText }]);
                     break;
                 }
 
                 completedText += value;
                 setStreamText(prev => prev + value);
+                setCurrentChatMessages(prev => [...prev, { isUser: false, msg: completedText }]);
             }
         } catch (err) {
             console.log(err);
