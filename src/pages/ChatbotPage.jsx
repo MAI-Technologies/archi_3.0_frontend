@@ -52,7 +52,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     // Must put scrollToBottom in its own useEffect() because putting it in the other one would keep regenerating a new sessionId every stream text
     useEffect(() => {
         scrollToBottom()
-    }, [currentChatMessages, streamText]);
+    }, [streamText]);
 
     useEffect(() => {
         authenticateUser().then((user) => {
@@ -125,8 +125,6 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
         setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
         setStreamText("");
-        // Assuming we add a new user message to currentChatMessages
-        setCurrentChatMessages(prev => [...prev, { isUser: true, msg }]);
         try {
             setIsThinking(true);
 
@@ -158,14 +156,12 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 if (done) {
                     setStreaming(false);
                     setHistory(prev => [...prev, { isUser: false, msg: completedText }]);
-                    // Assuming we finalize the bot response and update currentChatMessages
-                    setCurrentChatMessages(prev => [...prev, { isUser: false, msg: completedText }]);
+                    scrollToBottom(); // Ensure to scroll to bottom after the final message
                     break;
                 }
 
                 completedText += value;
                 setStreamText(prev => prev + value);
-                setCurrentChatMessages(prev => [...prev, { isUser: false, msg: completedText }]);
             }
         } catch (err) {
             console.log(err);
