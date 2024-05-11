@@ -8,7 +8,7 @@ export async function openAIRequest(prompt, sessionId) {
     if (!userId) throw new Error("No userId was given");
 
     try {
-        const res = await axios.post("https://archi-3-backend-fabe5cbde85f.herokuapp.com/openai", {
+        const res = await axios.post("https://archi3-backend-v2-56ae6c696951.herokuapp.com/openai", {
             prompt, sessionId, tutor, userId
         });
 

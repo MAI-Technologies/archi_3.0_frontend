@@ -81,7 +81,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     // For displaying conversations history on the side bar
     async function getConvoHistory(user) {
         try {
-            const result = await axios.get("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/get-history", { params: { userId: user.uid } });
+            const result = await axios.get("https://archi3-backend-v2-56ae6c696951.herokuapp.com/user/get-history", { params: { userId: user.uid } });
             const convos = result.data.convos;
             // Order from most recent to least recent 
             convos.sort(function (x, y) {
@@ -90,7 +90,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
 
             // Remove oldest convo from history if there are more than five convos
             if (convos.length > 5) {
-                await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: convos[convos.length - 1].sessionId } });
+                await axios.delete("https://archi3-backend-v2-56ae6c696951.herokuapp.com/user/delete-convo", { params: { sessionId: convos[convos.length - 1].sessionId } });
                 convos.pop();
             }
 
@@ -125,7 +125,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             setIsThinking(true);
 
-            const res = await fetch("https://archi-3-backend-fabe5cbde85f.herokuapp.com/openai", {
+            const res = await fetch("https://archi3-backend-v2-56ae6c696951.herokuapp.com/openai", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/event-stream',
@@ -186,7 +186,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     // Load old convo on the screen
     async function loadPastConvo(oldSessionId) {
         try {
-            const result = await axios.get("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/get-convo", { params: { sessionId: oldSessionId } });
+            const result = await axios.get("https://archi3-backend-v2-56ae6c696951.herokuapp.com/user/get-convo", { params: { sessionId: oldSessionId } });
             const convo = result.data.convo;
             const convos = convo.conversations;
             const newSessionId = v4();
@@ -228,7 +228,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             // create new convo with old convo info
             await addConvoRequest(newSessionId, convo.userId, convo.summary, convo.tutorName, newConversation);
             // then delete old convo from database
-            await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: oldSessionId } });
+            await axios.delete("https://archi3-backend-v2-56ae6c696951.herokuapp.com/user/delete-convo", { params: { sessionId: oldSessionId } });
 
             // Update side bar
             getConvoHistory(user);
@@ -242,7 +242,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         try {
             const answer = window.confirm("Are you sure you want to delete this conversation?");
             if (answer) {
-                await axios.delete("https://archi-3-backend-fabe5cbde85f.herokuapp.com/user/delete-convo", { params: { sessionId: id } });
+                await axios.delete("https://archi3-backend-v2-56ae6c696951.herokuapp.com/user/delete-convo", { params: { sessionId: id } });
                 window.location.reload();
             }
         } catch (err) {
