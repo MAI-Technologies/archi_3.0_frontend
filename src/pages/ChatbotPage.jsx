@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import { ContentWrapper } from "../components/Navbar/NavbarElements";
 import { v4 } from 'uuid';
+import { useTutor } from '../contexts/TutorContext';
 import TutorData from '../components/Tutor/TutorData';
 import styles from "./ChatbotPage.module.css";
 import ChatInputBar from "../components/ChatInputBar/ChatInputBar";
@@ -12,10 +13,11 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { authenticateUser } from '../utils/auth';
 import { UserContext } from "../contexts/UserContext";
 import { addConvoRequest } from '../requests/addConvoRequest';
+import Typewriter from "typewriter-effect";
 
 const ChatbotPage = ({ onPopupVisibility }) => {
     const { tutorId } = useParams();
-    const tutor = TutorData.find((char) => char.id === tutorId);
+    const { tutor, setTutor } = useTutor();
     const purpose = `I'm here to help you navigate through any math challenges you're facing! 🌟 Do you have a math problem or concept you need help with today? If so, let's solve it together!` // TODO: Get from backend later!
     const [isThinking, setIsThinking] = useState(false);
     const [history, setHistory] = useState([]);
@@ -46,6 +48,20 @@ const ChatbotPage = ({ onPopupVisibility }) => {
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
+
+    useEffect(() => {
+        if (!tutor || tutor.id !== tutorId) {
+            const matchedTutor = TutorData.find(t => t.id === tutorId);
+            if (matchedTutor) {
+                setTutor(matchedTutor);
+            } else {
+                console.error("Tutor not found with id:", tutorId);
+                navigate("/"); // redirect if no tutor found
+            }
+        }
+
+        // Authentication and initial data fetching logic here
+    }, [tutorId, setTutor, navigate]);
 
     // Must put scrollToBottom in its own useEffect() because putting it in the other one would keep regenerating a new sessionId every stream text
     useEffect(() => {
@@ -121,7 +137,7 @@ const ChatbotPage = ({ onPopupVisibility }) => {
         // Format the user input for MathJax if it contains LaTeX
         const formattedMsg = msg.includes("\\") ? `\\(${msg}\\)` : preprocessMath(msg);
         setHistory(prev => [...prev, { isUser: true, msg: formattedMsg }]);
-        setStreamText("")
+        setStreamText("");
         try {
             setIsThinking(true);
 
@@ -133,10 +149,10 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                 body: JSON.stringify({ prompt: msg, sessionId: sessionId, tutor: tutor.name, userId: user.uid })
             });
 
-            // setHistory(prev => [...prev, { isUser: false, msg: "" }]);
             const reader = res.body
                 .pipeThrough(new TextDecoderStream())
-                .getReader()
+                .getReader();
+
             setStreaming(true);
             let completedText = "";
             setIsThinking(false);
@@ -191,22 +207,34 @@ const ChatbotPage = ({ onPopupVisibility }) => {
             const convos = convo.conversations;
             const newSessionId = v4();
 
-            // Navigate to the corresponding tutor page and create a new session
-            switch (convo.tutorName.toLowerCase()) {
-                case "hypatia":
-                    navigate("/chatbot/hypatia");
-                    setSessionId(newSessionId);
-                    break;
-                case "mary j.":
-                    navigate("/chatbot/mary_j");
-                    setSessionId(newSessionId);
-                    break;
-                default:
-                    navigate("/chatbot/archi");
-                    setSessionId(newSessionId);
-                    break;
+            // Find the tutor associated with this conversation
+            const tutorForConvo = TutorData.find(t => t.name.toLowerCase() === convo.tutorName.toLowerCase());
+
+            // Update the context with this tutor
+            if (tutorForConvo) {
+                setTutor(tutorForConvo);  // Assuming setTutor is from useContext(TutorContext)
             }
+
+            navigate(`/chatbot/${tutorForConvo.id}`);
+            setSessionId(newSessionId);
             console.log("NEW SESSION" + newSessionId);
+
+            // Navigate to the corresponding tutor page and create a new session
+            // switch (convo.tutorName.toLowerCase()) {
+            //     case "hypatia":
+            //         navigate("/chatbot/hypatia");
+            //         setSessionId(newSessionId);
+            //         break;
+            //     case "mary j.":
+            //         navigate("/chatbot/mary_j");
+            //         setSessionId(newSessionId);
+            //         break;
+            //     default:
+            //         navigate("/chatbot/archi");
+            //         setSessionId(newSessionId);
+            //         break;
+            // }
+            // console.log("NEW SESSION" + newSessionId);
 
             // Display all previous messages 
             const newConversation = [{ role: "system", content: convos[0].content }, { role: "assistant", content: convos[1].content }];
@@ -282,11 +310,14 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                             {log.isUser ? <img src={userImage()} alt="user" /> : <img src={tutor.imageSrc} alt={tutor.name} />}
                                         </div>
                                         <div className={styles.msg}>
-                                            <MathJax dynamic>{log.msg}</MathJax>
+                                            <MathJax dynamic>
+                                                {i == history.length - 1 ? <Typewriter onInit={(typewriter) => { typewriter.typeString(log.msg).start(); }} options={{ delay: 1, cursor: '', }} /> : log.msg}
+                                            </MathJax>
                                         </div>
                                     </div>
                                 );
                             })}
+
 
                             {isThinking && <div className={styles.logMsg}>
                                 <div className={styles.profile}>
@@ -298,7 +329,9 @@ const ChatbotPage = ({ onPopupVisibility }) => {
                                 <div className={styles.profile}>
                                     <img src={tutor.imageSrc} alt={tutor.name} />
                                 </div>
-                                <p className={styles.msg}>{streamText}</p>
+                                <div className={styles.msg}>
+                                    <Typewriter onInit={(typewriter) => { typewriter.typeString(streamText).start(); }} options={{ delay: 1, cursor: '', }} />
+                                </div>
                             </div>}
                             <div ref={messagesEndRef} />
                         </div>
